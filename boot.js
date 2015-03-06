@@ -1,0 +1,1 @@
+window.SubstanceComposer = require("./src/composer");

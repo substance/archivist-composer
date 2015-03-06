@@ -1,0 +1,143 @@
+/* Reset
+---------------------------------
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+}
+:focus {
+  outline: 0;
+}
+body {
+  line-height: 1;
+  color: black;
+  background: white;
+}
+/*ol, ul {
+  list-style: none;
+}*/
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+}
+blockquote, q {
+  quotes: "" "";
+}
+
+/* Use borderbox model */
+* {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  text-decoration: none;
+}
+
+
+/* Fonts and colors
+---------------------------------
+*/
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: 'Source Sans Pro', Helvetica, Arial, Verdana, sans-serif;
+  color: #505050;  
+}
+
+a {
+  color: #1B6685;
+  font-weight: normal;
+  text-decoration: none;
+  -moz-transition: background-color 100ms linear, color 100ms linear, opacity 100ms linear;
+  -o-transition: background-color 100ms linear, color 100ms linear, opacity 100ms linear;
+  -webkit-transition: background-color 100ms linear, color 100ms linear, opacity 100ms linear;
+  transition: background-color 100ms linear, color 100ms linear, opacity 100ms linear;
+}
+
+a:hover {
+  color: rgba(11, 157, 217, 1);
+}
+
+/* Layout stuff 
+---------------------------------
+*/
+
+#container {
+}
+
+.searchbar {
+  overflow: visible;
+  z-index: 30000;
+  padding: 20px 40px;
+  padding-top: 30px;
+  padding-bottom: 0px;
+
+}
+
+#container .panel-wrapper {
+  overflow: auto;
+}
+
+
+/* Loading indicator */
+
+.progress-bar {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  height: 2px;
+  z-index: 31000;
+}
+
+.progress-bar .progress {
+  height: 2px;
+  width: 0%;
+  background: rgba(11, 157, 217, 1);
+}
+
+.progress-bar.loading .progress {
+  transition: width 2s;
+  -webkit-transition: width 2s;
+  width: 30%;
+}
+
+.progress-bar.done .progress {
+  transition: width 0.2s;
+  -webkit-transition: width 0.2s;
+  width: 100%;
+}
+
+/* Documents result list */
+
+#facets {
+  float: right;
+  width: 400px;
+  padding: 20px;
+  overflow: auto;
+}
