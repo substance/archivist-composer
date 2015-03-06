@@ -133,11 +133,24 @@ a:hover {
   width: 100%;
 }
 
-/* Documents result list */
+/* Composer Component */
 
-#facets {
-  float: right;
-  width: 400px;
-  padding: 20px;
+.composer-component .composer-menu {
+  background: #444;
+  height: 50px;
   overflow: auto;
+}
+
+.composer-component .composer-menu a {
+  display: block;
+  height: 50px;
+  line-height: 50px;
+  padding: 0px 10px;
+  float: left;
+  color: #ccc;
+}
+
+.composer-component .composer-menu a.active, .composer-component .composer-menu a:hover {
+  background: #000;
+  color: #fff;
 }
