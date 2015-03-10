@@ -3,6 +3,13 @@ var Component = Application.Component;
 var $$ = Application.$$;
 var _ = require("underscore");
 
+
+var SAMPLE_DOC = [
+  {type: "paragraph", content: "Paragraph 1"},
+  {type: "paragraph", content: "Paragraph 2"},
+  {type: "paragraph", content: "Paragraph 3"}
+];
+
 // The Dashboard Component
 // ----------------
 
@@ -23,6 +30,48 @@ Dashboard.Prototype.prototype = Component.prototype;
 Dashboard.prototype = new Dashboard.Prototype();
 
 
+// Paragraph
+// ----------------
+
+var Paragraph = function(props) {
+  Component.call(this, props);
+};
+
+Paragraph.Prototype = function() {
+
+  this.render = function() {
+    return $$("p", {html: this.props.node.content});
+  };
+};
+
+Paragraph.Prototype.prototype = Component.prototype;
+Paragraph.prototype = new Paragraph.Prototype();
+
+
+// The Content Panel
+// ----------------
+
+var ContentPanel = function(props) {
+  Component.call(this, props);
+};
+
+ContentPanel.Prototype = function() {
+
+  this.render = function() {
+    return $$("div", {className: "content-panel-component"},
+      $$("div", {className: "nodes"},
+        $$(Paragraph, {className: "paragraph", node: this.props.doc[0], ref: "p1"}),
+        $$(Paragraph, {className: "paragraph", node: this.props.doc[1], ref: "p2"}),
+        $$(Paragraph, {className: "paragraph", node: this.props.doc[2], ref: "p3"})
+      )
+    );
+  };
+};
+
+ContentPanel.Prototype.prototype = Component.prototype;
+ContentPanel.prototype = new ContentPanel.Prototype();
+
+
 // The Writer Component
 // ----------------
 
@@ -34,7 +83,7 @@ Writer.Prototype = function() {
 
   this.render = function() {
     return $$("div", {className: "writer-component"},
-      $$("div", {html: this.props.content})
+      $$(ContentPanel, {doc: this.props.doc, ref: "contentpanel"})
     );
   };
 };
@@ -65,8 +114,7 @@ Composer.Prototype = function() {
   };
 
   this.getInitialState = function() {
-
-    return {"id": "dashboard"};
+    return {"id": "writer"};
   };
 
   this.render = function() {
@@ -87,11 +135,11 @@ Composer.Prototype = function() {
     );
 
     // Context (Dashboard vs writer)
-    var contextEl
+    var contextEl;
     if (this.state.id === "dashboard") {
-      contextEl = $$(Dashboard, {/*ref: "dashboard"*/});
+      contextEl = $$(Dashboard, {ref: "dashboard"});
     } else {
-      contextEl = $$(Writer, {content: "Hello World", ref: "writer"});
+      contextEl = $$(Writer, {doc: SAMPLE_DOC, ref: "writer"});
     }
 
     return $$("div", {className: "composer-component"},
