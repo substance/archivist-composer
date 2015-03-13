@@ -3,26 +3,14 @@ var Component = Application.Component;
 var $$ = Application.$$;
 var _ = require("underscore");
 
+// Components
 var Writer = require("substance-writer");
-
 var Dashboard = require("./dashboard");
 
 // Writer Configuration
 // -------------------
 // 
-// Custom Panels, factories, etc.
-
-
-// Extensions
-// --------------
-//
-// - Entities Extension
-//    - entity panel,
-//    - add entity panel
-//    - tag entity tool
-//    - writer transitions
-
-// Subjects Extension
+// Register extensions
 
 var EntitiesExtension = require("./extensions/entities");
 var SubjectsExtension = require("./extensions/subjects");
@@ -33,15 +21,7 @@ var writerConfig = {
   extensions: [
     EntitiesExtension,
     SubjectsExtension
-  ],
-  // A factory method for creating a panel definition
-  createPanel: function(writer) {
-    if (writer.state.contextId === "entities") {
-      $$(SubjectsPanel, writer.panelData["subjects"]);
-    } else if (writer.state.contextId === "entities") {
-      $$(EntitiesPanel, writer.panelData["entities"]);
-    }
-  }
+  ]
 };
 
 var SAMPLE_DOC = [
