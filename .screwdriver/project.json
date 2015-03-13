@@ -6,6 +6,11 @@
       "branch": "refactor"
     },
     {
+      "repository": "https://github.com/substance/writer.git",
+      "folder": "node_modules/substance-writer",
+      "branch": "master"
+    },
+    {
       "repository": "https://github.com/substance/util.git",
       "folder": "node_modules/substance-util",
       "branch": "master"
