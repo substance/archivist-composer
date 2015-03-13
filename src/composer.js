@@ -24,15 +24,15 @@ var Dashboard = require("./dashboard");
 
 // Subjects Extension
 
-var EntitiesPanel = require("./entities_panel");
-var SubjectsPanel = require("./subjects_panel");
+var EntitiesExtension = require("./extensions/entities");
+var SubjectsExtension = require("./extensions/subjects");
 
 
 // Writer Configuration
 var writerConfig = {
-  panels: [
-    EntitiesPanel,
-    SubjectsPanel
+  extensions: [
+    EntitiesExtension,
+    SubjectsExtension
   ],
   // A factory method for creating a panel definition
   createPanel: function(writer) {
