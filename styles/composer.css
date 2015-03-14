@@ -252,3 +252,18 @@ a:hover {
 .content-editor-component .content-node.text {
   padding-bottom: 20px;
 }
+
+
+/* Annotations */
+.content-editor-component .annotation.strong {
+  font-weight: bold;
+}
+
+.content-editor-component .annotation.entity-reference {
+  background: rgba(145, 187, 4, 0.2);
+}
+
+.content-editor-component .annotation.entity-reference:hover {
+  background: rgba(145, 187, 4, 0.4);
+}
+

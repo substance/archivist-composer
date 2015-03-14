@@ -16,9 +16,6 @@ var SCHEMA = {
 
   // Static indexes
   // TODO: delete?
-  "indexes": {
-
-  },
 
   "types": {
 	  "document": {
@@ -46,10 +43,27 @@ var SCHEMA = {
 		  "id": "text",
 		  "parent": "content",
 		  "properties": {
-		    "source_id": "string",
 		    "content": "string"
 		  }
-		}
+		},
+
+    // Annotations
+
+    "annotation": {
+      "id": "annotation",
+      "properties": {
+        "path": ["array", "string"], // -> e.g. ["text_1", "content"]
+        "range": "array"
+      }
+    },
+
+    "entity_reference": {
+      "id": "entity_reference",
+      "parent": "annotation",
+      "properties": {
+        "target": "string"
+      }
+    }
   }
 };
 
