@@ -183,7 +183,34 @@ a:hover {
   background: #F8F8F8;
 }
 
+
+.writer-component .context-toggles {
+  height: 40px;
+  border-bottom: 1px solid #ddd;
+}
+
+.writer-component .context-toggles a.toggle-context {
+  display: block;
+  float: left;
+  height: 40px;
+  line-height: 40px;
+  padding: 0px 5px;
+  color: #444;
+  font-size: 13px;
+}
+
+.writer-component .context-toggles a.toggle-context:hover {
+  background: #eee;
+  border-bottom: 1px solid #bbb;
+}
+
+.writer-component .context-toggles a.toggle-context.active {
+  background: #eee;
+  border-bottom: 1px solid #444;
+}
+
 /* Content Panel Component */
+
 
 
 /* Content Tools Component */
@@ -211,4 +238,17 @@ a:hover {
 
 .content-tools-component .tools a:hover {
   background: #eee;
+}
+
+/* Content Editor Component */
+
+.content-editor-component {
+  padding: 20px;
+  line-height: 20px;
+}
+
+/* Text Node Component */
+
+.content-editor-component .content-node.text {
+  padding-bottom: 20px;
 }

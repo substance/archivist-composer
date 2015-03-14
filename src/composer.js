@@ -3,6 +3,9 @@ var Component = Application.Component;
 var $$ = Application.$$;
 var _ = require("underscore");
 
+// A custom doc model for the archivist
+var Interview = require("./interview");
+
 // Components
 var Writer = require("substance-writer");
 var Dashboard = require("./dashboard");
@@ -16,7 +19,6 @@ var SubjectsExtension = require("./extensions/subjects");
 var EntitiesExtension = require("./extensions/entities");
 
 
-
 // Writer Configuration
 var writerConfig = {
   extensions: [
@@ -25,11 +27,10 @@ var writerConfig = {
   ]
 };
 
-var SAMPLE_DOC = [
-  {type: "paragraph", content: "Paragraph 1"},
-  {type: "paragraph", content: "Paragraph 2"},
-  {type: "paragraph", content: "Paragraph 3"}
-];
+var EXAMPLE_DOC = require("../data/sample_doc");
+
+var doc = new Interview.fromSnapshot(EXAMPLE_DOC);
+console.log('le doc', doc);
 
 
 // The Composer Component
@@ -81,7 +82,7 @@ Composer.Prototype = function() {
     } else if (this.state.id === "writer") {
       contextEl = $$(Writer, {
         config: writerConfig,
-        doc: SAMPLE_DOC,
+        doc: doc,
         ref: "writer",
       });
     } else {

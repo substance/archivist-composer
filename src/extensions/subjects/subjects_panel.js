@@ -19,7 +19,10 @@ SubjectsPanel.Prototype = function() {
   };
 };
 
+SubjectsPanel.panelName = "Subjects";
 SubjectsPanel.contextId = "subjects";
+SubjectsPanel.icon = "fa-tag";
+
 
 SubjectsPanel.Prototype.prototype = Component.prototype;
 SubjectsPanel.prototype = new SubjectsPanel.Prototype();

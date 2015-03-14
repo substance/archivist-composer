@@ -7,7 +7,6 @@ var ejs = require('ejs');
 var path = require("path");
 var CJSServer = require('substance-cjs');
 
-
 var app = express();
 
 var port = process.env.PORT || 4001;
@@ -24,11 +23,11 @@ new CJSServer(app, __dirname, 'lens')
   // ATTENTION: the second argument is the script which is resembled by injecting a list
   // of script tags instead. It must be exactly the same string which is used in the script src.
   .scripts('./boot.js', 'substance_composer.js', {
-    ignores: [
-      'substance-commander',
-      'substance-chronicle',
-      'substance-operator'
-    ]
+    // ignores: [
+    //   'substance-commander',
+    //   'substance-chronicle',
+    //   'substance-operator'
+    // ]
   })
   // ... the same applies to the css file
   .styles(config.styles, 'composer.css')

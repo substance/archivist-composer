@@ -14,8 +14,7 @@ EntityView.Prototype = function() {
 
   this.render = function() {
     return $$("div", {className: "entity"},
-      $$("div", {className: "name", html: this.props.name}),
-      $$("div", {className: "meh", html: "meh"})
+      $$("div", {className: "name", html: this.props.name})
     );
   };
 };
@@ -34,6 +33,7 @@ var EntitiesPanel = function(props) {
 EntitiesPanel.Prototype = function() {
 
   this.render = function() {
+
     var entityNodes = this.props.map(function(entity, index) {
     	return $$(EntityView, entity)
     });
@@ -45,7 +45,9 @@ EntitiesPanel.Prototype = function() {
 };
 
 
+EntitiesPanel.panelName = "Entities";
 EntitiesPanel.contextId = "entities";
+EntitiesPanel.icon = "fa-bullseye";
 
 EntitiesPanel.Prototype.prototype = Component.prototype;
 EntitiesPanel.prototype = new EntitiesPanel.Prototype();

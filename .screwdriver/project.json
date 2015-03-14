@@ -3,7 +3,22 @@
     {
       "repository": "https://github.com/substance/application.git",
       "folder": "node_modules/substance-application",
-      "branch": "refactor"
+      "branch": "next"
+    },
+    {
+      "repository": "https://github.com/substance/data.git",
+      "folder": "node_modules/substance-data",
+      "branch": "master"
+    },
+    {
+      "repository": "https://github.com/substance/operator.git",
+      "folder": "node_modules/substance-operator",
+      "branch": "master"
+    },
+    {
+      "repository": "https://github.com/substance/document.git",
+      "folder": "node_modules/substance-document",
+      "branch": "next"
     },
     {
       "repository": "https://github.com/substance/writer.git",
@@ -42,11 +57,6 @@
     "name": "composer",
     "folder": "./dist",
     "source": "./boot.js",
-    "index": "./index.html",
-    "ignores": [
-      "substance-operator",
-      "substance-chronicle",
-      "substance-commander"
-    ]
+    "index": "./index.html"
   }
 }
