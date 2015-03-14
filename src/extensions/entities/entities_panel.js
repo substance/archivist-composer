@@ -8,7 +8,6 @@ var _ = require("underscore");
 
 var EntityView = function(props) {
   Component.call(this, props);
-  console.log('props', props);
 };
 
 EntityView.Prototype = function() {
@@ -35,7 +34,6 @@ var EntitiesPanel = function(props) {
 EntitiesPanel.Prototype = function() {
 
   this.render = function() {
-
     var entityNodes = this.props.map(function(entity, index) {
     	return $$(EntityView, entity)
     });

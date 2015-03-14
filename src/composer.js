@@ -12,15 +12,16 @@ var Dashboard = require("./dashboard");
 // 
 // Register extensions
 
-var EntitiesExtension = require("./extensions/entities");
 var SubjectsExtension = require("./extensions/subjects");
+var EntitiesExtension = require("./extensions/entities");
+
 
 
 // Writer Configuration
 var writerConfig = {
   extensions: [
-    EntitiesExtension,
-    SubjectsExtension
+    SubjectsExtension,
+    EntitiesExtension
   ]
 };
 
