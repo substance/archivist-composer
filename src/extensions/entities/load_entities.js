@@ -1,9 +1,11 @@
 var ENTITIES = [
   {
+    "id": "linz",
     "type": "location",
     "name": "Linz"
   },
   {
+    "id": "moscow",
     "type": "location",
     "name": "Moscow"
   }
@@ -12,7 +14,11 @@ var ENTITIES = [
 // By contract data is stored in writer.panelData["entities"]
 // This can also be used for caching results
 var loadEntities = function(writer, cb) {
-	writer.panelData["entities"] = ENTITIES;
+	writer.panelData["entities"] = {
+    entities: ENTITIES,
+    writer: writer,
+    doc: writer.props.doc
+  };
   cb(null);
 };
 

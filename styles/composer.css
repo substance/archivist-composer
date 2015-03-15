@@ -173,6 +173,7 @@ a:hover {
   width: 60%;
   height: 100%;
   background: #fff;
+  position: relative;
 }
 
 .resource-container {
@@ -243,7 +244,13 @@ a:hover {
 /* Content Editor Component */
 
 .content-editor-component {
-  margin: 20px;
+  position: absolute;
+  top: 40px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  padding: 20px;
+  overflow: auto;
   line-height: 20px;
 }
 
@@ -252,7 +259,6 @@ a:hover {
 .content-editor-component .content-node.text {
   padding-bottom: 20px;
 }
-
 
 /* Annotations */
 .content-editor-component .annotation.strong {

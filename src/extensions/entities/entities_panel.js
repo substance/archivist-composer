@@ -34,7 +34,7 @@ EntitiesPanel.Prototype = function() {
 
   this.render = function() {
 
-    var entityNodes = this.props.map(function(entity, index) {
+    var entityNodes = this.props.entities.map(function(entity, index) {
     	return $$(EntityView, entity)
     });
 

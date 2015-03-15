@@ -10,7 +10,12 @@ var SUBJECTS = [
 // By contract data is stored in writer.panelData["entities"]
 // This can also be used for caching results
 var loadSubjects = function(writer, cb) {
-	writer.panelData["subjects"] = SUBJECTS;
+  writer.panelData["subjects"] = {
+    subjects: SUBJECTS,
+    writer: writer,
+    doc: writer.props.doc
+  };
+
   cb(null);
 };
 
