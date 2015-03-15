@@ -13,7 +13,7 @@ var SubjectsPanel = function(props) {
 SubjectsPanel.Prototype = function() {
 
   this.render = function() {
-    return $$("div", {className: "entities-panel-component"},
+    return $$("div", {className: "subjects-panel-component"},
       $$("div", {html: "I AM THE SUBJECTS PANEL"})
     );
   };

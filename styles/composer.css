@@ -254,6 +254,23 @@ a:hover {
   line-height: 20px;
 }
 
+/* Entity component */
+.entities-panel-component {
+  
+}
+
+.entities-panel-component .entity {
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  border-left: 2px solid transparent;
+}
+
+.entities-panel-component .entity.active {
+  border-left: 2px solid rgba(145, 187, 4, 1);  
+}
+
+
+
 /* Text Node Component */
 
 .content-editor-component .content-node.text {

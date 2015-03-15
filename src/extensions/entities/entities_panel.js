@@ -13,7 +13,10 @@ var EntityView = function(props) {
 EntityView.Prototype = function() {
 
   this.render = function() {
-    return $$("div", {className: "entity"},
+    var className = ["entity"];
+    if (this.props.active) className.push("active");
+
+    return $$("div", {className: className.join(" ")},
       $$("div", {className: "name", html: this.props.name})
     );
   };
@@ -33,7 +36,6 @@ var EntitiesPanel = function(props) {
 EntitiesPanel.Prototype = function() {
 
   this.render = function() {
-
     var entityNodes = this.props.entities.map(function(entity, index) {
     	return $$(EntityView, entity)
     });
