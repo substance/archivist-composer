@@ -243,7 +243,7 @@ a:hover {
 /* Content Editor Component */
 
 .content-editor-component {
-  padding: 20px;
+  margin: 20px;
   line-height: 20px;
 }
 
