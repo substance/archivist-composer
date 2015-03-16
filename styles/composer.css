@@ -270,9 +270,6 @@ a:hover {
 }
 
 
-
-
-
 /* Entities component 
 -----------------------------------------------------*/
 
@@ -294,7 +291,6 @@ a:hover {
 .entity.active {
   border-left: 2px solid rgba(11, 157, 217, 1);
 }
-
 
 .entity .description {
   font-size: 12px;
@@ -335,6 +331,40 @@ a:hover {
   color: #A99C90;
 }
 
+/* Tag Entity component 
+-----------------------------------------------------*/
+
+.entities .no-results {
+  padding: 20px;
+  color: #777;
+  font-style: italic;
+}
+
+/*.tag-entity-panel-component {
+  top: 0px;
+  background: #F8F8F8;
+}*/
+
+.search {
+  height: 40px;
+  border-bottom: 1px solid #ddd;
+}
+
+.search .search-str {
+  padding-left: 5px;
+  width: 180px;
+  font-size: 13px;
+  position: absolute;
+  top: 7px;
+  left: 20px;
+  height: 26px;
+}
+
+.search select {
+  position: absolute;
+  top: 9px;
+  right: 20px;
+}
 
 /* Node Components
 -----------------------------------------------------*/
@@ -362,7 +392,6 @@ a:hover {
   background: rgba(11, 157, 217, 0.4);
 }
 
-
 /* Subject Reference */
 .content-editor-component .annotation.subject-reference {
   background: rgba(145, 187, 4, 0.2);
@@ -371,4 +400,3 @@ a:hover {
 .content-editor-component .annotation.subject-reference:hover {
   background: rgba(145, 187, 4, 0.4);
 }
-
