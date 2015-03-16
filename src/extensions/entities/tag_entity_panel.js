@@ -3,7 +3,32 @@ var Component = Application.Component;
 var $$ = Application.$$;
 var _ = require("underscore");
 
-// Tag Entity Panel
+// Entity types
+
+// Example of a sub view
+// ----------------
+
+var EntityView = function(props) {
+  Component.call(this, props);
+};
+
+EntityView.Prototype = function() {
+
+  this.render = function() {
+    var className = ["entity"];
+    if (this.props.active) className.push("active");
+
+    return $$("div", {className: className.join(" ")},
+      $$("div", {className: "name", html: this.props.name})
+    );
+  };
+};
+
+EntityView.Prototype.prototype = Component.prototype;
+EntityView.prototype = new EntityView.Prototype();
+
+
+// Entities Panel extension
 // ----------------
 
 var TagEntityPanel = function(props) {
@@ -12,9 +37,26 @@ var TagEntityPanel = function(props) {
 
 TagEntityPanel.Prototype = function() {
 
+  // this.getEntityElement = function(entity) {
+  //   if (entity.type === "prison") {
+  //     console.log(Prison);
+  //     return $$(Prison, entity); 
+  //   }
+  //   console.error('No view component for ', entity.type);
+  // };
+
   this.render = function() {
-    return $$("div", {className: "tag-entity-panel-component"},
-      $$('div', {html: "TODO: IMPLEMENT TAG ENTITY PANEL"})
+    var entityNodes = this.props.entities.map(function(entity, index) {
+      return $$(EntityView, entity);
+    });
+
+    return $$("div", {className: "panel tag-entity-panel-component"},
+      $$('div', {className: "search", html: "search"},
+        $$('input', {type: "text"})
+      ),
+      $$('div', {className: "entities"},
+        entityNodes
+      )
     );
   };
 };

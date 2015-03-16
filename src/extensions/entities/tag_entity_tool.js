@@ -16,7 +16,6 @@ TagEntityTool.Prototype = function() {
   // ----------------
 
   this.componentDidMount = function() {
-  	console.log("TagEntityTool mounted", this.el);
     $(this.el).on('click', _.bind(this._toggleEntityReference, this));
   };
 

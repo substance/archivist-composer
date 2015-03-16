@@ -3,9 +3,9 @@
 var EntitiesPanel = require("./entities_panel");
 var TagEntityPanel = require("./tag_entity_panel");
 var TagEntityTool = require("./tag_entity_tool");
-var loadEntities = require("./load_entities");
+var entitiesTransition = require("./entities_transition");
+var tagEntityTransition = require("./tag_entity_transition");
 var referenceHandler = require("./reference_handler");
-
 
 module.exports = {
   name: "entities",
@@ -15,7 +15,8 @@ module.exports = {
   ],
   referenceHandler: referenceHandler,
   transitions: [
-    loadEntities
+    entitiesTransition,
+    tagEntityTransition
   ],
   tools: [
   	TagEntityTool

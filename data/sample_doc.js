@@ -39,7 +39,7 @@ var sampleDoc = {
         "text_54",
         "content"
       ],
-      "target": "linz", // this is an external object
+      "target": "54ef1331afda2d3c024e4817", // this is an external object
       "range": [
         85,
         95

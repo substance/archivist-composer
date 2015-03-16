@@ -135,7 +135,9 @@ a:hover {
 }
 
 
-/* Composer Component */
+
+/* Composer Component
+-----------------------------------------------------*/
 
 .composer-component .composer-menu {
   background: #444;
@@ -157,7 +159,9 @@ a:hover {
   color: #fff;
 }
 
-/* Writer Component */
+
+/* Writer Component
+-----------------------------------------------------*/
 
 .writer-component {
   position: absolute;
@@ -177,6 +181,7 @@ a:hover {
 }
 
 .resource-container {
+  position: relative;
   float: right;
   border-left: 1px solid #ddd;
   width: 40%;
@@ -210,11 +215,20 @@ a:hover {
   border-bottom: 1px solid #444;
 }
 
-/* Content Panel Component */
+/* Panels (Context panel)
+-----------------------------------------------------*/
 
+.panel {
+  position: absolute;
+  top: 40px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  overflow: auto;
+}
 
-
-/* Content Tools Component */
+/* Content Tools
+-----------------------------------------------------*/
 
 .content-tools-component {
   height: 40px;
@@ -241,7 +255,8 @@ a:hover {
   background: #eee;
 }
 
-/* Content Editor Component */
+/* Content Editor
+-----------------------------------------------------*/
 
 .content-editor-component {
   position: absolute;
@@ -254,22 +269,75 @@ a:hover {
   line-height: 20px;
 }
 
-/* Entity component */
-.entities-panel-component {
-  
-}
 
-.entities-panel-component .entity {
+
+
+
+/* Entities component 
+-----------------------------------------------------*/
+
+.entity {
+  position: relative;
   padding: 20px;
   border-bottom: 1px solid #ddd;
   border-left: 2px solid transparent;
 }
 
-.entities-panel-component .entity.active {
-  border-left: 2px solid rgba(145, 187, 4, 1);  
+.entity .type {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  color: #888;
+  font-size: 12px;
+}
+
+.entity.active {
+  border-left: 2px solid rgba(11, 157, 217, 1);
 }
 
 
+.entity .description {
+  font-size: 12px;
+  padding-top: 10px;
+}
+
+.entity .synonyms {
+  font-size: 12px;
+  padding-top: 10px;
+}
+
+.entity .country {
+  font-size: 12px;
+  padding-top: 10px;
+}
+
+/* Prison Entity */
+
+.entity.prison .type {
+  color: rgba(11, 157, 217, 1);
+}
+
+/* Toponym Entity */
+
+.entity.toponym .type {
+  color: #56AB98;
+}
+
+/* Person Entity */
+
+.entity.person .type {
+  color: #D2808A;
+}
+
+/* Definition Entity */
+
+.entity.definition .type {
+  color: #A99C90;
+}
+
+
+/* Node Components
+-----------------------------------------------------*/
 
 /* Text Node Component */
 
@@ -277,16 +345,30 @@ a:hover {
   padding-bottom: 20px;
 }
 
-/* Annotations */
+/* Annotations
+-----------------------------------------------------*/
+
 .content-editor-component .annotation.strong {
   font-weight: bold;
 }
 
+/* Entity Reference */
+
 .content-editor-component .annotation.entity-reference {
-  background: rgba(145, 187, 4, 0.2);
+  background: rgba(11, 157, 217, 0.2);
 }
 
 .content-editor-component .annotation.entity-reference:hover {
+  background: rgba(11, 157, 217, 0.4);
+}
+
+
+/* Subject Reference */
+.content-editor-component .annotation.subject-reference {
+  background: rgba(145, 187, 4, 0.2);
+}
+
+.content-editor-component .annotation.subject-reference:hover {
   background: rgba(145, 187, 4, 0.4);
 }
 

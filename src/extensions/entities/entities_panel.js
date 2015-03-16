@@ -3,28 +3,11 @@ var Component = Application.Component;
 var $$ = Application.$$;
 var _ = require("underscore");
 
-// Example of a sub view
-// ----------------
-
-var EntityView = function(props) {
-  Component.call(this, props);
-};
-
-EntityView.Prototype = function() {
-
-  this.render = function() {
-    var className = ["entity"];
-    if (this.props.active) className.push("active");
-
-    return $$("div", {className: className.join(" ")},
-      $$("div", {className: "name", html: this.props.name})
-    );
-  };
-};
-
-EntityView.Prototype.prototype = Component.prototype;
-EntityView.prototype = new EntityView.Prototype();
-
+// Entity types
+var Prison = require("./entity_types/prison");
+var Toponym = require("./entity_types/toponym");
+var Person = require("./entity_types/person");
+var Definition = require("./entity_types/definition");
 
 // Entities Panel extension
 // ----------------
@@ -35,13 +18,29 @@ var EntitiesPanel = function(props) {
 
 EntitiesPanel.Prototype = function() {
 
+  this.getEntityElement = function(entity) {
+    if (entity.type === "prison") {
+      return $$(Prison, entity); 
+    } else if (entity.type === "toponym") {
+      return $$(Toponym, entity); 
+    } else if (entity.type === "person") {
+      return $$(Person, entity); 
+    } else if (entity.type === "definition") {
+      return $$(Definition, entity); 
+    }
+    throw new Error('No view component for '+ entity.type);
+  };
+
   this.render = function() {
+    var getElem = this.getEntityElement.bind(this);
     var entityNodes = this.props.entities.map(function(entity, index) {
-    	return $$(EntityView, entity)
+      return getElem(entity);
     });
 
-    return $$("div", {className: "entities-panel-component"},
-      entityNodes
+    return $$("div", {className: "panel entities-panel-component"},
+      $$('div', {className: 'entities'},
+        entityNodes
+      )
     );
   };
 };

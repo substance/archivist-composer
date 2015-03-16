@@ -19,7 +19,7 @@ var loadSubjects = function(writer, cb) {
   cb(null);
 };
 
-var loadEntitiesTransition = function(writer, oldState, newState, cb) {
+var subjectsTransition = function(writer, oldState, newState, cb) {
   if (oldState.contextId !== newState.contextId && newState.contextId === "subjects") {
     loadSubjects(writer, cb);
     return true;
@@ -27,4 +27,4 @@ var loadEntitiesTransition = function(writer, oldState, newState, cb) {
   return false;
 };
 
-module.exports = loadEntitiesTransition;
+module.exports = subjectsTransition;

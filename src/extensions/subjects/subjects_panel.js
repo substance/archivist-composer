@@ -8,6 +8,7 @@ var _ = require("underscore");
 
 var SubjectsPanel = function(props) {
   Component.call(this, props);
+  
 };
 
 SubjectsPanel.Prototype = function() {
