@@ -118,8 +118,14 @@ TagEntityPanel.panelName = "Tag Entities";
 TagEntityPanel.contextId = "tagentity";
 TagEntityPanel.icon = "fa-bullseye";
 
-// No toggle shown
+// No toggle is shown
 TagEntityPanel.isDialog = true;
+
+// Factory method for creation of a new subject panel using properties derived from writer
+// state
+TagEntityPanel.create = function(writer) {
+  return $$(TagEntityPanel, writer.panelData["tagentity"]);
+};
 
 TagEntityPanel.Prototype.prototype = Component.prototype;
 TagEntityPanel.prototype = new TagEntityPanel.Prototype();

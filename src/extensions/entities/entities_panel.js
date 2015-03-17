@@ -51,6 +51,13 @@ EntitiesPanel.panelName = "Entities";
 EntitiesPanel.contextId = "entities";
 EntitiesPanel.icon = "fa-bullseye";
 
+// Factory method for creation of a new subject panel using properties derived from writer
+// state
+EntitiesPanel.create = function(writer) {
+  return $$(EntitiesPanel, writer.panelData["entities"]);
+};
+
+
 EntitiesPanel.Prototype.prototype = Component.prototype;
 EntitiesPanel.prototype = new EntitiesPanel.Prototype();
 

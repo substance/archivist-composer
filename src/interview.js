@@ -59,6 +59,14 @@ var SCHEMA = {
       "properties": {
         "target": "string"
       }
+    },
+
+    "subject_reference": {
+      "id": "subject_reference",
+      "parent": "annotation",
+      "properties": {
+        "target": "string"
+      }
     }
   }
 };

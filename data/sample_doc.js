@@ -45,10 +45,39 @@ var sampleDoc = {
         95
       ]
     },
+
+    "subject_reference_1": {
+      "id": "subject_reference_1",
+      "type": "subject_reference",
+      "path": [
+        "text_54",
+        "content"
+      ],
+      "target": "54bae4cda868bc6fab4bcd0e", // this is an external object
+      "range": [
+        85,
+        95
+      ]
+    },
+
+    "subject_reference_2": {
+      "id": "subject_reference_2",
+      "type": "subject_reference",
+      "path": [
+        "text_54",
+        "content"
+      ],
+      "target": "54bae4d0a868bc6fab4bcd16", // this is an external object
+      "range": [
+        85,
+        95
+      ]
+    },
+
     "text_2": {
       "type": "text",
       "id": "text_2",
-      "content": 'Proin in luctus sapien, <span data-id="entity_reference_1" class="annotation entity-reference">ultrices commodo augue</span>. Phasellus ultrices commodo augue, in blandit nibh luctus ac. Aliquam euismod nibh vitae erat pulvinar, at semper libero tincidunt. Nulla finibus est ac consequat consequat. Sed at condimentum purus. Aliquam vulputate ipsum ut justo posuere, quis varius risus finibus. Ut scelerisque laoreet vehicula. Nullam gravida fringilla justo, nec efficitur nunc sagittis et. Suspendisse nibh ligula, imperdiet id interdum et, sollicitudin non mauris. Suspendisse potenti. Suspendisse luctus iaculis nulla sed efficitur. Nullam sed viverra metus. Etiam dictum blandit enim tincidunt maximus. Nullam tempus nibh at varius interdum.'
+      "content": 'Proin in luctus sapien, <span data-id="entity_reference_1" class="annotation entity-reference">ultrices commodo augue</span>. Phasellus ultrices commodo augue, in blandit nibh <span data-id="subject_reference_1" class="annotation subject-reference">euismod nibh vitae erat</span> luctus ac. Aliquam euismod nibh vitae erat pulvinar, at semper libero tincidunt. Nulla finibus est ac consequat consequat. Sed at condimentum purus. Aliquam vulputate ipsum ut justo posuere, quis varius risus finibus. Ut scelerisque laoreet vehicula. Nullam gravida fringilla justo, nec efficitur nunc sagittis et. Suspendisse nibh ligula, imperdiet id interdum et, sollicitudin non mauris. Suspendisse potenti. Suspendisse luctus iaculis nulla sed efficitur. Nullam sed <span data-id="subject_reference_2" class="annotation subject-reference">viverra metus</span>. Etiam dictum blandit enim tincidunt maximus. Nullam tempus nibh at varius interdum.'
     }
   }
 };
