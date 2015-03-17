@@ -394,25 +394,25 @@ a:hover {
 /* Annotations
 -----------------------------------------------------*/
 
-.content-editor-component .annotation.strong {
+.annotation.strong {
   font-weight: bold;
 }
 
 /* Entity Reference */
 
-.content-editor-component .annotation.entity-reference {
+.annotation.entity-reference {
   background: rgba(11, 157, 217, 0.2);
 }
 
-.content-editor-component .annotation.entity-reference:hover {
+.annotation.entity-reference:hover {
   background: rgba(11, 157, 217, 0.4);
 }
 
 /* Subject Reference */
-.content-editor-component .annotation.subject-reference {
+.annotation.subject-reference {
   background: rgba(145, 187, 4, 0.2);
 }
 
-.content-editor-component .annotation.subject-reference:hover {
+.annotation.subject-reference:hover {
   background: rgba(145, 187, 4, 0.4);
 }
