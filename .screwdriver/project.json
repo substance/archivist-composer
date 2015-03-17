@@ -1,6 +1,11 @@
 {
   "modules": [
     {
+      "repository": "https://github.com/oliver----/substance.git",
+      "folder": "node_modules/substance",
+      "branch": "master"
+    },
+    {
       "repository": "https://github.com/substance/application.git",
       "folder": "node_modules/substance-application",
       "branch": "next"
@@ -8,12 +13,12 @@
     {
       "repository": "https://github.com/substance/data.git",
       "folder": "node_modules/substance-data",
-      "branch": "master"
+      "branch": "next"
     },
     {
       "repository": "https://github.com/substance/operator.git",
       "folder": "node_modules/substance-operator",
-      "branch": "master"
+      "branch": "next"
     },
     {
       "repository": "https://github.com/substance/document.git",
@@ -33,7 +38,7 @@
     {
       "repository": "https://github.com/substance/cjs.git",
       "folder": "node_modules/substance-cjs",
-      "branch": "master"
+      "branch": "next"
     }
   ],
   "node_modules": {

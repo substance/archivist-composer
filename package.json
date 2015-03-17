@@ -4,10 +4,7 @@
   "dependencies": {
     "underscore": "*",
     "express": "3.3.x",
-    "ejs": "*",
-    "substance-application": "git+https://github.com/substance/application.git#refactor",
-    "substance-data": "git+https://github.com/substance/data.git#lens",
-    "substance-util": "git+https://github.com/substance/util.git#master"
+    "ejs": "*"
   },
   "devDependencies": {
     "substance-cjs": "git+https://github.com/substance/cjs.git#master"
