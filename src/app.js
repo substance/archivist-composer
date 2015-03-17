@@ -6,7 +6,6 @@ var _ = require("underscore");
 // The main composer
 var Composer = require("./composer");
 
-
 // The Composer Application
 // -------------------
 // 

@@ -18,6 +18,7 @@ var EntitiesPanel = function(props) {
 
 EntitiesPanel.Prototype = function() {
 
+
   this.getEntityElement = function(entity) {
     if (entity.type === "prison") {
       return $$(Prison, entity); 

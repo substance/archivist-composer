@@ -5,7 +5,6 @@ var util = require("substance-util");
 var Document = require("substance-document");
 // var Annotator = Document.Annotator;
 
-
 // Interview Schema
 // ---------------
 
@@ -13,9 +12,6 @@ var SCHEMA = {
 	// Schema info
 	"id": "substance-interview",
 	"version": "0.1.0",
-
-  // Static indexes
-  // TODO: delete?
 
   "types": {
 	  "document": {
