@@ -58,13 +58,13 @@ TagEntityPanel.Prototype = function() {
   this.getInitialState = function() {
     return {
       searchString: ""
+      entities: []
     };
   };
 
   this._search = function(e) {
     var searchString = $(e.currentTarget).val();
     e.preventDefault();
-    console.log('searching...', searchString);
     this.setState({
       searchString: searchString
     });
@@ -114,6 +114,7 @@ TagEntityPanel.Prototype = function() {
   };
 };
 
+
 TagEntityPanel.panelName = "Tag Entities";
 TagEntityPanel.contextId = "tagentity";
 TagEntityPanel.icon = "fa-bullseye";
@@ -121,11 +122,13 @@ TagEntityPanel.icon = "fa-bullseye";
 // No toggle is shown
 TagEntityPanel.isDialog = true;
 
+TagEntityPanel.persistent = true;
+
 // Factory method for creation of a new subject panel using properties derived from writer
 // state
 TagEntityPanel.create = function(writer) {
   var data = writer.panelData["tagentity"];
-  data.id = "tagentitypanel";
+  data.id = "tag-entity-panel";
   return $$(TagEntityPanel, data);
 };
 

@@ -20,11 +20,15 @@ var SubjectsPanel = function(props) {
 };
 
 SubjectsPanel.Prototype = function() {
+	// Component mounted
+	this.componentDidMount = function() {
+		console.log('subjects panel mounted');
+	};
 
 	// Returns true when properties have changed and re-render is needed
-	this.checkDirty = function(oldProps, props) {
-		if (oldProps.subjectId !== props.subjectId) return true;
-		if (oldProps.documentId !== props.documentId) return true;
+	this.shouldComponentUpdate = function(nextProps, nextState) {
+		if (this.props.subjectId !== nextProps.subjectId) return true;
+		if (this.props.documentId !== nextProps.documentId) return true;
 		return false;
 	};
 
