@@ -52,6 +52,18 @@ Composer.Prototype = function() {
     });
   };
 
+
+  // Routing
+  // ----------------
+
+  this.stateToRoute = function() {
+    return this.state;
+  };
+
+  this.stateFromRoute = function(compRoute) {
+    return this.compRoute;
+  };
+
   this.getInitialState = function() {
     return {"id": "writer"};
   };
