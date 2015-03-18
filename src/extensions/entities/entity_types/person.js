@@ -19,7 +19,6 @@ Person.Prototype = function() {
     return $$("div", {className: className.join(" ")},
     	$$("div", {className: "type", html: "Person"}),
       $$("div", {className: "name", html: this.props.name}),
-      $$("div", {className: "synonyms", html: "Also known as: "+ this.props.synonyms}),
       $$("div", {className: "country", html: "Country: "+this.props.country})
     );
   };
