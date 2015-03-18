@@ -24,7 +24,6 @@ TagEntityTool.Prototype = function() {
 
   	// TODO: check if already toggled, using writer/doc/editor API
   	//       if that's the case, delete reference
-
   	this.props.switchContext("tagentity");
   };
 
@@ -32,8 +31,8 @@ TagEntityTool.Prototype = function() {
   // TODO: implement new selection api and use this method
   this.isActive = function() {
   	// query current selection
-  	var refs = this.props.editor.selection.getAnnotations('entity_reference');
-  	return refs.length > 0;
+  	// var refs = this.props.editor.selection.getAnnotations('entity_reference');
+  	// return refs.length > 0;
   };
 
   // Rendering

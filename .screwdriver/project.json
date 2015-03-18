@@ -3,7 +3,7 @@
     {
       "repository": "https://github.com/substance/application.git",
       "folder": "node_modules/substance-application",
-      "branch": "next"
+      "branch": "experimental"
     },
     {
       "repository": "https://github.com/substance/data.git",
@@ -23,7 +23,7 @@
     {
       "repository": "https://github.com/substance/writer.git",
       "folder": "node_modules/substance-writer",
-      "branch": "master"
+      "branch": "experimental"
     },
     {
       "repository": "https://github.com/substance/util.git",

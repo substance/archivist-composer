@@ -18,7 +18,6 @@ var EntitiesPanel = function(props) {
 
 EntitiesPanel.Prototype = function() {
 
-
   this.getEntityElement = function(entity) {
     if (entity.type === "prison") {
       return $$(Prison, entity); 
@@ -46,15 +45,17 @@ EntitiesPanel.Prototype = function() {
   };
 };
 
-
 EntitiesPanel.panelName = "Entities";
 EntitiesPanel.contextId = "entities";
 EntitiesPanel.icon = "fa-bullseye";
 
+
 // Factory method for creation of a new subject panel using properties derived from writer
 // state
 EntitiesPanel.create = function(writer) {
-  return $$(EntitiesPanel, writer.panelData["entities"]);
+  var props = writer.panelData["entities"];
+  props["id"] = "entitiespanel";
+  return $$(EntitiesPanel, props);
 };
 
 

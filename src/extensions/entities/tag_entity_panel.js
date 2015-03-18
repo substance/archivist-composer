@@ -124,7 +124,9 @@ TagEntityPanel.isDialog = true;
 // Factory method for creation of a new subject panel using properties derived from writer
 // state
 TagEntityPanel.create = function(writer) {
-  return $$(TagEntityPanel, writer.panelData["tagentity"]);
+  var data = writer.panelData["tagentity"];
+  data.id = "tagentitypanel";
+  return $$(TagEntityPanel, data);
 };
 
 TagEntityPanel.Prototype.prototype = Component.prototype;

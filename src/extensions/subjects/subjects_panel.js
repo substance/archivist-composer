@@ -15,43 +15,35 @@ var SUBJECTS = [
 
 var SubjectsPanel = function(props) {
   Component.call(this, props);
+  this.subjects = [];
+	this.loadSubjects();
 };
 
 SubjectsPanel.Prototype = function() {
 
-	this.markActiveSubject = function() {
-		_.each(this.subjects, function(subject) {
-			subject.active = subject.id === this.props.subjectId;
-		}, this);
+	// Returns true when properties have changed and re-render is needed
+	this.checkDirty = function(oldProps, props) {
+		if (oldProps.subjectId !== props.subjectId) return true;
+		if (oldProps.documentId !== props.documentId) return true;
+		return false;
 	};
 
-	this.loadSubjects = function(cb) {
+	// Load subjects associated to the document and update computedProps
+	this.loadSubjects = function() {
 		var that = this;
-		console.log(this.props.subjectId);
 
-		if (this.subjects) {
-			// We don't run into this case here because components (like this panel) are not recycled, thus data needs to get loaded
-			// again.
-			that.markActiveSubject();
-		} else {
-			_.delay(function() {
-				that.subjects = JSON.parse(JSON.stringify(SUBJECTS));
-				that.markActiveSubject();
-				cb(null);
-			}, 1);			
-		}
+		_.delay(function() {
+			that.subjects = JSON.parse(JSON.stringify(SUBJECTS));
+			that.rerender(); // explicit refresh!
+		}, 700);
 	};
-
-  this.transition = function(oldState, newState, cb) {
-  	this.loadSubjects(cb);
-  };
-
-  // this.renderUninitialized = function() {
-  // 	return $$("div", {html: "Loading subjects ..."});
-  // };
 
   this.render = function() {
+  	console.log('SubjectsPanel.render');
+  	var props = this.props;
+
     var subjectNodes = this.subjects.map(function(subject, index) {
+    	subject.active = subject.id === props.subjectId;
       return $$(Subject, subject);
     });
 
@@ -61,6 +53,10 @@ SubjectsPanel.Prototype = function() {
   };
 };
 
+// Component Configuration
+// -----------------
+
+SubjectsPanel.persistent = true;
 
 // Panel Configuration
 // -----------------
@@ -69,10 +65,12 @@ SubjectsPanel.panelName = "Subjects";
 SubjectsPanel.contextId = "subjects";
 SubjectsPanel.icon = "fa-tag";
 
+
 // Factory method for creation of a new subject panel using properties derived from writer
 // state
 SubjectsPanel.create = function(writer) {
 	return $$(SubjectsPanel, {
+		id: "subjectspanel",
 		documentId: writer.props.doc.get('document').guid,
 		subjectId: writer.state.subjectId
 	});

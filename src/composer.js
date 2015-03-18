@@ -30,8 +30,6 @@ var writerConfig = {
 var EXAMPLE_DOC = require("../data/sample_doc");
 
 var doc = new Interview.fromSnapshot(EXAMPLE_DOC);
-console.log('le doc', doc);
-
 
 // The Composer Component
 // ----------------
@@ -83,7 +81,7 @@ Composer.Prototype = function() {
       contextEl = $$(Writer, {
         config: writerConfig,
         doc: doc,
-        ref: "writer",
+        id: "writer", //reusable singleton!
       });
     } else {
       contextEl = $$('div', {text: "loading doc"});
@@ -97,7 +95,6 @@ Composer.Prototype = function() {
     );
   };
 };
-
 
 Composer.Prototype.prototype = Component.prototype;
 Composer.prototype = new Composer.Prototype();
