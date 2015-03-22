@@ -224,8 +224,18 @@ a:hover {
   bottom: 0px;
   left: 0px;
   right: 0px;
-  overflow: auto;
 }
+
+.panel .panel-content {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  overflow: auto;
+  line-height: 20px;
+}
+
 
 /* Content Tools
 -----------------------------------------------------*/
@@ -255,20 +265,63 @@ a:hover {
   background: #eee;
 }
 
+/* Generic Panel styles
+-----------------------------------------------------*/
+
+.content-panel-component .container-node.content {
+  
+}
+
+.content-panel-component .container-node.content .nodes {
+  padding: 20px;
+  position: relative;
+}
+
+
 /* Content Editor
 -----------------------------------------------------*/
 
-.content-editor-component {
+.content-panel-component {
   position: absolute;
   top: 40px;
   bottom: 0px;
   left: 0px;
   right: 0px;
   padding: 20px;
-  overflow: auto;
-  line-height: 20px;
+}
+  
+/* Overrides .panel .panel-content */
+.content-panel-component .panel-content {
+  left: 20px;
 }
 
+/* Scrollbar component
+-----------------------------------------------------*/
+
+.scrollbar-component {
+  position: absolute;
+  left: 0px;
+  width: 20px;
+  top: 0px;
+  bottom: 0px;
+  background: #eee;;
+}
+
+.scrollbar-component .thumb {
+  position: absolute;
+  top: 40px;
+  left: 0px;
+  right: 0px;
+  height: 80px;
+  z-index: 4000;
+  background-color: rgba(0,0,0, 0.2);
+}
+
+.scrollbar-component .highlight {
+  position: absolute;
+  width: 100%;
+  background-color: rgba(145, 187, 4, 1);
+}
 
 /* Entities component 
 -----------------------------------------------------*/
@@ -339,11 +392,6 @@ a:hover {
   color: #777;
   font-style: italic;
 }
-
-/*.tag-entity-panel-component {
-  top: 0px;
-  background: #F8F8F8;
-}*/
 
 .search {
   height: 40px;
