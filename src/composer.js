@@ -40,8 +40,12 @@ var Composer = function(props) {
 
 Composer.Prototype = function() {
 
+  this.events = {
+    'click .composer-menu a': '_toggleMenu'
+  };
+
   this.componentDidMount = function() {
-    $(this.el).on('click', '.composer-menu a', _.bind(this._toggleMenu, this));
+    // $(this.el).on('click', '.composer-menu a', _.bind(this._toggleMenu, this));
   };
 
   this._toggleMenu = function(e) {

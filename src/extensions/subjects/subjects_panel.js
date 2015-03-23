@@ -22,7 +22,7 @@ var SubjectsPanel = function(props) {
 SubjectsPanel.Prototype = function() {
 	// Component mounted
 	this.componentDidMount = function() {
-		console.log('subjects panel mounted');
+		// console.log('subjects panel mounted');
 	};
 
 	// Returns true when properties have changed and re-render is needed
@@ -43,7 +43,7 @@ SubjectsPanel.Prototype = function() {
 	};
 
   this.render = function() {
-  	console.log('SubjectsPanel.render');
+  	// console.log('SubjectsPanel.render');
   	var props = this.props;
 
     var subjectNodes = this.subjects.map(function(subject, index) {
