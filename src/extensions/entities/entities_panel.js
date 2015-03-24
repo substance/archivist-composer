@@ -43,9 +43,10 @@ EntitiesPanel.Prototype = function() {
 
   // Returns true when properties have changed and re-render is needed
   this.shouldComponentUpdate = function(nextProps, nextState) {
-    if (this.props.entityId !== nextProps.entityId) return true;
-    if (this.props.documentId !== nextProps.documentId) return true;
-    return false;
+    if (this.props.entityId === nextProps.entityId && this.props.documentId === nextProps.documentId) return false;
+    // TODO: also check for changes in state object
+    // console.log('prevState', this.state, 'nextState', nextState);
+    return true;
   };
 
   this.loadEntities = function() {

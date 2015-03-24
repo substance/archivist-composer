@@ -53,9 +53,14 @@ var SCHEMA = {
       }
     },
 
+    "reference": {
+      "parent": "annotation",
+      "properties": {}
+    },
+
     "entity_reference": {
       "id": "entity_reference",
-      "parent": "annotation",
+      "parent": "reference",
       "properties": {
         "target": "string"
       }
@@ -63,7 +68,7 @@ var SCHEMA = {
 
     "subject_reference": {
       "id": "subject_reference",
-      "parent": "annotation",
+      "parent": "reference",
       "properties": {
         "target": "string"
       }
@@ -110,6 +115,11 @@ var Interview = function(options) {
 
   // Only for legacy purposes
   this.nodeTypes = {};
+
+  this.references = this.addIndex('referenceByTarget', {
+    types: ["reference"],
+    property: "target"
+  });
 };
 
 Interview.fromSnapshot = function(data, options) {

@@ -30,7 +30,7 @@ var ComposerApp = function(options) {
   Application.call(this, options);
 
   this.el = document.body; // use options.el
-  this.rootElement = $$(Composer, {ref: "composer"});
+  this.rootElement = $$(Composer, {id: "composer"});
 };
 
 ComposerApp.Prototype = function() {
