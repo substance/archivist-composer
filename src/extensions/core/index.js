@@ -12,9 +12,6 @@ module.exports = {
   panels: [
     // TODO: TOCPanel
   ],
-  // referenceHandler: referenceHandler,
-  transitions: [
-  ],
   tools: [
     // TODO: 
   	// TagEntityTool

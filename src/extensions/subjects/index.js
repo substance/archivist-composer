@@ -2,7 +2,7 @@
 
 var SubjectsPanel = require("./subjects_panel");
 var TagSubjectTool = require("./tag_subject_tool");
-var referenceHandler = require("./reference_handler");
+var stateHandlers = require("./state_handlers");
 
 module.exports = {
   name: "subjects",
@@ -12,7 +12,7 @@ module.exports = {
   panels: [
     SubjectsPanel,
   ],
-  referenceHandler: referenceHandler,
+  stateHandlers: stateHandlers,
   transitions: [
   ],
   tools: [

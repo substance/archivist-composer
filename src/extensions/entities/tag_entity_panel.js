@@ -1,6 +1,4 @@
-var Application = require("substance-application");
-var Component = Application.Component;
-var $$ = Application.$$;
+var $$ = React.createElement;
 var _ = require("underscore");
 
 var TYPE_LABELS = {
@@ -29,63 +27,45 @@ var SEARCH_RESULT = [
 // Example of a sub view
 // ----------------
 
-var EntityView = function(props) {
-  Component.call(this, props);
-};
-
-EntityView.Prototype = function() {
-
-  this.render = function() {
+var EntityView = React.createClass({
+  displayName: "Entity",
+  render: function() {
     var className = ["entity", this.props.type];
     if (this.props.active) className.push("active");
 
     var props = [
-      $$("div", {className: "type", html: TYPE_LABELS[this.props.type]}),
-      $$("div", {className: "name", html: this.props.name || this.props.title})
+      $$("div", {className: "type"}, TYPE_LABELS[this.props.type]),
+      $$("div", {className: "name"}, this.props.name || this.props.title)
     ];
 
     if (this.props.country) {
-      props.push($$("div", {className: "country", html: "Country"+this.props.country}));
+      props.push($$("div", {className: "country"}, "Country"+this.props.country));
     }
 
     return $$("div", {className: className.join(" ")}, props);
-  };
-};
-
-EntityView.Prototype.prototype = Component.prototype;
-EntityView.prototype = new EntityView.Prototype();
-
+  }
+});
 
 // Entities Panel extension
 // ----------------
 
-var TagEntityPanel = function(props) {
-  Component.call(this, props);
-  console.log('created tagEntityPanel');
-  this.loadEntities("");
-};
 
-TagEntityPanel.Prototype = function() {
 
-  this.componentDidMount = function() {
-    $(this.el).on('change', '.search-str', _.bind(this._search, this));
-  };
 
-  this.getInitialState = function() {
-    return {
-      searchString: "",
-      entities: []
-    };
-  };
+var TagEntityPanel = React.createClass({
+  displayName: "Tag Entity",
 
-  this.loadEntities = function(searchString) {
+  // Data loading methods
+  // ------------
+
+  loadEntities: function(searchString) {
     var self = this;
 
     if (searchString) {
       _.delay(function() {
         // Finished simulated loading of entities
         self.setState({
-          searchString: searchString,
+          // searchString: searchString,
           entities: SEARCH_RESULT
         });
       }, 700);
@@ -93,21 +73,47 @@ TagEntityPanel.Prototype = function() {
       _.delay(function() {
         // Finished simulated loading of entities
         self.setState({
-          searchString: searchString,
+          // searchString: searchString,
           entities: SUGGESTED_ENTITIES
         });
       }, 700);
     }
-  };
+  },
 
-  this._search = function(e) {
-    var searchString = $(e.currentTarget).val();
-    e.preventDefault();
+  // State relevant things
+  // ------------
+
+  getInitialState: function() {
+    return {
+      searchString: "",
+      entities: []
+    };
+  },
+
+  // Events
+  // ------------
+
+  componentDidMount: function() {
+    this.loadEntities("");
+  },
+
+  handleSearchStringChange: function(e) {
+    var searchString = e.target.value;
+    this.setState({searchString: searchString});
     this.loadEntities(searchString);
-  };
+  },
 
-  this.render = function() {
-    console.log('TagEntityPanel.render');
+  // render: function() {
+  //   var value = this.state.value;
+  //   return <input type="text" value={value} onChange={this.handleChange} />;
+  // }
+
+
+  // Rendering
+  // -------------------
+
+
+  render: function() {
     var entities = this.state.entities;
     var entityNodes;
 
@@ -120,50 +126,40 @@ TagEntityPanel.Prototype = function() {
     }
 
     return $$("div", {className: "panel tag-entity-panel-component"},
-      $$('div', {className: "search", html: ""},
-        $$('input', {className: "search-str", type: "text", placeholder: "Type to search for entities", value: this.state.searchString}),
-        $$('select', {className: "entity-type"},
-          $$('option', {value: "", html: "All"}),
-          $$('option', {value: "prison", html: "Prison"}),
-          $$('option', {value: "toponym", html: "Toponym"}),
-          $$('option', {value: "person", html: "Person"}),
-          $$('option', {value: "definition", html: "Definition"})
+      $$('div', {className: "panel-content"},
+        $$('div', {className: "search", html: ""},
+          $$('input', {
+            className: "search-str",
+            type: "text",
+            placeholder: "Type to search for entities",//,
+            // value: "HELLO"
+            value: this.state.searchString,
+            onChange: this.handleSearchStringChange
+          }),
+          $$('select', {className: "entity-type"},
+            $$('option', {value: ""}, "All"),
+            $$('option', {value: "prison"}, "Prison"),
+            $$('option', {value: "toponym"}, "Toponym"),
+            $$('option', {value: "person"}, "Person"),
+            $$('option', {value: "definition"}, "Definition")
+          )
+        ),
+        $$('div', {className: "entities"},
+          entityNodes
         )
-      ),
-      $$('div', {className: "entities"},
-        entityNodes
       )
     );
-  };
-};
-
-// Component configuration
-// ----------------
-
-TagEntityPanel.persistent = true;
+  }
+});
 
 // Panel configuration
 // ----------------
 
-TagEntityPanel.panelName = "Tag Entities";
 TagEntityPanel.contextId = "tagentity";
 TagEntityPanel.icon = "fa-bullseye";
 
 // No toggle is shown
 TagEntityPanel.isDialog = true;
 
-
-// Factory method for creation of a new subject panel using properties derived from writer
-// state
-TagEntityPanel.create = function(writer) {
-  return $$(TagEntityPanel, {
-    id: "tag-entity-panel",
-    writer: writer,
-    doc: writer.props.doc
-  });
-};
-
-TagEntityPanel.Prototype.prototype = Component.prototype;
-TagEntityPanel.prototype = new TagEntityPanel.Prototype();
 
 module.exports = TagEntityPanel;

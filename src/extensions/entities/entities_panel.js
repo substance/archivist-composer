@@ -20,7 +20,7 @@ var ENTITIES = [
 
 
 var EntitiesPanel = React.createClass({
-  displayName: "EntitiesPanel",
+  displayName: "Entities",
 
   // Data loading methods
   // ------------
@@ -46,20 +46,10 @@ var EntitiesPanel = React.createClass({
     };
   },
 
-  // Returns true when properties have changed and re-render is needed
-  // shouldComponentUpdate: function(nextProps, nextState) {
-  //   var sameEntity = this.props.entityId === nextProps.entityId;
-  //   var sameDoc = this.props.documentId === nextProps.documentId;
-
-  //   if (sameEntity && sameDoc) return false;
-  //   return true;
-  // },
-
   // Events
   // ------------
 
   componentDidMount: function() {
-    console.log('component mounted');
     this.loadEntities();
   },
 
@@ -80,7 +70,6 @@ var EntitiesPanel = React.createClass({
   },
 
   render: function() {
-    console.log('EntitiesPanel.render');
     var state = this.state;
     var props = this.props;
     
@@ -102,18 +91,7 @@ var EntitiesPanel = React.createClass({
   }
 });
 
-EntitiesPanel.panelName = "Entities";
 EntitiesPanel.contextId = "entities";
 EntitiesPanel.icon = "fa-bullseye";
-
-// Factory method for creation of a new subject panel using properties derived from writer
-// state
-EntitiesPanel.create = function(writer) {
-  return $$(EntitiesPanel, {
-    id: "entities-panel",
-    documentId: writer.props.doc.get('document').guid,
-    entityId: writer.state.entityId
-  });
-};
 
 module.exports = EntitiesPanel;
