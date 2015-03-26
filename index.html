@@ -13,6 +13,7 @@
     <link href='styles/composer.css' rel='stylesheet' type='text/css'/>
 
     <!-- Libs -->
+    <script src="lib/react.js"></script>
     <script src="lib/jquery-2.1.3.min.js"></script>
     <script src="./lib/jstree/jstree.min.js"></script>
     <link href="./lib/jstree/style.css" rel='stylesheet' type='text/css'/>
@@ -27,10 +28,12 @@
         //
         // Injects itself into body
 
-        var app = new window.SubstanceComposer({});
-        window.app = app;
+        // var app = new window.SubstanceComposer({});
+        // window.app = app;
+        var app = window.app;
+
+        // launch it
         app.start();
-        
       });
     </script>
   </head>

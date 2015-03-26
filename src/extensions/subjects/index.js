@@ -6,6 +6,9 @@ var referenceHandler = require("./reference_handler");
 
 module.exports = {
   name: "subjects",
+  nodes: {
+    // TODO: SubjectReferenceNode
+  },
   panels: [
     SubjectsPanel,
   ],

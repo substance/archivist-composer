@@ -1,54 +1,67 @@
 var Application = require("substance-application");
 var Component = Application.Component;
-var $$ = Application.$$;
+var $$ = React.createElement;
 var _ = require("underscore");
 
 // TagEntityTool
 // ----------------
 
-var TagEntityTool = function(props) {
-  Component.call(this, props);
-};
+// var TagEntityTool = function(props) {
+//   Component.call(this, props);
+// };
 
-TagEntityTool.Prototype = function() {
+// TagEntityTool.Prototype = function() {
 
-  // Events
-  // ----------------
+//   // Events
+//   // ----------------
 
-  this.componentDidMount = function() {
-    $(this.el).on('click', _.bind(this._toggleEntityReference, this));
-  };
+//   this.componentDidMount = function() {
+//     $(this.el).on('click', _.bind(this._toggleEntityReference, this));
+//   };
 
-  this._toggleEntityReference = function(e) {
-  	e.preventDefault();
+//   this._toggleEntityReference = function(e) {
+//   	e.preventDefault();
 
-  	// TODO: check if already toggled, using writer/doc/editor API
-  	//       if that's the case, delete reference
-  	this.props.switchContext("tagentity");
-  };
+//   	// TODO: check if already toggled, using writer/doc/editor API
+//   	//       if that's the case, delete reference
+//   	this.props.switchContext("tagentity");
+//   };
 
-  // Use editor API to determine wether the tool is toggled or not
-  // TODO: implement new selection api and use this method
-  this.isActive = function() {
-  	// query current selection
-  	// var refs = this.props.editor.selection.getAnnotations('entity_reference');
-  	// return refs.length > 0;
-  };
+//   // Use editor API to determine wether the tool is toggled or not
+//   // TODO: implement new selection api and use this method
+//   this.isActive = function() {
+//   	// query current selection
+//   	// var refs = this.props.editor.selection.getAnnotations('entity_reference');
+//   	// return refs.length > 0;
+//   };
 
-  // Rendering
-  // ----------------  
+//   // Rendering
+//   // ----------------  
 
-  this.render = function() {
+//   this.render = function() {
+//     return $$("a", {
+//     	className: 'tag-entity-tool-component tool', 
+//     	href: "#",
+//     	html: '<i class="fa fa-bullseye"></i>',
+//     	title: 'Tag Entity'
+//     });
+//   };
+// };
+
+// TagEntityTool.Prototype.prototype = Component.prototype;
+// TagEntityTool.prototype = new TagEntityTool.Prototype();
+
+
+var TagEntityTool = React.createClass({
+  displayName: "TagEntityTool",
+  render: function() {
     return $$("a", {
-    	className: 'tag-entity-tool-component tool', 
-    	href: "#",
-    	html: '<i class="fa fa-bullseye"></i>',
-    	title: 'Tag Entity'
+      className: 'tag-entity-tool-component tool',
+      href: "#",
+      title: 'Tag Entity',
+      dangerouslySetInnerHTML: {__html: '<i class="fa fa-bullseye"></i>'}
     });
-  };
-};
-
-TagEntityTool.Prototype.prototype = Component.prototype;
-TagEntityTool.prototype = new TagEntityTool.Prototype();
+  }
+});
 
 module.exports = TagEntityTool;

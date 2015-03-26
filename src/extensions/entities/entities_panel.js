@@ -1,7 +1,11 @@
-var Application = require("substance-application");
-var Component = Application.Component;
-var $$ = Application.$$;
+var $$ = React.createElement;
 var _ = require("underscore");
+
+// Entity types
+var Prison = require("./entity_types/prison");
+var Toponym = require("./entity_types/toponym");
+var Person = require("./entity_types/person");
+var Definition = require("./entity_types/definition");
 
 var ENTITIES = [
   // Prisons
@@ -14,53 +18,55 @@ var ENTITIES = [
   {"_id":"54f476ba973cfcef0354adab","type": "person", "name":"Мария","description":"Мария, младшая сестра О.Г. Головиной","__v":0,"id":"54f476ba973cfcef0354adab"},{"_id":"54f476ba973cfcef0354adac","type": "person", "name":"Головина Анна Терентьевна","description":"","__v":0,"id":"54f476ba973cfcef0354adac"}
 ];
 
-// Entity types
-var Prison = require("./entity_types/prison");
-var Toponym = require("./entity_types/toponym");
-var Person = require("./entity_types/person");
-var Definition = require("./entity_types/definition");
 
-// Entities Panel extension
-// ----------------
+var EntitiesPanel = React.createClass({
+  displayName: "EntitiesPanel",
 
-var EntitiesPanel = function(props) {
-  Component.call(this, props);
+  // Data loading methods
+  // ------------
 
-  this.loadEntities();
-};
-
-EntitiesPanel.Prototype = function() {
-
-  this.getInitialState = function() {
-    return {
-      entities: []
-    };
-  };
-
-  this.componentDidMount = function() {
-    console.log('entities panel mounted');
-  };
-
-  // Returns true when properties have changed and re-render is needed
-  this.shouldComponentUpdate = function(nextProps, nextState) {
-    if (this.props.entityId === nextProps.entityId && this.props.documentId === nextProps.documentId) return false;
-    // TODO: also check for changes in state object
-    // console.log('prevState', this.state, 'nextState', nextState);
-    return true;
-  };
-
-  this.loadEntities = function() {
+  loadEntities: function() {
     var self = this;
 
     _.delay(function() {
       // Finished simulated loading of entities
+      console.log('loading finished');
       self.setState({
         entities: ENTITIES
       });
     }, 700);
-  };
+  },
 
-  this.getEntityElement = function(entity) {
+  // State relevant things
+  // ------------
+
+  getInitialState: function() {
+    return {
+      entities: []
+    };
+  },
+
+  // Returns true when properties have changed and re-render is needed
+  // shouldComponentUpdate: function(nextProps, nextState) {
+  //   var sameEntity = this.props.entityId === nextProps.entityId;
+  //   var sameDoc = this.props.documentId === nextProps.documentId;
+
+  //   if (sameEntity && sameDoc) return false;
+  //   return true;
+  // },
+
+  // Events
+  // ------------
+
+  componentDidMount: function() {
+    console.log('component mounted');
+    this.loadEntities();
+  },
+
+  // Rendering
+  // -------------------
+
+  getEntityElement: function(entity) {
     if (entity.type === "prison") {
       return $$(Prison, entity); 
     } else if (entity.type === "toponym") {
@@ -71,32 +77,34 @@ EntitiesPanel.Prototype = function() {
       return $$(Definition, entity); 
     }
     throw new Error('No view component for '+ entity.type);
-  };
+  },
 
-  this.render = function() {
+  render: function() {
+    console.log('EntitiesPanel.render');
     var state = this.state;
     var props = this.props;
     
-    var getElem = this.getEntityElement.bind(this);
+    var getElem = this.getEntityElement;
     var entityNodes = state.entities.map(function(entity, index) {
       // Dynamically assign active state
       entity.active = entity.id === props.entityId;
+      entity.key = entity.id;
       return getElem(entity);
     });
 
     return $$("div", {className: "panel entities-panel-component"},
-      $$('div', {className: 'entities'},
-        entityNodes
+      $$('div', {className: 'panel-content'},
+        $$('div', {className: 'entities'},
+          entityNodes
+        )
       )
     );
-  };
-};
+  }
+});
 
 EntitiesPanel.panelName = "Entities";
 EntitiesPanel.contextId = "entities";
 EntitiesPanel.icon = "fa-bullseye";
-
-EntitiesPanel.persistent = true;
 
 // Factory method for creation of a new subject panel using properties derived from writer
 // state
@@ -107,9 +115,5 @@ EntitiesPanel.create = function(writer) {
     entityId: writer.state.entityId
   });
 };
-
-
-EntitiesPanel.Prototype.prototype = Component.prototype;
-EntitiesPanel.prototype = new EntitiesPanel.Prototype();
 
 module.exports = EntitiesPanel;

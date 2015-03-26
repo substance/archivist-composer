@@ -1,6 +1,6 @@
 var Application = require("substance-application");
 var Component = Application.Component;
-var $$ = Application.$$;
+var $$ = React.createElement;
 var _ = require("underscore");
 
 // A custom doc model for the archivist
@@ -8,20 +8,20 @@ var Interview = require("./interview");
 
 // Components
 var Writer = require("substance-writer");
-var Dashboard = require("./dashboard");
 
 // Writer Configuration
 // -------------------
 // 
 // Register extensions
 
+var CoreExtension = require("./extensions/core");
 var SubjectsExtension = require("./extensions/subjects");
 var EntitiesExtension = require("./extensions/entities");
-
 
 // Writer Configuration
 var writerConfig = {
   extensions: [
+    CoreExtension,
     SubjectsExtension,
     EntitiesExtension
   ]
@@ -34,74 +34,117 @@ var doc = new Interview.fromSnapshot(EXAMPLE_DOC);
 // The Composer Component
 // ----------------
 
-var Composer = function(props) {
-  Component.call(this, props);
-};
+// var Composer = function(props) {
+//   Component.call(this, props);
+// };
 
-Composer.Prototype = function() {
+// Composer.Prototype = function() {
 
-  this.events = {
-    'click .composer-menu a': '_toggleMenu'
-  };
+//   // this.events = {
+//   //   'click .composer-menu a': '_toggleMenu'
+//   // };
 
-  this.componentDidMount = function() {
-    // $(this.el).on('click', '.composer-menu a', _.bind(this._toggleMenu, this));
-  };
+//   this.componentDidMount = function() {
+//     // $(this.el).on('click', '.composer-menu a', _.bind(this._toggleMenu, this));
+//   };
 
-  this._toggleMenu = function(e) {
-    e.preventDefault();
-    var newContext = $(e.currentTarget).attr("data-context");
-    this.setState({
-      id: newContext
-    });
-  };
+//   this._toggleMenu = function(e) {
+//     e.preventDefault();
+//     var newContext = $(e.currentTarget).attr("data-context");
+//     this.setState({
+//       id: newContext
+//     });
+//   };
 
 
-  // Routing
-  // ----------------
+//   // Routing
+//   // ----------------
 
-  this.stateToRoute = function() {
-    return this.state;
-  };
+//   this.stateToRoute = function() {
+//     return this.state;
+//   };
 
-  this.stateFromRoute = function(compRoute) {
-    return this.compRoute;
-  };
+//   this.stateFromRoute = function(compRoute) {
+//     return this.compRoute;
+//   };
 
-  this.getInitialState = function() {
+//   this.getInitialState = function() {
+//     return {"id": "writer"};
+//   };
+
+//   this.render = function() {
+//     // Menu
+//     var menuElement = $$("div", {className: "composer-menu"},
+//       $$('a', {
+//         href: "#",
+//         text: "Dashboard",
+//         "data-context": "dashboard",
+//         className: this.state.id === "dashboard" ? "active": ""
+//       }),
+//       $$('a', {
+//         href: "#",
+//         text: "Writer", 
+//         "data-context": "writer",
+//         className: this.state.id === "writer" ? "active": ""
+//       })
+//     );
+
+//     // Context (Dashboard vs writer)
+//     var contextEl;
+//     if (this.state.id === "dashboard") {
+//       contextEl = $$(Dashboard, {ref: "dashboard"});
+//     } else if (this.state.id === "writer") {
+//       contextEl = $$(Writer, {
+//         config: writerConfig,
+//         doc: doc,
+//         id: "writer", //reusable singleton!
+//       });
+//     } else {
+//       contextEl = $$('div', {text: "loading doc"});
+//     }
+
+//     return $$("div", {className: "composer-component"},
+//       menuElement,
+//       $$("div", {className: "composer-container"},
+//         contextEl
+//       )
+//     );
+//   };
+// };
+
+// Composer.Prototype.prototype = Component.prototype;
+// Composer.prototype = new Composer.Prototype();
+
+
+
+var Composer = React.createClass({
+  displayName: "Composer",
+  getInitialState: function() {
     return {"id": "writer"};
-  };
-
-  this.render = function() {
+  },
+  render: function() {
     // Menu
     var menuElement = $$("div", {className: "composer-menu"},
       $$('a', {
         href: "#",
-        text: "Dashboard",
         "data-context": "dashboard",
         className: this.state.id === "dashboard" ? "active": ""
-      }),
+      }, "Dashboard"),
       $$('a', {
-        href: "#",
-        text: "Writer", 
+        href: "#", 
         "data-context": "writer",
         className: this.state.id === "writer" ? "active": ""
-      })
+      }, "Writer")
     );
 
     // Context (Dashboard vs writer)
     var contextEl;
-    if (this.state.id === "dashboard") {
-      contextEl = $$(Dashboard, {ref: "dashboard"});
-    } else if (this.state.id === "writer") {
-      contextEl = $$(Writer, {
-        config: writerConfig,
-        doc: doc,
-        id: "writer", //reusable singleton!
-      });
-    } else {
-      contextEl = $$('div', {text: "loading doc"});
-    }
+
+    contextEl = $$(Writer, {
+      config: writerConfig,
+      doc: doc,
+      id: "writer", //reusable singleton!
+    });
 
     return $$("div", {className: "composer-component"},
       menuElement,
@@ -109,10 +152,7 @@ Composer.Prototype = function() {
         contextEl
       )
     );
-  };
-};
-
-Composer.Prototype.prototype = Component.prototype;
-Composer.prototype = new Composer.Prototype();
+  }
+});
 
 module.exports = Composer;

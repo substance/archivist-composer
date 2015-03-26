@@ -8,6 +8,9 @@ var referenceHandler = require("./reference_handler");
 
 module.exports = {
   name: "entities",
+  nodes: {
+    // TODO: EntityReferenceNode
+  },
   panels: [
     EntitiesPanel,
     TagEntityPanel

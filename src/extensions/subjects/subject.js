@@ -1,26 +1,21 @@
-var Application = require("substance-application")
-var Component = Application.Component;
-var $$ = Application.$$;
+var $$ = React.createElement;
 var _ = require("underscore");
 
-var Subject = function(props) {
-  Component.call(this, props);
-};
+// Subject view
+// ----------------
 
-Subject.Prototype = function() {
-
-  this.render = function() {
+var Subject = React.createClass({
+  displayName: "Subject",
+  render: function() {
     var className = ["subject", this.props.type];
     if (this.props.active) className.push("active");
 
     return $$("div", {className: className.join(" ")}, [
-      $$('div', {className: 'name', html: this.props.name}),
-      $$('div', {className: 'id', html: this.props.id})
+      $$('div', {className: 'name'}, this.props.name),
+      $$('div', {className: 'id'}, this.props.id)
     ]);
-  };
-};
+  }
+});
 
-Subject.Prototype.prototype = Component.prototype;
-Subject.prototype = new Subject.Prototype();
 
 module.exports = Subject;

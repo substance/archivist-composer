@@ -5,7 +5,8 @@ var _ = require("underscore");
 
 // The main composer
 var Composer = require("./composer");
-var WriterNodes = require('substance-writer').Nodes
+
+// var WriterNodes = require('substance-writer').Nodes
 
 // The Composer Application
 // -------------------
@@ -21,24 +22,35 @@ var WriterNodes = require('substance-writer').Nodes
 //   el: document.body
 // });
 
-var ComposerApp = function(options) {
-  // TODO: discuss how to configure a component registry
-  // Note: having this allows to lookup and create components
-  // by name, such as components for custom nodes
-  options.components = _.extend(WriterNodes, options.components);
+// var ComposerApp = function(options) {
+//   // TODO: discuss how to configure a component registry
+//   // Note: having this allows to lookup and create components
+//   // by name, such as components for custom nodes
+//   options.components = _.extend(WriterNodes, options.components);
 
-  Application.call(this, options);
+//   Application.call(this, options);
 
-  this.el = document.body; // use options.el
-  this.rootElement = $$(Composer, {id: "composer"});
+//   this.el = document.body; // use options.el
+//   this.rootElement = $$(Composer, {id: "composer"});
+// };
+
+// ComposerApp.Prototype = function() {
+
+// };
+
+// ComposerApp.Prototype.prototype = Application.prototype;
+// ComposerApp.prototype = new ComposerApp.Prototype();
+
+var app = {
+	start: function() {
+		React.render(
+		  React.createElement(Composer, {
+		  	author: "Hello World"
+		  }),
+		  document.body
+		);
+	}
 };
 
-ComposerApp.Prototype = function() {
+module.exports = app;
 
-};
-
-
-ComposerApp.Prototype.prototype = Application.prototype;
-ComposerApp.prototype = new ComposerApp.Prototype();
-
-module.exports = ComposerApp;

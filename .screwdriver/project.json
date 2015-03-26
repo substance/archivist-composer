@@ -23,7 +23,7 @@
     {
       "repository": "https://github.com/substance/writer.git",
       "folder": "node_modules/substance-writer",
-      "branch": "experimental"
+      "branch": "react"
     },
     {
       "repository": "https://github.com/substance/util.git",

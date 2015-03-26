@@ -1,1 +1,1 @@
-window.SubstanceComposer = require("./src/app");
+window.app = require("./src/app");
