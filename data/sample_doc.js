@@ -56,7 +56,7 @@ var sampleDoc = {
         "text_54",
         "content"
       ],
-      "target": "54bae4cda868bc6fab4bcd0e", // this is an external object
+      "target": ["54bae4cda868bc6fab4bcd0e"], // these are external objects
       "range": [
         85,
         95
@@ -70,10 +70,10 @@ var sampleDoc = {
         "text_54",
         "content"
       ],
-      "target": "54bae4d0a868bc6fab4bcd16", // this is an external object
+      "target": ["54bae4d0a868bc6fab4bcd16"], // these are external objects
       "range": [
-        85,
-        95
+        100,
+        120
       ]
     },
 

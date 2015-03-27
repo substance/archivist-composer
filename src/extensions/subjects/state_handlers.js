@@ -1,7 +1,6 @@
 var SubjectsPanel = require("./subjects_panel");
-var TagSubjectPanel = require("./tag_subject_panel");
+var EditSubjectReferencePanel = require("./edit_subject_reference_panel");
 var $$ = React.createElement;
-
 
 var stateHandlers = {
 
@@ -13,14 +12,18 @@ var stateHandlers = {
   // Returns a new panel element if a particular state is matched
 
   handleContextPanelCreation: function(writer) {
-    if (writer.state.contextId === "subjects") {
+    var s = writer.state;
+
+    if (s.contextId === "subjects") {
       return $$(SubjectsPanel, {
+        writer: writer,
         documentId: writer.props.doc.get('document').guid,
         subjectId: writer.state.subjectId
       });
-    } else if (writer.state.contextId === "tagsubject") {
-      return $$(TagSubjectPanel, {
+    } else if (s.contextId === "editSubjectReference" && s.subjectReferenceId) {
+      return $$(EditSubjectReferencePanel, {
         writer: writer,
+        subjectReferenceId: s.subjectReferenceId,
         doc: writer.props.doc
       });
     }
@@ -48,8 +51,8 @@ var stateHandlers = {
       } else {
         // Toggle on
         writer.replaceState({
-          contextId: "subjects",
-          subjectId: reference.target
+          contextId: "editSubjectReference",
+          subjectReferenceId: reference.id
         });
       }
       return true;
@@ -68,11 +71,16 @@ var stateHandlers = {
     var doc = writer.props.doc;
     var state = writer.state;
 
-    // Let the extension handle which nodes should be highlighted
+    // When a subject has been clicked in the subjects panel
     if (state.contextId === "subjects" && state.subjectId) {
       // Use reference handler
       var references = Object.keys(doc.references.get(state.subjectId));
       return references;
+    }
+
+    // When a subject reference has been clicked and an edit dialog came up
+    if (state.contextId === "editSubjectReference" && state.subjectReferenceId) {
+      return [state.subjectReferenceId];
     }
   }
 };

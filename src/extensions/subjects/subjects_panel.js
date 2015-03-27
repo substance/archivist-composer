@@ -44,17 +44,29 @@ var SubjectsPanel = React.createClass({
     this.loadSubjects();
   },
 
+  handleToggle: function(subjectId) {
+    // console.log('meeeh haah', subjectId);
+    var writer = this.props.writer;
+
+    writer.replaceState({
+      contextId: "subjects",
+      subjectId: subjectId
+    });
+  },
+
   // Rendering
   // -------------------
 
   render: function() {
   	var state = this.state;
   	var props = this.props;
+    var self = this;
 
     var subjectNodes = state.subjects.map(function(subject, index) {
       // Dynamically assign active state
       subject.active = subject.id === props.subjectId;
       subject.key = subject.id;
+      subject.handleToggle = self.handleToggle;
       return $$(Subject, subject);
     });
 
