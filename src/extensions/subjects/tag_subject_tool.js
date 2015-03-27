@@ -8,12 +8,18 @@ var _ = require("underscore");
 
 var TagSubjectTool = React.createClass({
   displayName: "TagSubjectTool",
+
+  handleClick: function(e) {
+    this.props.switchContext("tagsubject");
+  },
+
   render: function() {
     return $$("a", {
     	className: 'tag-subject-tool-component tool', 
     	href: "#",
     	dangerouslySetInnerHTML: {__html: '<i class="fa fa-tag"></i>'},
-    	title: 'Tag Subject'
+    	title: 'Tag Subject',
+      onClick: this.handleClick
     });
   }
 });

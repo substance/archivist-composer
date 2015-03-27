@@ -1,4 +1,5 @@
 var SubjectsPanel = require("./subjects_panel");
+var TagSubjectPanel = require("./tag_subject_panel");
 var $$ = React.createElement;
 
 
@@ -16,6 +17,11 @@ var stateHandlers = {
       return $$(SubjectsPanel, {
         documentId: writer.props.doc.get('document').guid,
         subjectId: writer.state.subjectId
+      });
+    } else if (writer.state.contextId === "tagsubject") {
+      return $$(TagSubjectPanel, {
+        writer: writer,
+        doc: writer.props.doc
       });
     }
   },
