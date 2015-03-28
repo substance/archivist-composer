@@ -30,19 +30,20 @@ var EntitiesPanel = React.createClass({
 
     _.delay(function() {
       // Finished simulated loading of entities
-      console.log('loading finished');
       self.setState({
         entities: ENTITIES
       });
-    }, 700);
+    }, 1);
   },
 
   // State relevant things
   // ------------
 
   getInitialState: function() {
+    // Use cache
+    var entities = ENTITIES;
     return {
-      entities: []
+      entities: entities
     };
   },
 
@@ -50,13 +51,33 @@ var EntitiesPanel = React.createClass({
   // ------------
 
   componentDidMount: function() {
-    this.loadEntities();
+    if (this.state.entities.length > 0) {
+      this.loadEntities();  
+    }
+  },
+
+  handleToggle: function(entityId) {
+    // console.log('meeeh haah', subjectId);
+    var writer = this.props.writer;
+
+    if (writer.state.entityId === entityId) {
+      writer.replaceState({
+        contextId: "entities"
+      }); 
+    } else {
+      writer.replaceState({
+        contextId: "entities",
+        entityId: entityId
+      });      
+    }
   },
 
   // Rendering
   // -------------------
 
   getEntityElement: function(entity) {
+    entity.handleToggle = this.handleToggle;
+
     if (entity.type === "prison") {
       return $$(Prison, entity); 
     } else if (entity.type === "toponym") {

@@ -25,15 +25,17 @@ var SubjectsPanel = React.createClass({
 			self.setState({
 				subjects: SUBJECTS
 			});
-		}, 700);
+		}, 1);
   },
 
   // State relevant things
   // ------------
 
   getInitialState: function() {
+    // restore from cache if available (simulated!)
+    var subjects = SUBJECTS;
     return {
-      subjects: []
+      subjects: subjects
     };
   },
 
@@ -41,17 +43,26 @@ var SubjectsPanel = React.createClass({
   // ------------
 
   componentDidMount: function() {
-    this.loadSubjects();
+    // If not from cache -> load
+    if (this.state.subjects.length === 0) {
+      this.loadSubjects();  
+    }
   },
 
   handleToggle: function(subjectId) {
     // console.log('meeeh haah', subjectId);
     var writer = this.props.writer;
 
-    writer.replaceState({
-      contextId: "subjects",
-      subjectId: subjectId
-    });
+    if (writer.state.subjectId === subjectId) {
+      writer.replaceState({
+        contextId: "subjects"
+      }); 
+    } else {
+      writer.replaceState({
+        contextId: "subjects",
+        subjectId: subjectId
+      });      
+    }
   },
 
   // Rendering

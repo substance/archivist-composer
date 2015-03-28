@@ -12,6 +12,7 @@ var stateHandlers = {
   handleContextPanelCreation: function(writer) {
     if (writer.state.contextId === "entities") {
       return $$(EntitiesPanel, {
+        writer: writer,
         documentId: writer.props.doc.get('document').guid,
         entityId: writer.state.entityId
       });

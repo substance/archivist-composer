@@ -323,6 +323,52 @@ a:hover {
   background-color: rgba(145, 187, 4, 1);
 }
 
+
+/* Node Components
+-----------------------------------------------------*/
+
+/* Text Node Component */
+
+.content-editor-component .content-node.text {
+  padding-bottom: 20px;
+}
+
+/* Annotations
+-----------------------------------------------------*/
+
+.annotation.strong {
+  font-weight: bold;
+}
+
+/* Entity Reference */
+
+.annotation.entity-reference {
+  background: rgba(11, 157, 217, 0.2);
+}
+
+.annotation.entity-reference:hover {
+  background: rgba(11, 157, 217, 0.4);
+}
+
+/* Subject Reference */
+.annotation.subject-reference {
+  background: rgba(145, 187, 4, 0.2);
+}
+
+.annotation.subject-reference:hover {
+  background: rgba(145, 187, 4, 0.4);
+}
+
+
+
+
+
+
+
+/* Archivist Extensions
+-----------------------------------------------------*/
+
+
 /* Entities component 
 -----------------------------------------------------*/
 
@@ -331,6 +377,17 @@ a:hover {
   padding: 20px;
   border-bottom: 1px solid #ddd;
   border-left: 2px solid transparent;
+  cursor: pointer;
+}
+
+
+.entity:hover {
+  border-left: 2px solid rgba(11, 157, 217, 0.3);
+}
+
+.entity.active {
+  background: white;
+  border-left: 2px solid rgba(11, 157, 217, 1);
 }
 
 .entity .type {
@@ -341,9 +398,6 @@ a:hover {
   font-size: 12px;
 }
 
-.entity.active {
-  border-left: 2px solid rgba(11, 157, 217, 1);
-}
 
 .entity .description {
   font-size: 12px;
@@ -384,8 +438,16 @@ a:hover {
   color: #A99C90;
 }
 
-/* Tag Entity component 
+/* Edit Subject Reference Panel 
 -----------------------------------------------------*/
+
+.panel.tag-subject-panel-component {
+  font-size: 12px;
+}
+
+.panel.tag-subject-panel-component .subjects-tree {
+  padding: 10px;
+}
 
 .entities .no-results {
   padding: 20px;
@@ -414,6 +476,11 @@ a:hover {
   right: 20px;
 }
 
+/* Custom scrollbar styles */
+.scrollbar-component.entities .highlight {
+  background-color: rgba(11, 157, 217, 1);
+}
+
 
 /* Subject component 
 -----------------------------------------------------*/
@@ -423,44 +490,14 @@ a:hover {
   padding: 20px;
   border-bottom: 1px solid #ddd;
   border-left: 2px solid transparent;
+  cursor: pointer;
+}
+
+.subject:hover {
+  border-left: 2px solid rgba(145, 187, 4, 0.3);
 }
 
 .subject.active {
-  border-left: 2px solid rgba(11, 157, 217, 1);
-}
-
-
-/* Node Components
------------------------------------------------------*/
-
-/* Text Node Component */
-
-.content-editor-component .content-node.text {
-  padding-bottom: 20px;
-}
-
-/* Annotations
------------------------------------------------------*/
-
-.annotation.strong {
-  font-weight: bold;
-}
-
-/* Entity Reference */
-
-.annotation.entity-reference {
-  background: rgba(11, 157, 217, 0.2);
-}
-
-.annotation.entity-reference:hover {
-  background: rgba(11, 157, 217, 0.4);
-}
-
-/* Subject Reference */
-.annotation.subject-reference {
-  background: rgba(145, 187, 4, 0.2);
-}
-
-.annotation.subject-reference:hover {
-  background: rgba(145, 187, 4, 0.4);
+  background: white;
+  border-left: 2px solid rgba(145, 187, 4, 1);
 }
