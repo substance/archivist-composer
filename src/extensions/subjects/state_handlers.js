@@ -43,7 +43,7 @@ var stateHandlers = {
 
     if (reference.type === "subject_reference") {
 
-      if (state.contextId === "subjects" && reference.target === state.subjectId) {
+      if (state.contextId === "editSubjectReference" && reference.id === state.subjectReferenceId) {
         // Toggle off
         writer.replaceState({
           contextId: "subjects"
