@@ -1,5 +1,6 @@
 var $$ = React.createElement;
 var _ = require("underscore");
+var util = require("substance-util");
 
 var TYPE_LABELS = {
   "prison": "Prison",
@@ -7,6 +8,7 @@ var TYPE_LABELS = {
   "person": "Person",
   "definition": "Definition"
 };
+
 
 // Fixture data
 var SUGGESTED_ENTITIES = [
@@ -24,11 +26,18 @@ var SEARCH_RESULT = [
   {"_id":"54f476ba973cfcef0354adab","type": "person", "name":"Мария","description":"Мария, младшая сестра О.Г. Головиной","__v":0,"id":"54f476ba973cfcef0354adab"},{"_id":"54f476ba973cfcef0354adac","type": "person", "name":"Головина Анна Терентьевна","description":"","__v":0,"id":"54f476ba973cfcef0354adac"}
 ];
 
+
 // Example of a sub view
 // ----------------
 
 var EntityView = React.createClass({
   displayName: "Entity",
+
+  handleClick: function(e) {
+    this.props.handleSelection(this.props.id);
+    e.preventDefault();
+  },
+
   render: function() {
     var className = ["entity", this.props.type];
     if (this.props.active) className.push("active");
@@ -42,18 +51,19 @@ var EntityView = React.createClass({
       props.push($$("div", {className: "country"}, "Country"+this.props.country));
     }
 
-    return $$("div", {className: className.join(" ")}, props);
+    return $$("div", {
+      className: className.join(" "),
+      onClick: this.handleClick
+    }, props);
   }
 });
 
 // Entities Panel extension
 // ----------------
 
-
-
-
 var TagEntityPanel = React.createClass({
   displayName: "Tag Entity",
+
 
   // Data loading methods
   // ------------
@@ -103,22 +113,53 @@ var TagEntityPanel = React.createClass({
     this.loadEntities(searchString);
   },
 
-  // render: function() {
-  //   var value = this.state.value;
-  //   return <input type="text" value={value} onChange={this.handleChange} />;
-  // }
 
+  // Called with entityId when an entity has been clicked
+  handleSelection: function(entityId) {
+    var doc = this.props.doc;
+    var writer = this.props.writer;
+
+    var path = ["text_54", "content"];
+    var range = [84, 105];
+    // WANTED: an api to retrieve path and pos
+    // var selection = this.writer.getSelection();
+    // var path = selection.getPath();
+    // var range = selection.getRange();
+
+    var entityReference = {
+      id: "entity_reference_" + util.uuid(),
+      type: "entity_reference",
+      path: path,
+      range: range,
+      target: entityId
+    };
+
+    // Display reference in editor
+    doc.create(entityReference);
+
+    // Some fake action until editor is ready
+    var textNode = doc.get("text_3");
+    var newContent = textNode.content += ' and <span data-id="'+entityReference.id+'" class="annotation entity-reference">'+entityReference.id+'</span>';
+    doc.set(["text_3", "content"], newContent);
+
+    // Switch state to highlight newly created reference
+    writer.replaceState({
+      contextId: "entities",
+      entityId: entityId
+    });
+  },
 
   // Rendering
   // -------------------
 
-
   render: function() {
+    var self = this;
     var entities = this.state.entities;
     var entityNodes;
 
     if (entities.length > 0) {
       entityNodes = entities.map(function(entity) {
+        entity.handleSelection = self.handleSelection;
         return $$(EntityView, entity);
       });
     } else {

@@ -18,13 +18,13 @@ var ENTITIES = [
   {"_id":"54f476ba973cfcef0354adab","type": "person", "name":"Мария","description":"Мария, младшая сестра О.Г. Головиной","__v":0,"id":"54f476ba973cfcef0354adab"},{"_id":"54f476ba973cfcef0354adac","type": "person", "name":"Головина Анна Терентьевна","description":"","__v":0,"id":"54f476ba973cfcef0354adac"}
 ];
 
-
 var EntitiesPanel = React.createClass({
   displayName: "Entities",
 
   // Data loading methods
   // ------------
 
+  // Loding must be based on a list of referenced articles
   loadEntities: function() {
     var self = this;
 
