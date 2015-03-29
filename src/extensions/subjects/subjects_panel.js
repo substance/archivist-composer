@@ -1,12 +1,12 @@
 var $$ = React.createElement;
 var _ = require("underscore");
+var SubjectsModel = require("./subjects_model");
+
+var SUBJECTS = require("./subjects_fixture");
 
 // Sub component
 var Subject = require("./subject");
 
-var SUBJECTS = [
-  {"_id":"54bae4cda868bc6fab4bcd0e","name":"Казни (в том числе потенциальные)","parent":"54bae4cda868bc6fab4bcd0d","__v":0,"id":"54bae4cda868bc6fab4bcd0e"},{"_id":"54bae4d0a868bc6fab4bcd16","name":"Лагеря  военнопленных","parent":"54bae493a868bc6fab4bcc30","__v":0,"id":"54bae4d0a868bc6fab4bcd16"}
-];
 
 // Subjects Panel extension
 // ----------------
@@ -23,7 +23,7 @@ var SubjectsPanel = React.createClass({
   	var self = this;
 		_.delay(function() {
 			self.setState({
-				subjects: SUBJECTS
+				subjects: new SubjectsModel(self.props.doc, SUBJECTS)
 			});
 		}, 1);
   },
@@ -32,8 +32,8 @@ var SubjectsPanel = React.createClass({
   // ------------
 
   getInitialState: function() {
-    // restore from cache if available (simulated!)
-    var subjects = SUBJECTS;
+    var subjects = new SubjectsModel(this.props.doc, SUBJECTS);
+    
     return {
       subjects: subjects
     };
@@ -73,11 +73,15 @@ var SubjectsPanel = React.createClass({
   	var props = this.props;
     var self = this;
 
-    var subjectNodes = state.subjects.map(function(subject, index) {
-      // Dynamically assign active state
+    // Only get referenced subjects
+    var referencedSubjects = state.subjects.getAllReferencedSubjects();
+
+    var subjectNodes = referencedSubjects.map(function(subject, index) {
+      // Dynamically assign active state and a few other things
       subject.active = subject.id === props.subjectId;
       subject.key = subject.id;
       subject.handleToggle = self.handleToggle;
+      subject.fullPath = state.subjects.getFullPathForSubject(subject.id);
       return $$(Subject, subject);
     });
 

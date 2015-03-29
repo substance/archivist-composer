@@ -120,6 +120,19 @@ var Interview = function(options) {
     types: ["reference"],
     property: "target"
   });
+
+  // Index subject references (multi-annotations)
+  this.subjectReferencesIndex = this.addIndex('subjectReferencesIndex', {
+    types: ["subject_reference"],
+    property: "target"
+  });
+
+  // Index only entity references (regular annotations)
+  this.entityReferencesIndex = this.addIndex('entityReferencesIndex', {
+    types: ["entity_reference"],
+    property: "target"
+  });
+
 };
 
 Interview.fromSnapshot = function(data, options) {

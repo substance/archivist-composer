@@ -17,6 +17,7 @@ var stateHandlers = {
     if (s.contextId === "subjects") {
       return $$(SubjectsPanel, {
         writer: writer,
+        doc: writer.props.doc,
         documentId: writer.props.doc.get('document').guid,
         subjectId: writer.state.subjectId
       });

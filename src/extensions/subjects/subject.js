@@ -18,6 +18,7 @@ var Subject = React.createClass({
 
     return $$("div", {className: className.join(" "), onClick: this.handleToggle}, [
       $$('div', {className: 'name'}, this.props.name),
+      $$('div', {className: 'full-path'}, this.props.fullPath.join(" > ")),
       $$('div', {className: 'id'}, this.props.id)
     ]);
   }
