@@ -14,7 +14,6 @@ module.exports = {
   ],
   tools: [
     // TODO: 
-  	// TagEntityTool
     // StrongTool
     // EmphasisTool
     // LinkTool

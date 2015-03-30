@@ -2,6 +2,7 @@ var SubjectsPanel = require("./subjects_panel");
 var EditSubjectReferencePanel = require("./edit_subject_reference_panel");
 var $$ = React.createElement;
 
+
 var stateHandlers = {
 
   // Handle Context Panel creation
@@ -14,14 +15,14 @@ var stateHandlers = {
   handleContextPanelCreation: function(writer) {
     var s = writer.state;
 
-    if (s.contextId === "subjects") {
+    if (s.contextId === SubjectsPanel.contextId) {
       return $$(SubjectsPanel, {
         writer: writer,
         doc: writer.props.doc,
         documentId: writer.props.doc.get('document').guid,
         subjectId: writer.state.subjectId
       });
-    } else if (s.contextId === "editSubjectReference" && s.subjectReferenceId) {
+    } else if (s.contextId === EditSubjectReferencePanel.contextId && s.subjectReferenceId) {
       return $$(EditSubjectReferencePanel, {
         writer: writer,
         subjectReferenceId: s.subjectReferenceId,
@@ -44,7 +45,7 @@ var stateHandlers = {
 
     if (reference.type === "subject_reference") {
 
-      if (state.contextId === "editSubjectReference" && reference.id === state.subjectReferenceId) {
+      if (state.contextId === EditSubjectReferencePanel.contextId && reference.id === state.subjectReferenceId) {
         // Toggle off
         writer.replaceState({
           contextId: "subjects"
@@ -52,7 +53,7 @@ var stateHandlers = {
       } else {
         // Toggle on
         writer.replaceState({
-          contextId: "editSubjectReference",
+          contextId: EditSubjectReferencePanel.contextId,
           subjectReferenceId: reference.id
         });
       }
@@ -77,12 +78,12 @@ var stateHandlers = {
       // Use reference handler
       var references = Object.keys(doc.subjectReferencesIndex.get(state.subjectId));
 
-      console.log('REFS', references, state.subjectId);
+      console.log('TODO: Fix refs', references, state.subjectId);
       return references;
     }
 
     // When a subject reference has been clicked and an edit dialog came up
-    if (state.contextId === "editSubjectReference" && state.subjectReferenceId) {
+    if (state.contextId === EditSubjectReferencePanel.contextId && state.subjectReferenceId) {
       return [state.subjectReferenceId];
     }
   }
