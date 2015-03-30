@@ -6,5 +6,8 @@
   "latedef": true,
   "undef": true,
   "unused": true,
-  "sub": true
+  "sub": true,
+  "predef": [
+    "React"
+  ]
 }

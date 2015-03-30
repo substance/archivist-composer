@@ -18,7 +18,7 @@ var ContainerNode = React.createClass({
       var ComponentClass = writer.getNodeComponentClass(node.type);
       return $$(ComponentClass, {key: node.id, writer: writer, doc: doc, node: node});
     });
-    
+
     return $$("div", {className: "container-node " + this.props.node.id /*, contentEditable: true*/},
       $$('div', {className: "nodes"}, components)
     );

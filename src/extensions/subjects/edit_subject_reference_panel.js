@@ -31,15 +31,37 @@ var EditSubjectReferencePanel = React.createClass({
     this.renderSubjectsTree();
   },
 
+  componentWillUnmount: function() {
+    console.log('removing tree event listener');
+    var treeContainerEl = this.refs.subjectsTree.getDOMNode();
+    $(treeContainerEl).off('changed.jstree');
+  },
+
   componentDidUpdate: function() {
     console.log('TagSubjectPanel updated');
     this.renderSubjectsTree();
+  },
+
+  // Write changes in selection to document model
+  // ------------
+
+  updateAnnotation: function(e) {
+    e.preventDefault();
+    var treeContainerEl = this.refs.subjectsTree.getDOMNode();
+    var subjectIds = $(treeContainerEl).jstree().get_selected();
+    console.log('updating subjectReferenceId', subjectIds);
+
+    var doc = this.props.doc;
+    var subjectReferenceId = this.props.subjectReferenceId;
+
+    doc.set([this.props.subjectReferenceId, "target"], subjectIds);
   },
 
   // Render jsTree widget accordingly
   // ------------
 
   renderSubjectsTree: function() {
+    var self = this;
     var subjects = this.state.subjects;
     var doc = this.props.doc;
     var treeContainerEl = this.refs.subjectsTree.getDOMNode();
@@ -61,9 +83,10 @@ var EditSubjectReferencePanel = React.createClass({
       }
     });
 
-    // Select assigned items
-    // --------------
+    // Remove previously attached listeners
+    $(treeContainerEl).off('changed.jstree');
 
+    // Select assigned items
     _.delay(function() {
       $(treeContainerEl).jstree('deselect_all');
       $(treeContainerEl).jstree('close_all');
@@ -71,9 +94,9 @@ var EditSubjectReferencePanel = React.createClass({
       _.delay(function() {
         _.each(subjectRef.target, function(subjectId) {
           $(treeContainerEl).jstree('select_node', subjectId);
+          $(treeContainerEl).on('changed.jstree', _.bind(self.updateAnnotation, this));
         }, this);        
       }, 200);
-
     }, 200, this);
   },
 
@@ -86,9 +109,7 @@ var EditSubjectReferencePanel = React.createClass({
 
     return $$("div", {className: "panel tag-subject-panel-component"},
       $$('div', {className: "panel-content"},
-        $$('div', {className: "subjects-tree", ref: 'subjectsTree'},
-          ""
-        )
+        $$('div', {className: "subjects-tree", ref: 'subjectsTree'})
       )
     );
   }

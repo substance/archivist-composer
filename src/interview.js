@@ -70,7 +70,7 @@ var SCHEMA = {
       "id": "subject_reference",
       "parent": "reference",
       "properties": {
-        "target": "string"
+        "target": ["array", "string"]
       }
     }
   }
