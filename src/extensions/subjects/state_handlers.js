@@ -75,6 +75,8 @@ var stateHandlers = {
 
     // When a subject has been clicked in the subjects panel
     if (state.contextId === "subjects" && state.subjectId) {
+
+      // TODO: case 1 get all subject references for subject id
       // Use reference handler
       var references = Object.keys(doc.subjectReferencesIndex.get(state.subjectId));
 

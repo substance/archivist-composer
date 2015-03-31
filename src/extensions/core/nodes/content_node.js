@@ -1,11 +1,11 @@
 
 var SubstanceNode = require('substance-document').Node;
 
-var TextNode = SubstanceNode.extend( {
+var ContentNode = SubstanceNode.extend({
   name: "content",
   properties: {
     content: "string"
   }
-} );
+});
 
-module.exports = TextNode;
+module.exports = ContentNode;
