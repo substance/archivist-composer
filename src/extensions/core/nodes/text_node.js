@@ -1,9 +1,8 @@
 
-var SubstanceNode = require('substance-document').Node;
+var ContentNode = require('./content_node');
 
-var TextNode = SubstanceNode.extend( {
-  name: "text",
-  parent: "content"
+var TextNode = ContentNode.extend( {
+  name: "text"
 } );
 
 module.exports = TextNode;
