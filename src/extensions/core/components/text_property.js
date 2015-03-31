@@ -7,7 +7,7 @@ var $$ = React.createElement;
 var TextProperty = React.createClass({
   displayName: "TextProperty",
   render: function() {
-    var text = this.props.doc.get(this.props.path);
+    var text = this.props.doc.get(this.props.path) || "";
     // TODO: eventually I want to render annotated text here
     var annotatedText = text; // TODO create annotated html
     return $$("span", {
