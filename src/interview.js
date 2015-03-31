@@ -21,45 +21,57 @@ var Interview = function(data) {
   SubstanceDocument.call(this, schema, data);
 
   // indexes
-  this.references = this.addIndex('referenceByTarget', new SubstanceDocument.AbstractIndex({
+  this.references = this.addIndex('referenceByTarget', SubstanceDocument.AbstractIndex.extend({
     select: function(node) {
       return node.isInstanceOf("reference");
     },
+    // this actually would not be necessary as it is the default impl
     getKey: function(node) {
       return node.id;
     }
   }));
   // Index subject references (multi-annotations)
-  this.subjectReferencesIndex = this.addIndex('subjectReferencesIndex', new SubstanceDocument.AbstractIndex({
+  this.subjectReferencesIndex = this.addIndex('subjectReferencesIndex', SubstanceDocument.AbstractIndex.extend({
     select: function(node) {
       return node.isInstanceOf("subject_reference");
     },
-    getKey: function(node) {
-      return [node.target, node.id];
-    }
+    // getKey: function(node) {
+    //   return node.id;
+    // }
   }));
+/*
+  // As an example: this would create a subject -> subject_reference index:
+  // Index subject references (multi-annotations)
+  var subject2subjectReferences = this.addIndex('subject2references', SubstanceDocument.AbstractIndex.extend({
+    // take all subject_references...
+    select: function(node) {
+      return node.isInstanceOf("subject_reference");
+    },
+    // ... use the target value as key; but key is not a single one, it has multiple values
+    getKey: function(node) {
+      return node.target;
+    },
+    // ... so we need to override 'create' and 'delete' to insert/remove multiple entries
+    create: function(keys, node) {
+      Substance.each(keys, function(id) {
+        this.index.set([id, node.id], node);
+      }, this);
+    },
+    delete: function(keys) {
+      Substance.each(keys, function(id) {
+        this.index.delete([id, node.id]);
+      }, this);
+    },
+  }));
+*/
+
   // Index only entity references (regular annotations)
-  this.entityReferencesIndex = this.addIndex('entityReferencesIndex', new SubstanceDocument.AbstractIndex({
+  this.entityReferencesIndex = this.addIndex('entityReferencesIndex', SubstanceDocument.AbstractIndex.extend({
     select: function(node) {
       return node.isInstanceOf("entity_reference");
     },
-    create: function(node) {
-      var targets = this.node.target;
-      Substance.each(targets, function(id) {
-        this.index.set([id, node.id], node);
-      });
-    },
-    delete: function(node) {
-      var targets = this.node.target;
-      Substance.each(targets, function(id) {
-        this.index.delete([id, node.id]);
-      });
-    },
-    update: function(node, property, value, oldValue) {
-      Substance.each(oldValue, function(id) {
-        this.index.delete([id, node.id]);
-      });
-      this.create(node);
+    getKey: function(node) {
+      return [node.target, node.id];
     }
   }));
 };
