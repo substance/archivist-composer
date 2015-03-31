@@ -13,6 +13,7 @@ var TextProperty = React.createClass({
     return $$("span", {
       className: "text-property " + this.props.className || "",
       contentEditable: true,
+      "data-path": this.props.path.join('.'),
       dangerouslySetInnerHTML: {__html: annotatedText}
     });
   }
