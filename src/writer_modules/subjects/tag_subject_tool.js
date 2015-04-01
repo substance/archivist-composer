@@ -9,31 +9,15 @@ var TagSubjectTool = React.createClass({
   displayName: "TagSubjectTool",
 
   handleClick: function(e) {
-    var doc = this.props.doc;
-    var writer = this.props.writer;
+    var writerCtrl = this.props.writerCtrl;
 
-    // TODO: determine using current selection
-    var path = ["text_3", "content"];
-    var range = [40, 80];
-
-    var subjectReference = {
-      id: "subject_reference_" + util.uuid(),
+    var subjectReference = writerCtrl.annotate({
       type: "subject_reference",
-      path: path,
-      range: range,
-      target: [] // no subjects assigned for the time being
-    };
-
-    // // Display reference in editor
-    doc.create(subjectReference);
-
-    // // Some fake action until editor is ready
-    var textNode = doc.get("text_3");
-    var newContent = textNode.content += ' and <span data-id="'+subjectReference.id+'" class="annotation subject-reference">'+subjectReference.id+'</span>';
-    doc.set(["text_3", "content"], newContent);
+      target: []
+    });
 
     // Switch state to highlight newly created reference
-    writer.replaceState({
+    writerCtrl.replaceState({
       contextId: "editSubjectReference",
       subjectReferenceId: subjectReference.id
     });

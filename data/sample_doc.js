@@ -70,7 +70,7 @@ var sampleDoc = {
         "text_54",
         "content"
       ],
-      "target": ["54bae4d0a868bc6fab4bcd16"], // these are external objects
+      "target": ["54bae4d0a868bc6fab4bcd16", "54bae99ca868bc3ec7fb5ad8"], // these are external objects
       "range": [
         100,
         120
