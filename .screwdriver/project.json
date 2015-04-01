@@ -26,9 +26,9 @@
       "branch": "refactor"
     },
     {
-      "repository": "https://github.com/oliver----/substance.git",
+      "repository": "https://github.com/substance/substance.git",
       "folder": "node_modules/substance",
-      "branch": "master"
+      "branch": "next"
     },
     {
       "repository": "https://github.com/substance/surface.git",
