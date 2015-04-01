@@ -94,8 +94,8 @@ var EditSubjectReferencePanel = React.createClass({
       _.delay(function() {
         _.each(subjectRef.target, function(subjectId) {
           $(treeContainerEl).jstree('select_node', subjectId);
-          $(treeContainerEl).on('changed.jstree', _.bind(self.updateAnnotation, this));
-        }, this);        
+        }, this);
+        $(treeContainerEl).on('changed.jstree', _.bind(self.updateAnnotation, this));
       }, 200);
     }, 200, this);
   },
