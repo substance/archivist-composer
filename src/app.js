@@ -10,6 +10,9 @@ var writerModules = require("./writer_modules");
 var doc = new Interview(EXAMPLE_DOC);
 window.doc = doc;
 
+// Prepare local cache
+window.cache = {};
+
 var Composer = React.createClass({
   displayName: "Composer",
   render: function() {

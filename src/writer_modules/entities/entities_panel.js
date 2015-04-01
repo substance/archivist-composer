@@ -1,14 +1,11 @@
-var $$ = React.createElement;
-var _ = require("underscore");
-
 var Substance = require("substance");
+var $$ = React.createElement;
 
 // Entity types
 var Prison = require("./entity_types/prison");
 var Toponym = require("./entity_types/toponym");
 var Person = require("./entity_types/person");
 var Definition = require("./entity_types/definition");
-
 
 var ENTITIES = [
   // Prisons
@@ -21,50 +18,56 @@ var ENTITIES = [
   {"_id":"54f476ba973cfcef0354adab","type": "person", "name":"Мария","description":"Мария, младшая сестра О.Г. Головиной","__v":0,"id":"54f476ba973cfcef0354adab"},{"_id":"54f476ba973cfcef0354adac","type": "person", "name":"Головина Анна Терентьевна","description":"","__v":0,"id":"54f476ba973cfcef0354adac"}
 ];
 
-
-function loadEntitiesByIds(entityIds) {
-  return Substance.filter(ENTITIES, function(entity) {
-    return Substance.includes(entityIds, entity.id);
-  });
-}
-
-// console.log('FOUND', loadEntitiesByIds(["54ef1331afda2d3c024e4818", "54f476ba973cfcef0354adab"]));
-
-
 var EntitiesPanel = React.createClass({
   displayName: "Entities",
 
   // Data loading methods
   // ------------
 
-  // Loding must be based on a list of referenced articles
   loadEntities: function() {
     var self = this;
+    var doc = this.props.writerCtrl.doc;
 
-    _.delay(function() {
+    var entityReferences = doc.entityReferencesIndex.get();
+    var entityIds = Substance.map(entityReferences, function(entityRef, key) {
+      return entityRef.target;
+    });
+
+    Substance.delay(function() {
+      console.log('loading entities...');
+
+      // TODO: replace with ajax request
+      var entities = Substance.filter(ENTITIES, function(entity) {
+        return Substance.includes(entityIds, entity.id);
+      });
+
+      window.cache.entities = entities;
+
       // Finished simulated loading of entities
       self.setState({
-        entities: ENTITIES
+        entities: entities
       });
-    }, 1);
+    }, 1000);
+  },
+
+  restoreEntitiesFromCache: function() {
+    // 1. check if cache is valid
+    if (window.cache && window.cache.entities) {
+      return window.cache.entities;
+    }
+  },
+
+  cacheInvalid: function() {
+    if (!window.cache.entities) return true;
+    return false;
   },
 
   // State relevant things
   // ------------
 
   getInitialState: function() {
-    var doc = this.props.writerCtrl.doc;
-
-    var entityReferences = doc.entityReferencesIndex.get();
-    console.log('entityrefs', entityReferences);
-
-    var entityIds = Substance.map(entityReferences, function(entityRef, key) {
-      return entityRef.target;
-    });
-
-    var entities = loadEntitiesByIds(entityIds);
     return {
-      entities: entities
+      entities: this.restoreEntitiesFromCache() || []
     };
   },
 
@@ -72,9 +75,15 @@ var EntitiesPanel = React.createClass({
   // ------------
 
   componentDidMount: function() {
-    // if (this.state.entities.length > 0) {
-    //   this.loadEntities();  
-    // }
+    if (this.cacheInvalid()) {
+      this.loadEntities();  
+    }
+  },
+
+  componentDidUpdate: function() {
+    if (this.cacheInvalid()) {
+      this.loadEntities();
+    }
   },
 
   handleToggle: function(entityId) {
