@@ -117,33 +117,15 @@ var TagEntityPanel = React.createClass({
   // Called with entityId when an entity has been clicked
   handleSelection: function(entityId) {
     var doc = this.props.doc;
-    var writer = this.props.writer;
+    var writerCtrl = this.props.writerCtrl;
 
-    var path = ["text_54", "content"];
-    var range = [84, 105];
-    // WANTED: an api to retrieve path and pos
-    // var selection = this.writer.getSelection();
-    // var path = selection.getPath();
-    // var range = selection.getRange();
-
-    var entityReference = {
-      id: "entity_reference_" + util.uuid(),
+    writerCtrl.annotate({
       type: "entity_reference",
-      path: path,
-      range: range,
       target: entityId
-    };
-
-    // Display reference in editor
-    doc.create(entityReference);
-
-    // Some fake action until editor is ready
-    var textNode = doc.get("text_3");
-    var newContent = textNode.content += ' and <span data-id="'+entityReference.id+'" class="annotation entity-reference">'+entityReference.id+'</span>';
-    doc.set(["text_3", "content"], newContent);
+    });
 
     // Switch state to highlight newly created reference
-    writer.replaceState({
+    writerCtrl.replaceState({
       contextId: "entities",
       entityId: entityId
     });
@@ -199,8 +181,7 @@ var TagEntityPanel = React.createClass({
 TagEntityPanel.contextId = "tagentity";
 TagEntityPanel.icon = "fa-bullseye";
 
-// No toggle is shown
+// No context switch toggle is shown
 TagEntityPanel.isDialog = true;
-
 
 module.exports = TagEntityPanel;

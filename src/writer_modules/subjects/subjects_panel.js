@@ -1,12 +1,10 @@
 var $$ = React.createElement;
 var _ = require("underscore");
 var SubjectsModel = require("./subjects_model");
-
 var SUBJECTS = require("./subjects_fixture");
 
 // Sub component
 var Subject = require("./subject");
-
 
 // Subjects Panel extension
 // ----------------
