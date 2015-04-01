@@ -1,6 +1,8 @@
 var $$ = React.createElement;
 var _ = require("underscore");
 
+var Substance = require("substance");
+
 // Entity types
 var Prison = require("./entity_types/prison");
 var Toponym = require("./entity_types/toponym");
@@ -18,6 +20,16 @@ var ENTITIES = [
   // Persons
   {"_id":"54f476ba973cfcef0354adab","type": "person", "name":"Мария","description":"Мария, младшая сестра О.Г. Головиной","__v":0,"id":"54f476ba973cfcef0354adab"},{"_id":"54f476ba973cfcef0354adac","type": "person", "name":"Головина Анна Терентьевна","description":"","__v":0,"id":"54f476ba973cfcef0354adac"}
 ];
+
+
+function loadEntitiesByIds(entityIds) {
+  return Substance.filter(ENTITIES, function(entity) {
+    return Substance.includes(entityIds, entity.id);
+  });
+}
+
+// console.log('FOUND', loadEntitiesByIds(["54ef1331afda2d3c024e4818", "54f476ba973cfcef0354adab"]));
+
 
 var EntitiesPanel = React.createClass({
   displayName: "Entities",
@@ -41,8 +53,16 @@ var EntitiesPanel = React.createClass({
   // ------------
 
   getInitialState: function() {
-    // Use cache
-    var entities = ENTITIES;
+    var doc = this.props.writerCtrl.doc;
+
+    var entityReferences = doc.entityReferencesIndex.get();
+    console.log('entityrefs', entityReferences);
+
+    var entityIds = Substance.map(entityReferences, function(entityRef, key) {
+      return entityRef.target;
+    });
+
+    var entities = loadEntitiesByIds(entityIds);
     return {
       entities: entities
     };
@@ -52,9 +72,9 @@ var EntitiesPanel = React.createClass({
   // ------------
 
   componentDidMount: function() {
-    if (this.state.entities.length > 0) {
-      this.loadEntities();  
-    }
+    // if (this.state.entities.length > 0) {
+    //   this.loadEntities();  
+    // }
   },
 
   handleToggle: function(entityId) {

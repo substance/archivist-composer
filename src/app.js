@@ -7,6 +7,9 @@ var EXAMPLE_DOC = require("../data/sample_doc");
 // Writer Configuration
 var writerModules = require("./writer_modules");
 
+var doc = new Interview(EXAMPLE_DOC);
+window.doc = doc;
+
 var Composer = React.createClass({
   displayName: "Composer",
   render: function() {
@@ -14,7 +17,7 @@ var Composer = React.createClass({
       config: {
         modules: writerModules
       },
-      doc: new Interview(EXAMPLE_DOC),
+      doc: doc,
       id: "writer"
     });
   }
