@@ -43,7 +43,6 @@ SubjectsModel.prototype.getTree = function() {
 
 SubjectsModel.prototype.getAllReferencedSubjects = function(subjectReferenceId) {
   var doc = this.doc;
-
   var subjectRefs = doc.subjectReferencesIndex.get();
   var subjects = [];
 

@@ -14,7 +14,7 @@ var EditSubjectReferencePanel = React.createClass({
   // ------------
 
   getInitialState: function() {
-    var subjects = new SubjectsModel(this.props.doc, SUBJECTS);
+    var subjects = new SubjectsModel(this.props.writerCtrl.doc, SUBJECTS);
 
     // TODO: create subject tree from cache
     return {
@@ -51,7 +51,7 @@ var EditSubjectReferencePanel = React.createClass({
     var subjectIds = $(treeContainerEl).jstree().get_selected();
     console.log('updating subjectReferenceId', subjectIds);
 
-    var doc = this.props.doc;
+    var doc = this.props.writerCtrl.doc;
     var subjectReferenceId = this.props.subjectReferenceId;
 
     doc.set([this.props.subjectReferenceId, "target"], subjectIds);
@@ -63,7 +63,7 @@ var EditSubjectReferencePanel = React.createClass({
   renderSubjectsTree: function() {
     var self = this;
     var subjects = this.state.subjects;
-    var doc = this.props.doc;
+    var doc = this.props.writerCtrl.doc;
     var treeContainerEl = this.refs.subjectsTree.getDOMNode();
     var subjectsTree = subjects.getTree();
     var subjectRef = doc.get(this.props.subjectReferenceId);

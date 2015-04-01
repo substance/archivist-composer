@@ -20,10 +20,11 @@ var SubjectsPanel = React.createClass({
   // ------------
 
   loadSubjects: function() {
+    var writerCtrl = this.props.writerCtrl;
   	var self = this;
 		_.delay(function() {
 			self.setState({
-				subjects: new SubjectsModel(self.props.doc, SUBJECTS)
+				subjects: new SubjectsModel(writerCtrl.doc, SUBJECTS)
 			});
 		}, 1);
   },
@@ -32,7 +33,8 @@ var SubjectsPanel = React.createClass({
   // ------------
 
   getInitialState: function() {
-    var subjects = new SubjectsModel(this.props.doc, SUBJECTS);
+    var writerCtrl = this.props.writerCtrl;
+    var subjects = new SubjectsModel(writerCtrl.doc, SUBJECTS);
     
     return {
       subjects: subjects
@@ -50,18 +52,17 @@ var SubjectsPanel = React.createClass({
   },
 
   handleToggle: function(subjectId) {
-    // console.log('meeeh haah', subjectId);
-    var writer = this.props.writer;
+    var writerCtrl = this.props.writerCtrl;
 
-    if (writer.state.subjectId === subjectId) {
-      writer.replaceState({
+    if (writerCtrl.state.subjectId === subjectId) {
+      writerCtrl.replaceState({
         contextId: "subjects"
       }); 
     } else {
-      writer.replaceState({
+      writerCtrl.replaceState({
         contextId: "subjects",
         subjectId: subjectId
-      });      
+      });
     }
   },
 

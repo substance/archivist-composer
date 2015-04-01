@@ -12,21 +12,19 @@ var stateHandlers = {
   // 
   // Returns a new panel element if a particular state is matched
 
-  handleContextPanelCreation: function(writer) {
-    var s = writer.state;
+  handleContextPanelCreation: function(writerCtrl) {
+    var s = writerCtrl.getState();
 
     if (s.contextId === SubjectsPanel.contextId) {
       return $$(SubjectsPanel, {
-        writer: writer,
-        doc: writer.props.doc,
-        documentId: writer.props.doc.get('document').guid,
-        subjectId: writer.state.subjectId
+        writerCtrl: writerCtrl,
+        // documentId: writer.props.doc.get('document').guid,
+        subjectId: s.subjectId
       });
     } else if (s.contextId === EditSubjectReferencePanel.contextId && s.subjectReferenceId) {
       return $$(EditSubjectReferencePanel, {
-        writer: writer,
-        subjectReferenceId: s.subjectReferenceId,
-        doc: writer.props.doc
+        writerCtrl: writerCtrl,
+        subjectReferenceId: s.subjectReferenceId
       });
     }
   },
@@ -40,19 +38,19 @@ var stateHandlers = {
   // manipulate writer state (e.g. switching the contextId) so a custom panel
   // can display contextual information (see Subjects Panel).
 
-  handleReferenceToggle: function(writer, reference) {
-    var state = writer.state;
+  handleReferenceToggle: function(writerCtrl, reference) {
+    var state = writerCtrl.getState();
 
     if (reference.type === "subject_reference") {
 
       if (state.contextId === EditSubjectReferencePanel.contextId && reference.id === state.subjectReferenceId) {
         // Toggle off
-        writer.replaceState({
+        writerCtrl.replaceState({
           contextId: "subjects"
         });
       } else {
         // Toggle on
-        writer.replaceState({
+        writerCtrl.replaceState({
           contextId: EditSubjectReferencePanel.contextId,
           subjectReferenceId: reference.id
         });
@@ -69,18 +67,13 @@ var stateHandlers = {
   // Based on writer state, determine which nodes should be highlighted in the content panel
   // @returns a list of nodes to be highlighted
 
-  getHighlightedNodes: function(writer) {
-    var doc = writer.props.doc;
-    var state = writer.state;
+  getHighlightedNodes: function(writerCtrl) {
+    var doc = writerCtrl.doc;
+    var state = writerCtrl.getState();
 
     // When a subject has been clicked in the subjects panel
     if (state.contextId === "subjects" && state.subjectId) {
-
-      // TODO: case 1 get all subject references for subject id
-      // Use reference handler
       var references = Object.keys(doc.subjectReferencesIndex.get(state.subjectId));
-
-      console.log('TODO: Fix refs', references, state.subjectId);
       return references;
     }
 

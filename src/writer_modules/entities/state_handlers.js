@@ -9,17 +9,17 @@ var stateHandlers = {
   // 
   // Returns a new panel element if a particular state is matched
 
-  handleContextPanelCreation: function(writer) {
-    if (writer.state.contextId === "entities") {
+  handleContextPanelCreation: function(writerCtrl) {
+    var state = writerCtrl.getState();
+
+    if (state.contextId === "entities") {
       return $$(EntitiesPanel, {
-        writer: writer,
-        documentId: writer.props.doc.get('document').guid,
-        entityId: writer.state.entityId
+        writerCtrl: writerCtrl, // writerCtrl needed?
+        entityId: state.entityId
       });
-    } else if (writer.state.contextId === "tagentity") {
+    } else if (state.contextId === "tagentity") {
       return $$(TagEntityPanel, {
-        writer: writer,
-        doc: writer.props.doc
+        writerCtrl: writerCtrl
       });
     }
   },
@@ -34,18 +34,18 @@ var stateHandlers = {
   // can display contextual information (see Entities Panel). Also data can be loaded asynchronously
   // using a custom transition
 
-  handleReferenceToggle: function(writer, reference) {
-    var state = writer.state;
+  handleReferenceToggle: function(writerCtrl, reference) {
+    var state = writerCtrl.getState();
 
     if (reference.type === "entity_reference") {
       if (state.contextId === "entities" && reference.target === state.entityId) {
         // Toggle off
-        writer.replaceState({
+        writerCtrl.replaceState({
           contextId: "entities"
         });
       } else {
         // Toggle on
-        writer.replaceState({
+        writerCtrl.replaceState({
           contextId: "entities",
           entityId: reference.target
         });
@@ -62,9 +62,9 @@ var stateHandlers = {
   // Based on writer state, determine which nodes should be highlighted in the content panel
   // @returns a list of nodes to be highlighted
 
-  getHighlightedNodes: function(writer) {
-    var doc = writer.props.doc;
-    var state = writer.state;
+  getHighlightedNodes: function(writerCtrl) {
+    var doc = writerCtrl.doc;
+    var state = writerCtrl.getState();
 
     // Let the extension handle which nodes should be highlighted
     if (state.contextId === "entities" && state.entityId) {
