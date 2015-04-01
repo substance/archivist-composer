@@ -21,21 +21,25 @@ var ENTITIES = [
 var EntitiesPanel = React.createClass({
   displayName: "Entities",
 
+
+  getReferencedEntityIds: function() {
+    var doc = this.props.writerCtrl.doc;
+    var entityReferences = doc.entityReferencesIndex.get();
+    return Substance.map(entityReferences, function(entityRef, key) {
+      return entityRef.target;
+    });
+  },
+
   // Data loading methods
   // ------------
 
   loadEntities: function() {
     var self = this;
-    var doc = this.props.writerCtrl.doc;
-
-    var entityReferences = doc.entityReferencesIndex.get();
-    var entityIds = Substance.map(entityReferences, function(entityRef, key) {
-      return entityRef.target;
-    });
-
+    
     Substance.delay(function() {
       console.log('loading entities...');
 
+      var entityIds = self.getReferencedEntityIds();
       // TODO: replace with ajax request
       var entities = Substance.filter(ENTITIES, function(entity) {
         return Substance.includes(entityIds, entity.id);
@@ -58,8 +62,18 @@ var EntitiesPanel = React.createClass({
   },
 
   cacheInvalid: function() {
-    if (!window.cache.entities) return true;
-    return false;
+    // Sneak into cache
+    if (window.cache.entities) {
+      var currentEntities = this.getReferencedEntityIds();
+      var cachedEntities = Substance.pluck(window.cache.entities, 'id');
+
+      if (Substance.isArrayEqual(currentEntities, cachedEntities)) {
+        console.log('cache matched still valid')
+        return false;
+      }
+    }
+
+    return true;
   },
 
   // State relevant things
