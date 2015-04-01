@@ -12,7 +12,7 @@ var Composer = React.createClass({
   render: function() {
     return $$(Writer, {
       config: {
-        extensions: writerModules
+        modules: writerModules
       },
       doc: new Interview(EXAMPLE_DOC),
       id: "writer"
