@@ -1,4 +1,3 @@
-
 var ContentNode = require('./content_node');
 
 var TextNode = ContentNode.extend({

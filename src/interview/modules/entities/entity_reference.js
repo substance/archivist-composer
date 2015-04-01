@@ -1,5 +1,4 @@
-
-var Reference = require('../../core/nodes/reference');
+var Reference = require('../core/reference');
 
 var EntityReference = Reference.extend({
   name: "entity_reference",

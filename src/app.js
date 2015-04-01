@@ -1,15 +1,29 @@
 var $$ = React.createElement;
-var _ = require("underscore");
+var Interview = require('./interview');
+var Writer = require("substance-writer");
 
-// The main composer
-var Composer = require("./composer");
+var EXAMPLE_DOC = require("../data/sample_doc");
+
+// Writer Configuration
+var writerModules = require("./writer_modules");
+
+var Composer = React.createClass({
+  displayName: "Composer",
+  render: function() {
+    return $$(Writer, {
+      config: {
+        extensions: writerModules
+      },
+      doc: new Interview(EXAMPLE_DOC),
+      id: "writer"
+    });
+  }
+});
 
 var app = {
   start: function() {
     React.render(
-      $$(Composer, {
-        author: "Hello World"
-      }),
+      $$(Composer),
       document.body
     );
   }

@@ -1,4 +1,3 @@
-
 var SubstanceNode = require('substance-document').Node;
 
 var DocumentNode = SubstanceNode.extend({

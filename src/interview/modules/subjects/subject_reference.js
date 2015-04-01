@@ -1,5 +1,5 @@
 
-var Reference = require('../../core/nodes/reference');
+var Reference = require('../core/reference');
 
 var SubjectReference = Reference.extend({
   name: "subject_reference",

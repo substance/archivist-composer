@@ -1,4 +1,3 @@
-
 var Annotation = require('substance-document').Annotation;
 
 var Reference = Annotation.extend({
