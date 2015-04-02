@@ -10,7 +10,11 @@ var AnnotationComponent = React.createClass({
     // HACK: we should think about moving to dashes in type names so that we can
     // better map to CSS class names.
     classNames = classNames.replace('_', '-');
-    return $$("span", { className: classNames, "data-id": this.props.node.id },
+    return $$("span", {
+        key: this.props.node.id,
+        className: classNames,
+        "data-id": this.props.node.id
+      },
       this.props.children
     );
   }

@@ -11,20 +11,28 @@ var Surface = Substance.Surface;
 var ContainerComponent = React.createClass({
   displayName: "ContainerComponent",
 
+  contextTypes: {
+    componentFactory: React.PropTypes.object.required
+  },
+
   render: function() {
     var containerNode = this.props.node;
     var doc = this.props.doc;
     var writerCtrl = this.props.writerCtrl;
+    var componentFactory = this.context.componentFactory;
 
     var components = containerNode.nodes.map(function(nodeId) {
       var node = doc.get(nodeId);
-      var ComponentClass = writerCtrl.getNodeComponentClass(node.type);
-
+      var ComponentClass = componentFactory.get(node.type);
+      if (!ComponentClass) {
+        throw new Error('Could not resolve a component for type: ' + node.type);
+      }
       return $$(ComponentClass, {
         key: node.id,
-        writerCtrl: writerCtrl,
         doc: doc,
-        node: node
+        node: node,
+        // TODO: we should use DI instead of coupling to the writer
+        writerCtrl: writerCtrl
       });
     });
 

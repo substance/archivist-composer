@@ -10,17 +10,37 @@ var AnnotationComponent = require('./annotation_component');
 var TextProperty = React.createClass({
   displayName: "text-property",
 
+  contextTypes: {
+    componentFactory: React.PropTypes.object.required
+  },
+
+  componentDidMount: function() {
+    var doc = this.props.doc;
+    doc.addDocumentChangeListener(this, this.props.path, this.propertyDidChange);
+  },
+
+  componentWillUnmount: function() {
+    var doc = this.props.doc;
+    doc.removeDocumentChangeListener(this, this.props.path);
+  },
+
+  propertyDidChange: function(/*ops*/) {
+    console.log('################## HAHAHA');
+  },
+
   renderWithAnnotations: function(text, annotations) {
     var doc = this.props.doc;
+    var componentFactory = this.context.componentFactory;
 
     var annotator = new Annotator();
     annotator.onText = function(context, text) {
       context.children.push(text);
     };
+
     annotator.onEnter = function(entry) {
       var anno = doc.get(entry.id);
       // TODO: we need a component factory, so that we can create the appropriate component
-      var componentClass = AnnotationComponent;
+      var componentClass = componentFactory.get(anno.type) || AnnotationComponent;
       return {
         component: componentClass,
         props: {
