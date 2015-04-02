@@ -2,14 +2,13 @@ var SubjectsPanel = require("./subjects_panel");
 var EditSubjectReferencePanel = require("./edit_subject_reference_panel");
 var $$ = React.createElement;
 
-
 var stateHandlers = {
 
   // Handle Context Panel creation
   // -----------------
-  // 
+  //
   // => inspects state
-  // 
+  //
   // Returns a new panel element if a particular state is matched
 
   handleContextPanelCreation: function(writerCtrl) {
@@ -31,9 +30,9 @@ var stateHandlers = {
 
   // Handle click on reference
   // -----------------
-  // 
+  //
   // => modifies state
-  // 
+  //
   // When user clicks on a reference somewhere, the extension gets the chance to
   // manipulate writer state (e.g. switching the contextId) so a custom panel
   // can display contextual information (see Subjects Panel).
@@ -61,9 +60,9 @@ var stateHandlers = {
 
   // Determine highlighted nodes
   // -----------------
-  // 
+  //
   // => inspects state
-  // 
+  //
   // Based on writer state, determine which nodes should be highlighted in the content panel
   // @returns a list of nodes to be highlighted
 

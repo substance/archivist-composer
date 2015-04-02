@@ -1,11 +1,8 @@
-var Application = require("substance-application");
-var Component = Application.Component;
 var $$ = React.createElement;
-var _ = require("underscore");
 
 var TagEntityTool = React.createClass({
   displayName: "TagEntityTool",
-  handleClick: function(e) {
+  handleClick: function() {
   	this.props.switchContext("tagentity");
   },
 

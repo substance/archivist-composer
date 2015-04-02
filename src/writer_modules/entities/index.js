@@ -1,5 +1,3 @@
-"use strict";
-
 var EntitiesPanel = require("./entities_panel");
 var TagEntityPanel = require("./tag_entity_panel");
 var TagEntityTool = require("./tag_entity_tool");

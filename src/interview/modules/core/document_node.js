@@ -1,6 +1,6 @@
-var SubstanceNode = require('substance-document').Node;
+var Substance = require('substance');
 
-var DocumentNode = SubstanceNode.extend({
+var DocumentNode = Substance.Document.Node.extend({
   name: "document",
   properties: {
     "guid": "string",

@@ -1,7 +1,7 @@
-var Document = require("substance-document");
+var Substance = require('substance');
 
 function initialize(doc) {
-  doc.references = doc.addIndex('referenceByTarget', Document.Index.create({
+  doc.references = doc.addIndex('referenceByTarget', Substance.Data.Index.create({
     type: "reference",
     property: "target"
   }));

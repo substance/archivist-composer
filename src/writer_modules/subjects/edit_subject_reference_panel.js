@@ -52,8 +52,6 @@ var EditSubjectReferencePanel = React.createClass({
     console.log('updating subjectReferenceId', subjectIds);
 
     var doc = this.props.writerCtrl.doc;
-    var subjectReferenceId = this.props.subjectReferenceId;
-
     doc.set([this.props.subjectReferenceId, "target"], subjectIds);
   },
 
@@ -104,9 +102,6 @@ var EditSubjectReferencePanel = React.createClass({
   // -------------------
 
   render: function() {
-    var subjects = this.state.subjects;
-    var entityNodes;
-
     return $$("div", {className: "panel tag-subject-panel-component"},
       $$('div', {className: "panel-content"},
         $$('div', {className: "subjects-tree", ref: 'subjectsTree'})

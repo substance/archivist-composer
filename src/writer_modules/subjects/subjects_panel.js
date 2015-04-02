@@ -8,7 +8,7 @@ var Subject = require("./subject");
 
 // Subjects Panel extension
 // ----------------
-// 
+//
 // TODO: make stateful something like this: http://blog.mgechev.com/2015/03/05/persistent-state-reactjs/
 
 var SubjectsPanel = React.createClass({
@@ -33,7 +33,7 @@ var SubjectsPanel = React.createClass({
   getInitialState: function() {
     var writerCtrl = this.props.writerCtrl;
     var subjects = new SubjectsModel(writerCtrl.doc, SUBJECTS);
-    
+
     return {
       subjects: subjects
     };
@@ -45,7 +45,7 @@ var SubjectsPanel = React.createClass({
   componentDidMount: function() {
     // If not from cache -> load
     if (this.state.subjects.length === 0) {
-      this.loadSubjects();  
+      this.loadSubjects();
     }
   },
 
@@ -55,7 +55,7 @@ var SubjectsPanel = React.createClass({
     if (writerCtrl.state.subjectId === subjectId) {
       writerCtrl.replaceState({
         contextId: "subjects"
-      }); 
+      });
     } else {
       writerCtrl.replaceState({
         contextId: "subjects",
@@ -75,7 +75,7 @@ var SubjectsPanel = React.createClass({
     // Only get referenced subjects
     var referencedSubjects = state.subjects.getAllReferencedSubjects();
 
-    var subjectNodes = referencedSubjects.map(function(subject, index) {
+    var subjectNodes = referencedSubjects.map(function(subject) {
       // Dynamically assign active state and a few other things
       subject.active = subject.id === props.subjectId;
       subject.key = subject.id;

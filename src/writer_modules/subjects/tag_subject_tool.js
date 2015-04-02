@@ -1,6 +1,4 @@
 var $$ = React.createElement;
-var _ = require("underscore");
-var util = require("substance-util");
 
 // TagSubjectTool
 // ----------------
@@ -8,7 +6,7 @@ var util = require("substance-util");
 var TagSubjectTool = React.createClass({
   displayName: "TagSubjectTool",
 
-  handleClick: function(e) {
+  handleClick: function() {
     var writerCtrl = this.props.writerCtrl;
 
     var subjectReference = writerCtrl.annotate({
@@ -25,10 +23,10 @@ var TagSubjectTool = React.createClass({
 
   render: function() {
     return $$("a", {
-    	className: 'tag-subject-tool-component tool', 
-    	href: "#",
-    	dangerouslySetInnerHTML: {__html: '<i class="fa fa-tag"></i>'},
-    	title: 'Tag Subject',
+      className: 'tag-subject-tool-component tool',
+      href: "#",
+      dangerouslySetInnerHTML: {__html: '<i class="fa fa-tag"></i>'},
+      title: 'Tag Subject',
       onClick: this.handleClick
     });
   }

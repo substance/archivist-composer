@@ -1,6 +1,6 @@
-var Annotation = require('substance-document').Annotation;
+var Substance = require('substance');
 
-var Reference = Annotation.extend({
+var Reference = Substance.Document.Annotation.extend({
   name: "reference"
 });
 

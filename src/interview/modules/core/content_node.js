@@ -1,6 +1,8 @@
-var SubstanceNode = require('substance-document').Node;
+'use strict';
 
-var ContentNode = SubstanceNode.extend({
+var Substance = require('substance');
+
+var ContentNode = Substance.Document.Node.extend({
   name: "content",
   properties: {
     content: "string"

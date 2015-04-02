@@ -1,7 +1,6 @@
+var Substance = require("substance");
 var $$ = React.createElement;
 var _ = require("underscore");
-
-var Substance = require("substance");
 
 // Entity types
 var Prison = require("./entity_types/prison");
@@ -73,7 +72,7 @@ var EntitiesPanel = React.createClass({
 
   componentDidMount: function() {
     // if (this.state.entities.length > 0) {
-    //   this.loadEntities();  
+    //   this.loadEntities();
     // }
   },
 
@@ -99,13 +98,13 @@ var EntitiesPanel = React.createClass({
     entity.handleToggle = this.handleToggle;
 
     if (entity.type === "prison") {
-      return $$(Prison, entity); 
+      return $$(Prison, entity);
     } else if (entity.type === "toponym") {
-      return $$(Toponym, entity); 
+      return $$(Toponym, entity);
     } else if (entity.type === "person") {
-      return $$(Person, entity); 
+      return $$(Person, entity);
     } else if (entity.type === "definition") {
-      return $$(Definition, entity); 
+      return $$(Definition, entity);
     }
     throw new Error('No view component for '+ entity.type);
   },
@@ -113,7 +112,7 @@ var EntitiesPanel = React.createClass({
   render: function() {
     var state = this.state;
     var props = this.props;
-    
+
     var getElem = this.getEntityElement;
     var entityNodes = state.entities.map(function(entity, index) {
       // Dynamically assign active state

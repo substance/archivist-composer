@@ -1,7 +1,7 @@
+var Substance = require('substance');
 var $$ = React.createElement;
 var _ = require("underscore");
-
-var Surface = require('substance-surface');
+var Surface = Substance.Surface;
 
 // Container Node
 // ----------------
@@ -19,7 +19,7 @@ var ContainerNode = React.createClass({
     var components = containerNode.nodes.map(function(nodeId) {
       var node = doc.get(nodeId);
       var ComponentClass = writerCtrl.getNodeComponentClass(node.type);
-      
+
       return $$(ComponentClass, {
         key: node.id,
         writerCtrl: writerCtrl,

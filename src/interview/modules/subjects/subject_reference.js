@@ -1,4 +1,3 @@
-
 var Reference = require('../core/reference');
 
 var SubjectReference = Reference.extend({

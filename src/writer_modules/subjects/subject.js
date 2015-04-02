@@ -1,5 +1,4 @@
 var $$ = React.createElement;
-var _ = require("underscore");
 
 // Subject view
 // ----------------

@@ -1,6 +1,5 @@
 var $$ = React.createElement;
 var _ = require("underscore");
-var util = require("substance-util");
 
 var TYPE_LABELS = {
   "prison": "Prison",
@@ -116,7 +115,6 @@ var TagEntityPanel = React.createClass({
 
   // Called with entityId when an entity has been clicked
   handleSelection: function(entityId) {
-    var doc = this.props.doc;
     var writerCtrl = this.props.writerCtrl;
 
     writerCtrl.annotate({
