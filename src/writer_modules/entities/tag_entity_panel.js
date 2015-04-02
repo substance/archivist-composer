@@ -1,5 +1,5 @@
 var $$ = React.createElement;
-var _ = require("underscore");
+var Substance = require("substance");
 
 var TYPE_LABELS = {
   "prison": "Prison",
@@ -7,7 +7,6 @@ var TYPE_LABELS = {
   "person": "Person",
   "definition": "Definition"
 };
-
 
 // Fixture data
 var SUGGESTED_ENTITIES = [
@@ -71,7 +70,7 @@ var TagEntityPanel = React.createClass({
     var self = this;
 
     if (searchString) {
-      _.delay(function() {
+      Substance.delay(function() {
         // Finished simulated loading of entities
         self.setState({
           // searchString: searchString,
@@ -79,7 +78,7 @@ var TagEntityPanel = React.createClass({
         });
       }, 700);
     } else {
-      _.delay(function() {
+      Substance.delay(function() {
         // Finished simulated loading of entities
         self.setState({
           // searchString: searchString,
@@ -153,7 +152,6 @@ var TagEntityPanel = React.createClass({
             className: "search-str",
             type: "text",
             placeholder: "Type to search for entities",//,
-            // value: "HELLO"
             value: this.state.searchString,
             onChange: this.handleSearchStringChange
           }),

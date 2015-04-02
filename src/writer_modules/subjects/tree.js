@@ -1,4 +1,4 @@
-var _ = require("underscore");
+var Substance = require("substance");
 
 // A simple tree implementation
 // -------------
@@ -13,7 +13,7 @@ Tree.Prototype = function() {
   this.buildIndexes = function() {
     // Build a map of parents referencing their kids
     this.parentIndex = {};
-    _.each(this.nodes, function(node) {
+    Substance.each(this.nodes, function(node) {
       var parent = node.parent || "root";
       if (!this.parentIndex[parent]) {
         this.parentIndex[parent] = [ node ];
@@ -49,7 +49,7 @@ Tree.Prototype = function() {
         fn.call(ctx, rootNode);  
       }
 
-      _.each(self.getChildren(rootNode.id), function(child) {
+      Substance.each(self.getChildren(rootNode.id), function(child) {
         _walkTree(child, fn, ctx);
       });
     }

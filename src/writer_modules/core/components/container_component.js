@@ -1,6 +1,5 @@
 var Substance = require('substance');
 var $$ = React.createElement;
-var _ = require("underscore");
 
 var Surface = Substance.Surface;
 

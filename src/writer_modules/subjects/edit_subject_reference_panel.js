@@ -1,5 +1,5 @@
 var $$ = React.createElement;
-var _ = require("underscore");
+var Substance = require("substance");
 var SubjectsModel = require("./subjects_model");
 
 var SUBJECTS = require("./subjects_fixture");
@@ -85,15 +85,15 @@ var EditSubjectReferencePanel = React.createClass({
     $(treeContainerEl).off('changed.jstree');
 
     // Select assigned items
-    _.delay(function() {
+    Substance.delay(function() {
       $(treeContainerEl).jstree('deselect_all');
       $(treeContainerEl).jstree('close_all');
 
-      _.delay(function() {
-        _.each(subjectRef.target, function(subjectId) {
+      Substance.delay(function() {
+        Substance.each(subjectRef.target, function(subjectId) {
           $(treeContainerEl).jstree('select_node', subjectId);
         }, this);
-        $(treeContainerEl).on('changed.jstree', _.bind(self.updateAnnotation, this));
+        $(treeContainerEl).on('changed.jstree', self.updateAnnotation.bind(this));
       }, 200);
     }, 200, this);
   },

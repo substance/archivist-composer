@@ -1,7 +1,7 @@
 var http = require('http');
 var express = require('express');
 var path = require('path');
-var _ = require("underscore");
+var Substance = require("substance");
 var fs = require('fs');
 var ejs = require('ejs');
 var path = require("path");
@@ -16,7 +16,6 @@ app.use(express.methodOverride());
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname);
-
 
 var config = require("./.screwdriver/project.json");
 new CJSServer(app, __dirname, 'lens')
@@ -35,7 +34,7 @@ new CJSServer(app, __dirname, 'lens')
 
 
 // Serve assets with alias as configured in project.json (~dist like setup)
-_.each(config.assets, function(srcPath, distPath) {
+Substance.each(config.assets, function(srcPath, distPath) {
   var absPath = path.join(__dirname, srcPath);
   var route = "/" + distPath;
   //console.log("Adding route for asset", route, "->", absPath);

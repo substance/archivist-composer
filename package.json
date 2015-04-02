@@ -2,7 +2,6 @@
   "name": "archivist-composer",
   "description": "Substance Archivist Composer.",
   "dependencies": {
-    "underscore": "*",
     "express": "3.3.x",
     "ejs": "*"
   },

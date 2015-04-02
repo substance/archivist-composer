@@ -1,5 +1,4 @@
 var $$ = React.createElement;
-var _ = require("underscore");
 var TextProperty = require('./text_property')
 
 // TextNode
@@ -9,7 +8,7 @@ var TextProperty = require('./text_property')
 var TextNode = React.createClass({
   componentDidMount: function() {
     var doc = this.props.doc;
-    doc.on('operation:applied', _.bind(this.onGraphUpdate));
+    doc.on('operation:applied', this.onGraphUpdate.bind(this));
   },
 
   // This is a bit wacky implementation

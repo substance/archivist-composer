@@ -1,5 +1,5 @@
 var Tree = require("./tree");
-var _ = require("underscore");
+var Substance = require("substance");
 
 var SubjectsModel = function(doc, subjects) {
   this.doc = doc;
@@ -7,7 +7,7 @@ var SubjectsModel = function(doc, subjects) {
   // Convert subjects to hash
   this.subjects = {};
 
-  _.each(subjects, function(subject) {
+  Substance.each(subjects, function(subject) {
     this.subjects[subject.id] = subject;
   }, this);
 
@@ -25,7 +25,7 @@ SubjectsModel.prototype.getTree = function() {
     var nodes = tree.getChildren(parentId);
     if (nodes.length === 0) return res; // exit condition
 
-    _.each(nodes, function(node) {
+    Substance.each(nodes, function(node) {
       var entry = {
         id: node.id,
         text: node.name,
@@ -40,15 +40,14 @@ SubjectsModel.prototype.getTree = function() {
 };
 
 
-
 SubjectsModel.prototype.getAllReferencedSubjects = function() {
   var doc = this.doc;
   var subjectRefs = doc.subjectReferencesIndex.get();
   var subjects = [];
 
-  _.each(subjectRefs, function(subjectRef) {
+  Substance.each(subjectRefs, function(subjectRef) {
     // collect subjects
-    _.each(subjectRef.target, function(subjectId) {
+    Substance.each(subjectRef.target, function(subjectId) {
       subjects.push(this.tree.get(subjectId));
     }, this);
   }, this);

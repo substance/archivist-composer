@@ -1,5 +1,5 @@
 var $$ = React.createElement;
-var _ = require("underscore");
+var Substance = require("substance");
 var SubjectsModel = require("./subjects_model");
 var SUBJECTS = require("./subjects_fixture");
 
@@ -20,7 +20,7 @@ var SubjectsPanel = React.createClass({
   loadSubjects: function() {
     var writerCtrl = this.props.writerCtrl;
   	var self = this;
-		_.delay(function() {
+		Substance.delay(function() {
 			self.setState({
 				subjects: new SubjectsModel(writerCtrl.doc, SUBJECTS)
 			});
