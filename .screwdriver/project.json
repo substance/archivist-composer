@@ -6,33 +6,8 @@
       "branch": "experimental"
     },
     {
-      "repository": "https://github.com/substance/chronicle.git",
-      "folder": "node_modules/substance-chronicle",
-      "branch": "next"
-    },
-    {
-      "repository": "https://github.com/substance/data.git",
-      "folder": "node_modules/substance-data",
-      "branch": "next"
-    },
-    {
-      "repository": "https://github.com/substance/operator.git",
-      "folder": "node_modules/substance-operator",
-      "branch": "next"
-    },
-    {
-      "repository": "https://github.com/substance/document.git",
-      "folder": "node_modules/substance-document",
-      "branch": "refactor"
-    },
-    {
       "repository": "https://github.com/substance/substance.git",
       "folder": "node_modules/substance",
-      "branch": "next"
-    },
-    {
-      "repository": "https://github.com/substance/surface.git",
-      "folder": "node_modules/substance-surface",
       "branch": "next"
     },
     {
