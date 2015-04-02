@@ -38,9 +38,15 @@ var ContainerNode = React.createClass({
       this.surface.dispose();
     }
     var surfaceModel = new Surface.FullfledgedEditor(this.props.node);
+
     this.surface = new Surface(this.getDOMNode(), surfaceModel);
+    this.props.writerCtrl.registerSurface(this.surface, "content");
 
     this.surface.attach();
+  },
+
+  componentWillUnmount: function() {
+    this.props.writerCtrl.unregisterSurface(this.surface);
   },
 
 });
