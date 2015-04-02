@@ -1,6 +1,7 @@
 var Substance = require('substance');
 var $$ = React.createElement;
 var _ = require("underscore");
+
 var Surface = Substance.Surface;
 
 // Container Node
@@ -37,7 +38,9 @@ var ContainerNode = React.createClass({
     if (this.surface) {
       this.surface.dispose();
     }
-    this.surface = new Surface(this.getDOMNode(), this.props.node);
+    var surfaceModel = new Surface.FullfledgedEditor(this.props.node);
+    this.surface = new Surface(this.getDOMNode(), surfaceModel);
+
     this.surface.attach();
   },
 
