@@ -1,11 +1,11 @@
 var $$ = React.createElement;
 var TextProperty = require('./text_property')
 
-// TextNode
+// TextComponent
 // ----------------
 //
 
-var TextNode = React.createClass({
+var TextComponent = React.createClass({
   componentDidMount: function() {
     var doc = this.props.doc;
     doc.on('operation:applied', this.onGraphUpdate.bind(this));
@@ -18,12 +18,12 @@ var TextNode = React.createClass({
     }
   },
 
-  displayName: "TextNode",
+  displayName: "TextComponent",
   render: function() {
-    return $$("div", { className: "content-node text" },
+    return $$("div", { className: "content-node text", "data-id": this.props.node.id },
       $$(TextProperty, { doc: this.props.doc, path: [ this.props.node.id, "content"] })
     );
   }
 });
 
-module.exports = TextNode;
+module.exports = TextComponent;

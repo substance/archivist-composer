@@ -8,8 +8,8 @@ var Surface = Substance.Surface;
 //
 // Represents a flat collection of nodes
 
-var ContainerNode = React.createClass({
-  displayName: "ContainerNode",
+var ContainerComponent = React.createClass({
+  displayName: "ContainerComponent",
 
   render: function() {
     var containerNode = this.props.node;
@@ -51,4 +51,4 @@ var ContainerNode = React.createClass({
 
 });
 
-module.exports = ContainerNode;
+module.exports = ContainerComponent;

@@ -67,7 +67,7 @@ html {
 body {
   font-family: 'Source Sans Pro', Helvetica, Arial, Verdana, sans-serif;
   color: #505050;
-  overflow: hidden;  
+  overflow: hidden;
 }
 
 a {
@@ -84,7 +84,7 @@ a:hover {
   color: rgba(11, 157, 217, 1);
 }
 
-/* Layout stuff 
+/* Layout stuff
 ---------------------------------
 */
 
@@ -269,7 +269,7 @@ a:hover {
 -----------------------------------------------------*/
 
 .content-panel-component .container-node.content {
-  
+
 }
 
 .content-panel-component .container-node.content .nodes {
@@ -289,7 +289,7 @@ a:hover {
   right: 0px;
   padding: 20px;
 }
-  
+
 /* Overrides .panel .panel-content */
 .content-panel-component .panel-content {
   left: 20px;
@@ -380,7 +380,7 @@ a:hover {
 -----------------------------------------------------*/
 
 
-/* Entities component 
+/* Entities component
 -----------------------------------------------------*/
 
 .entity {
@@ -449,7 +449,7 @@ a:hover {
   color: #A99C90;
 }
 
-/* Edit Subject Reference Panel 
+/* Edit Subject Reference Panel
 -----------------------------------------------------*/
 
 .panel.tag-subject-panel-component {
@@ -493,7 +493,7 @@ a:hover {
 }
 
 
-/* Subject component 
+/* Subject component
 -----------------------------------------------------*/
 
 .subject {
