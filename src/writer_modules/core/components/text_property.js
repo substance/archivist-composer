@@ -11,7 +11,7 @@ var TextProperty = React.createClass({
   displayName: "text-property",
 
   contextTypes: {
-    componentFactory: React.PropTypes.object.required
+    componentFactory: React.PropTypes.object.isRequired
   },
 
   componentDidMount: function() {

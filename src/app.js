@@ -16,19 +16,6 @@ window.doc = doc;
 // Prepare local cache
 window.cache = {};
 
-var Composer = React.createClass({
-  displayName: "Composer",
-  render: function() {
-    return $$(Writer, {
-      config: {
-        modules: writerModules
-      },
-      doc: doc,
-      id: "writer"
-    });
-  }
-});
-
 // extract a component factory from writerModules and expose it via 'context'
 var componentFactory = new Substance.Factory();
 Substance.each(writerModules, function(module) {
@@ -41,19 +28,35 @@ var globalContext = {
   componentFactory: componentFactory
 };
 
+var Composer = React.createClass({
+  displayName: "Composer",
+
+  childContextTypes: {
+    componentFactory: React.PropTypes.object
+  },
+
+  getChildContext: function() {
+    return globalContext;
+  },
+
+  render: function() {
+    return $$(Writer, {
+      config: {
+        modules: writerModules
+      },
+      doc: doc,
+      id: "writer"
+    });
+  },
+
+});
+
 var app = {
   start: function() {
-    // Dependency injection
-    // Note: a component needs to declare its dependency via
-    //   contextTypes: {
-    //     componentFactory: React.PropTypes.object.required
-    //   }
-    React.withContext(globalContext, function () {
-      React.render(
-        $$(Composer),
-        document.body
-      );
-    });
+    React.render(
+      $$(Composer),
+      document.body
+    );
   }
 };
 

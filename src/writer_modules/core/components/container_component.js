@@ -12,7 +12,7 @@ var ContainerComponent = React.createClass({
   displayName: "ContainerComponent",
 
   contextTypes: {
-    componentFactory: React.PropTypes.object.required
+    componentFactory: React.PropTypes.object.isRequired
   },
 
   render: function() {
