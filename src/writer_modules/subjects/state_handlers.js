@@ -37,23 +37,48 @@ var stateHandlers = {
   // manipulate writer state (e.g. switching the contextId) so a custom panel
   // can display contextual information (see Subjects Panel).
 
-  handleReferenceToggle: function(writerCtrl, reference) {
-    var state = writerCtrl.getState();
+  // handleReferenceToggle: function(writerCtrl, reference) {
+  //   var state = writerCtrl.getState();
 
-    if (reference.type === "subject_reference") {
+  //   if (reference.type === "subject_reference") {
 
-      if (state.contextId === EditSubjectReferencePanel.contextId && reference.id === state.subjectReferenceId) {
-        // Toggle off
-        writerCtrl.replaceState({
-          contextId: "subjects"
-        });
-      } else {
-        // Toggle on
-        writerCtrl.replaceState({
-          contextId: EditSubjectReferencePanel.contextId,
-          subjectReferenceId: reference.id
-        });
-      }
+  //     if (state.contextId === EditSubjectReferencePanel.contextId && reference.id === state.subjectReferenceId) {
+  //       // Toggle off
+  //       writerCtrl.replaceState({
+  //         contextId: "subjects"
+  //       });
+  //     } else {
+  //       // Toggle on
+  //       writerCtrl.replaceState({
+  //         contextId: EditSubjectReferencePanel.contextId,
+  //         subjectReferenceId: reference.id
+  //       });
+  //     }
+  //     return true;
+  //   }
+  // },
+
+  // Handle selection change
+  // -----------------
+  //
+  // => modifies state
+  //
+  // When user navigates over a reference somewhere, the extension gets the chance to
+  // manipulate writer state (e.g. switching the contextId) so a custom panel
+  // can display contextual information.
+
+  handleSelectionChange: function(writerCtrl, sel, annotations) {
+    if (sel.isNull() || !sel.isPropertySelection()) return;
+
+    var range = sel.getTextRange();
+    var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1], "subject_reference");
+
+    if (annotations.length > 0) {
+      var ref = annotations[0];
+      writerCtrl.replaceState({
+        contextId: EditSubjectReferencePanel.contextId,
+        subjectReferenceId: ref.id
+      });
       return true;
     }
   },

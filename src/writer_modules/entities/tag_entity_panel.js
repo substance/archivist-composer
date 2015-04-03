@@ -32,8 +32,8 @@ var EntityView = React.createClass({
   displayName: "Entity",
 
   handleClick: function(e) {
-    this.props.handleSelection(this.props.id);
     e.preventDefault();
+    this.props.handleSelection(this.props.id);
   },
 
   render: function() {
