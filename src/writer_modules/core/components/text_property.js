@@ -24,8 +24,10 @@ var TextProperty = React.createClass({
     doc.removeDocumentChangeListener(this, this.props.path);
   },
 
-  propertyDidChange: function(/*ops*/) {
-    console.log('################## HAHAHA');
+  // TODO: we need to join the ContentEditable dance...
+  // when this is edited directly we usually do not need to update
+  propertyDidChange: function(/*documentChange, ops*/) {
+    this.forceUpdate();
   },
 
   renderWithAnnotations: function(text, annotations) {
