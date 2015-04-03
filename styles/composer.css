@@ -361,6 +361,10 @@ a:hover {
   background: rgba(11, 157, 217, 0.4);
 }
 
+.annotation.entity-reference.active {
+  background: rgba(11, 157, 217, 0.6);
+}
+
 /* Subject Reference */
 .annotation.subject-reference {
   background: rgba(145, 187, 4, 0.2);
@@ -368,6 +372,10 @@ a:hover {
 
 .annotation.subject-reference:hover {
   background: rgba(145, 187, 4, 0.4);
+}
+
+.annotation.subject-reference.active {
+  background: rgba(145, 187, 4, 0.6);
 }
 
 
