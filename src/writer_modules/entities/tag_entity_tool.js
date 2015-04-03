@@ -43,23 +43,14 @@ var TagEntityTool = React.createClass({
     var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1], "entity_reference");
 
     if (annotations.length > 0) {
-      console.log('deleteing annotation');
       writerCtrl.deleteAnnotation(annotations[0].id);
     } else {
-      console.log('create annotation');
-
-      // Create immediately or let the tag entity panel do the work?
-      var annotation = writerCtrl.annotate({
-        type: "entity_reference",
-        target: "54f476ba973cfcef0354adab"
-      });
-
       writerCtrl.replaceState({
-        "contextId": "entities",
-        "entityId": annotation.target
+        contextId: "tagentity",
+        path: sel.getPath(),
+        range: sel.getTextRange()
       });
     }
-  	// this.props.switchContext("tagentity");
   },
 
   getInitialState: function() {

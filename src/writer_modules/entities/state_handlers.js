@@ -19,7 +19,9 @@ var stateHandlers = {
       });
     } else if (state.contextId === "tagentity") {
       return $$(TagEntityPanel, {
-        writerCtrl: writerCtrl
+        writerCtrl: writerCtrl,
+        path: state.path,
+        range: state.range
       });
     }
   },

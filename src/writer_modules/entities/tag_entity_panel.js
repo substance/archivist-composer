@@ -116,10 +116,17 @@ var TagEntityPanel = React.createClass({
   handleSelection: function(entityId) {
     var writerCtrl = this.props.writerCtrl;
 
-    writerCtrl.annotate({
+    var path = this.props.path;
+    var range = this.props.range;
+
+    var annotation = writerCtrl.annotate({
       type: "entity_reference",
-      target: entityId
+      target: entityId,
+      path: path,
+      range: range
     });
+
+    console.log('created annotation', annotation);
 
     // Switch state to highlight newly created reference
     writerCtrl.replaceState({
@@ -154,14 +161,14 @@ var TagEntityPanel = React.createClass({
             placeholder: "Type to search for entities",//,
             value: this.state.searchString,
             onChange: this.handleSearchStringChange
-          }),
-          $$('select', {className: "entity-type"},
-            $$('option', {value: ""}, "All"),
-            $$('option', {value: "prison"}, "Prison"),
-            $$('option', {value: "toponym"}, "Toponym"),
-            $$('option', {value: "person"}, "Person"),
-            $$('option', {value: "definition"}, "Definition")
-          )
+          }) // ,
+          // $$('select', {className: "entity-type"},
+          //   $$('option', {value: ""}, "All"),
+          //   $$('option', {value: "prison"}, "Prison"),
+          //   $$('option', {value: "toponym"}, "Toponym"),
+          //   $$('option', {value: "person"}, "Person"),
+          //   $$('option', {value: "definition"}, "Definition")
+          // )
         ),
         $$('div', {className: "entities"},
           entityNodes
