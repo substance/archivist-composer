@@ -259,6 +259,17 @@ a:hover {
   color: #444;
   line-height: 30px;
   text-align: center;
+  opacity: 0.2;
+}
+
+.content-tools-component .tools a.active {
+  opacity: 1.0;
+}
+
+.content-tools-component .tools a.selected {
+  opacity: 1.0;
+  background: #444;
+  color: #fff;
 }
 
 .content-tools-component .tools a:hover {
