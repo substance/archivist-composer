@@ -51,8 +51,9 @@ var EditSubjectReferencePanel = React.createClass({
     var subjectIds = $(treeContainerEl).jstree().get_selected();
     console.log('updating subjectReferenceId', subjectIds);
 
-    var doc = this.props.writerCtrl.doc;
-    doc.set([this.props.subjectReferenceId, "target"], subjectIds);
+    var tx = this.props.writerCtrl.doc.startTransaction();
+    tx.set([this.props.subjectReferenceId, "target"], subjectIds);
+    tx.save();
   },
 
   // Render jsTree widget accordingly
