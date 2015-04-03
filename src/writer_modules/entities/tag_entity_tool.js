@@ -34,7 +34,6 @@ var TagEntityTool = React.createClass({
   handleClick: function() {
     // toggle annotation
     var writerCtrl = this.props.writerCtrl;
-
     var sel = writerCtrl.getSelection();
 
     // Check if already on
@@ -49,6 +48,7 @@ var TagEntityTool = React.createClass({
     } else {
       console.log('create annotation');
 
+      // Create immediately or let the tag entity panel do the work?
       var annotation = writerCtrl.annotate({
         type: "entity_reference",
         target: "54f476ba973cfcef0354adab"
