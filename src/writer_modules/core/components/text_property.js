@@ -26,7 +26,15 @@ var TextProperty = React.createClass({
 
   // TODO: we need to join the ContentEditable dance...
   // when this is edited directly we usually do not need to update
-  propertyDidChange: function(/*documentChange, ops*/) {
+  propertyDidChange: function(documentChange, ops, info) {
+    // HACK: trying to detect if the component has 'focus'
+    // When this is being edited, we assume that it doesn't need to be updated
+    // However, this is not a good solution. The best would be, if the rerendering was
+    // less destructive.
+    if (info && info.source === this.getDOMNode()) {
+      console.log('Skipping update of text-property');
+      return;
+    }
     this.forceUpdate();
   },
 
