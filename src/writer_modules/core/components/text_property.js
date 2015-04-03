@@ -16,6 +16,10 @@ var TextProperty = React.createClass({
     componentFactory: React.PropTypes.object.isRequired
   },
 
+  componentShouldUpdate: function() {
+    return false;
+  },
+
   componentDidMount: function() {
     var doc = this.props.doc;
     doc.addDocumentChangeListener(this, this.props.path, this.propertyDidChange);
@@ -23,7 +27,7 @@ var TextProperty = React.createClass({
   },
 
   componentDidUpdate: function() {
-    this.renderManually();
+    // this.renderManually();
   },
 
   componentWillUnmount: function() {
