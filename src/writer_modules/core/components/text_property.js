@@ -1,7 +1,9 @@
 var Substance = require('substance');
 var $$ = React.createElement;
 var Annotator = Substance.Document.Annotator;
-var AnnotationComponent = require('./annotation_component');
+
+var NodeView = require('./node_view');
+var AnnotationView = require('./annotation_view');
 
 // TextProperty
 // ----------------
@@ -17,12 +19,68 @@ var TextProperty = React.createClass({
   componentDidMount: function() {
     var doc = this.props.doc;
     doc.addDocumentChangeListener(this, this.props.path, this.propertyDidChange);
+    this.renderManually();
+  },
+
+  componentDidUpdate: function() {
+    this.renderManually();
   },
 
   componentWillUnmount: function() {
     var doc = this.props.doc;
     doc.removeDocumentChangeListener(this, this.props.path);
   },
+
+  renderManually: function() {
+    var contentView = new TextProperty.ContentView({
+      doc: this.props.doc,
+      node: this.props.node,
+      children: this.getContent()
+    })
+    var fragment = contentView.render();
+    var domNode = this.getDOMNode();
+    domNode.innerHTML = "";
+    domNode.appendChild(fragment);
+  },
+
+  getContent: function() {
+    var doc = this.props.doc;
+    var componentFactory = this.context.componentFactory;
+    var path = this.props.path;
+    var text = doc.get(path) || "";
+    var annotations = doc.getIndex('annotations').get(path);
+
+    var annotator = new Annotator();
+    annotator.onText = function(context, text) {
+      context.children.push(text);
+    };
+
+    annotator.onEnter = function(entry) {
+      var anno = doc.get(entry.id);
+      // TODO: we need a component factory, so that we can create the appropriate component
+      var ViewClass = AnnotationView;
+      return {
+        ViewClass: ViewClass,
+        props: {
+          doc: doc,
+          node: anno
+        },
+        children: []
+      };
+    };
+    annotator.onExit = function(entry, context, parentContext) {
+      var props = context.props;
+      props.children = context.children;
+      var view = new context.ViewClass(props);
+      parentContext.children.push(view);
+    };
+
+    var root = { children: [] };
+    annotator.start(root, text, annotations);
+
+    return root.children;
+  },
+
 
   // TODO: we need to join the ContentEditable dance...
   // when this is edited directly we usually do not need to update
@@ -35,56 +93,23 @@ var TextProperty = React.createClass({
       console.log('Skipping update of text-property');
       return;
     }
-    this.forceUpdate();
-  },
-
-  renderWithAnnotations: function(text, annotations) {
-    var doc = this.props.doc;
-    var componentFactory = this.context.componentFactory;
-
-    var annotator = new Annotator();
-    annotator.onText = function(context, text) {
-      context.children.push(text);
-    };
-
-    annotator.onEnter = function(entry) {
-      var anno = doc.get(entry.id);
-      // TODO: we need a component factory, so that we can create the appropriate component
-      var componentClass = componentFactory.get(anno.type) || AnnotationComponent;
-      return {
-        component: componentClass,
-        props: {
-          doc: doc,
-          node: anno
-        },
-        children: []
-      };
-    };
-    annotator.onExit = function(entry, context, parentContext) {
-      var props = context.props;
-      props.children = context.children;
-      var component = $$(context.component, props);
-      parentContext.children.push(component);
-    };
-
-    var root = { children: [] };
-    annotator.start(root, text, annotations);
-
-    var component = $$('span', {
-      className: "text-property " + (this.props.className || ""),
-      contentEditable: true,
-      "data-path": this.props.path.join('.')
-    }, root.children);
-
-    return component;
+    this.renderManually();
   },
 
   render: function() {
-    var text = this.props.doc.get(this.props.path) || "";
-    var annotations = this.props.doc.getIndex('annotations').get(this.props.path);
-    return this.renderWithAnnotations(text, annotations);
+    return $$('span', {
+      className: "text-property " + (this.props.className || ""),
+      contentEditable: true,
+      "data-path": this.props.path.join('.')
+    });
   },
 
 });
+
+TextProperty.ContentView = NodeView.extend({
+  createElement: function() {
+    return document.createDocumentFragment();
+  }
+})
 
 module.exports = TextProperty;
