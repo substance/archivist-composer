@@ -27,18 +27,15 @@ var EditSubjectReferencePanel = React.createClass({
   // ------------
 
   componentDidMount: function() {
-    console.log('TagSubjectPanel mounted');
     this.renderSubjectsTree();
   },
 
   componentWillUnmount: function() {
-    console.log('removing tree event listener');
     var treeContainerEl = this.refs.subjectsTree.getDOMNode();
     $(treeContainerEl).off('changed.jstree');
   },
 
   componentDidUpdate: function() {
-    console.log('TagSubjectPanel updated');
     this.renderSubjectsTree();
   },
 

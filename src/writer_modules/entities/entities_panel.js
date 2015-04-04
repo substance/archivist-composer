@@ -64,11 +64,11 @@ var EntitiesPanel = React.createClass({
   cacheInvalid: function() {
     // Sneak into cache
     if (window.cache.entities) {
-      var currentEntities = this.getReferencedEntityIds();
-      var cachedEntities = Substance.pluck(window.cache.entities, 'id');
+      var currentEntities = Substance.uniq(this.getReferencedEntityIds());
+      var cachedEntities = Substance.uniq(Substance.pluck(window.cache.entities, 'id'));
 
+      console.log('currentEntities', currentEntities, 'cached', cachedEntities);
       if (Substance.isArrayEqual(currentEntities, cachedEntities)) {
-        console.log('cache matched still valid')
         return false;
       }
     }
