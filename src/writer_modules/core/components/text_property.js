@@ -12,17 +12,13 @@ var AnnotationView = require('./annotation_view');
 var TextProperty = React.createClass({
   displayName: "text-property",
 
-  contextTypes: {
-    componentFactory: React.PropTypes.object.isRequired
-  },
-
   componentShouldUpdate: function() {
     return false;
   },
 
   componentDidMount: function() {
     var doc = this.props.doc;
-    doc.addDocumentChangeListener(this, this.props.path, this.propertyDidChange);
+    doc.getEventProxy('path').add(this.props.path, this, this.propertyDidChange);
     this.renderManually();
   },
 
@@ -32,7 +28,7 @@ var TextProperty = React.createClass({
 
   componentWillUnmount: function() {
     var doc = this.props.doc;
-    doc.removeDocumentChangeListener(this, this.props.path);
+    doc.getEventProxy('path').remove(this.props.path, this);
   },
 
   renderManually: function() {
@@ -49,7 +45,6 @@ var TextProperty = React.createClass({
 
   getContent: function() {
     var doc = this.props.doc;
-    var componentFactory = this.context.componentFactory;
     var path = this.props.path;
     var text = doc.get(path) || "";
     var annotations = doc.getIndex('annotations').get(path);
@@ -88,14 +83,9 @@ var TextProperty = React.createClass({
 
   // TODO: we need to join the ContentEditable dance...
   // when this is edited directly we usually do not need to update
-  propertyDidChange: function(documentChange, ops, info) {
+  propertyDidChange: function(/*documentChange, ops, info*/) {
     // TODO: maybe we want to find an incremental solution
     // However, this is surprisingly fast so that almost no flickering can be observed.
-    // If we can recreate/preserve annotation classes/styles this would be good way to go for now.
-    // if (info && info.source === this.getDOMNode()) {
-    //   console.log('Skipping update of text-property');
-    //   return;
-    // }
     this.renderManually();
   },
 
@@ -116,6 +106,6 @@ TextProperty.ContentView = NodeView.extend({
   createElement: function() {
     return document.createDocumentFragment();
   }
-})
+});
 
 module.exports = TextProperty;
