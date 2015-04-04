@@ -7,7 +7,11 @@ var AnnotationView = NodeView.extend({
   tagName: 'span',
 
   getClassNames: function() {
-    return this.node.getClassNames().replace('_', '-');
+    var classNames = this.node.getClassNames().replace('_', '-');
+    if (this.props.classNames) {
+      classNames += " " + this.props.classNames.join(' ');
+    }
+    return classNames;
   }
 });
 

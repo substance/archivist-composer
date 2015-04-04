@@ -11,7 +11,11 @@ var TextComponent = React.createClass({
 
   render: function() {
     return $$("div", { className: "content-node text", "data-id": this.props.node.id },
-      $$(TextProperty, { doc: this.props.doc, path: [ this.props.node.id, "content"] })
+      $$(TextProperty, {
+        doc: this.props.doc,
+        path: [ this.props.node.id, "content"],
+        writerCtrl: this.props.writerCtrl,
+      })
     );
   }
 });
