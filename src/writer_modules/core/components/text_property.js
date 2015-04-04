@@ -89,14 +89,13 @@ var TextProperty = React.createClass({
   // TODO: we need to join the ContentEditable dance...
   // when this is edited directly we usually do not need to update
   propertyDidChange: function(documentChange, ops, info) {
-    // HACK: trying to detect if the component has 'focus'
-    // When this is being edited, we assume that it doesn't need to be updated
-    // However, this is not a good solution. The best would be, if the rerendering was
-    // less destructive.
-    if (info && info.source === this.getDOMNode()) {
-      console.log('Skipping update of text-property');
-      return;
-    }
+    // TODO: maybe we want to find an incremental solution
+    // However, this is surprisingly fast so that almost no flickering can be observed.
+    // If we can recreate/preserve annotation classes/styles this would be good way to go for now.
+    // if (info && info.source === this.getDOMNode()) {
+    //   console.log('Skipping update of text-property');
+    //   return;
+    // }
     this.renderManually();
   },
 
@@ -104,6 +103,9 @@ var TextProperty = React.createClass({
     return $$('span', {
       className: "text-property " + (this.props.className || ""),
       contentEditable: true,
+      style: {
+        "white-space": "pre-wrap"
+      },
       "data-path": this.props.path.join('.')
     });
   },
