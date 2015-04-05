@@ -8,7 +8,7 @@ var SUBJECTS = require("./subjects_fixture");
 // ----------------
 
 var EditSubjectReferencePanel = React.createClass({
-  displayName: "Edit Annotation",
+  displayName: "Edit Subject Reference",
 
   // State relevant things
   // ------------
@@ -91,7 +91,7 @@ var EditSubjectReferencePanel = React.createClass({
         Substance.each(subjectRef.target, function(subjectId) {
           $(treeContainerEl).jstree('select_node', subjectId);
         }, this);
-        $(treeContainerEl).on('changed.jstree', self.updateAnnotation.bind(this));
+        $(treeContainerEl).on('changed.jstree', self.updateAnnotation);
       }, 200);
     }, 200, this);
   },
