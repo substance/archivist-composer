@@ -36,7 +36,9 @@ var TagSubjectTool = React.createClass({
     }
   },
 
-  handleClick: function() {
+  handleClick: function(e) {
+    e.preventDefault();
+    
     // toggle subject_reference on or off
     var writerCtrl = this.props.writerCtrl;
     var sel = writerCtrl.getSelection();
@@ -55,7 +57,7 @@ var TagSubjectTool = React.createClass({
     } else {
       // Do nothing if selection is collapsed
       if (sel.isCollapsed()) return;
-      
+
       // Create new subject reference
       var subjectReference = writerCtrl.annotate({
         type: "subject_reference",
