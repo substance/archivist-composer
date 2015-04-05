@@ -26,13 +26,14 @@ var ContainerComponent = React.createClass({
     };
   },
 
+  getHighlightedNodes: function() {
+    return this.props.writerCtrl.getHighlightedNodes();
+  },
+
   getChildContext: function() {
-    var props = this.props;
     return {
       surface: this.state.surface,
-      getHighlightedNodes: function() {
-        return props.writerCtrl.getHighlightedNodes();
-      }
+      getHighlightedNodes: this.getHighlightedNodes
     };
   },
 
