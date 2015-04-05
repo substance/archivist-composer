@@ -14,7 +14,7 @@ var EditSubjectReferencePanel = React.createClass({
     e.preventDefault();
     // Go to regular entities panel
     this.props.writerCtrl.replaceState({
-      contextId: "entities"
+      contextId: "subjects"
     });
   },
 
