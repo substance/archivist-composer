@@ -22,7 +22,7 @@ var ContainerComponent = React.createClass({
 
   getInitialState: function() {
     return {
-      surface: new Surface(new Surface.FullfledgedEditor(this.props.node))
+      surface: new Surface(new Surface.FullfledgedEditor(this.props.doc))
     };
   },
 
@@ -57,21 +57,36 @@ var ContainerComponent = React.createClass({
       });
     });
 
-    return $$("div", {className: "container-node " + this.props.node.id, contentEditable: true },
+    return $$("div", {
+        className: "container-node " + this.props.node.id,
+        contentEditable: true,
+        "data-id": this.props.node.id
+      },
       $$('div', {className: "nodes"}, components)
     );
   },
 
   componentDidMount: function() {
     var surface = this.state.surface;
+    this.props.doc.getEventProxy('path').add([this.props.node.id, 'nodes'], this, this.containerDidChange);
     this.props.writerCtrl.registerSurface(surface, "content");
     surface.attach(this.getDOMNode());
   },
 
   componentWillUnmount: function() {
     var surface = this.state.surface;
+    this.props.doc.getEventProxy('path').remove([this.props.node.id, 'nodes'], this);
     this.props.writerCtrl.unregisterSurface(surface);
     surface.detach();
+  },
+
+  containerDidChange: function() {
+    var self = this;
+    this.forceUpdate();
+    // update the surface afterwards so that it can re-analyze the component layout
+    setTimeout(function() {
+      self.state.surface.update();
+    });
   },
 
 });
