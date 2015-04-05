@@ -18,6 +18,15 @@ var ENTITIES = [
   {"_id":"54f476ba973cfcef0354adab","type": "person", "name":"Мария","description":"Мария, младшая сестра О.Г. Головиной","__v":0,"id":"54f476ba973cfcef0354adab"},{"_id":"54f476ba973cfcef0354adac","type": "person", "name":"Головина Анна Терентьевна","description":"","__v":0,"id":"54f476ba973cfcef0354adac"}
 ];
 
+
+function loadEntitiesLocal(entityIds, cb) {
+  var entities = Substance.filter(ENTITIES, function(entity) {
+    return Substance.includes(entityIds, entity.id);
+  });
+  cb(null, entities);
+}
+
+
 var EntitiesPanel = React.createClass({
   displayName: "Entities",
 
@@ -30,28 +39,26 @@ var EntitiesPanel = React.createClass({
     });
   },
 
+
   // Data loading methods
   // ------------
 
   loadEntities: function() {
     var self = this;
 
-    Substance.delay(function() {
-      console.log('loading entities...');
+    // Substance.delay(function() {
+    console.log('loading entities...');
 
-      var entityIds = self.getReferencedEntityIds();
-      // TODO: replace with ajax request
-      var entities = Substance.filter(ENTITIES, function(entity) {
-        return Substance.includes(entityIds, entity.id);
-      });
+    var entityIds = self.getReferencedEntityIds();
 
+    loadEntitiesLocal(entityIds, function(err, entities) {
       window.cache.entities = entities;
 
       // Finished simulated loading of entities
       self.setState({
         entities: entities
       });
-    }, 1000);
+    });
   },
 
   restoreEntitiesFromCache: function() {
