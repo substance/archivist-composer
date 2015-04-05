@@ -44,6 +44,9 @@ var TagEntityTool = React.createClass({
 
     if (annotations.length > 0) {
       writerCtrl.deleteAnnotation(annotations[0].id);
+      writerCtrl.replaceState({
+        contextId: "entities"
+      });
     } else {
       writerCtrl.replaceState({
         contextId: "tagentity",

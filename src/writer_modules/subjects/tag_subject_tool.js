@@ -37,18 +37,34 @@ var TagSubjectTool = React.createClass({
   },
 
   handleClick: function() {
+    // toggle subject_reference on or off
     var writerCtrl = this.props.writerCtrl;
+    var sel = writerCtrl.getSelection();
 
-    var subjectReference = writerCtrl.annotate({
-      type: "subject_reference",
-      target: []
-    });
+    // Check if already on
+    if (sel.isNull() || !sel.isPropertySelection()) return;
 
-    // Switch state to highlight newly created reference
-    writerCtrl.replaceState({
-      contextId: "editSubjectReference",
-      subjectReferenceId: subjectReference.id
-    });
+    var range = sel.getTextRange();
+    var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1], "subject_reference");
+
+    if (annotations.length > 0) {
+      writerCtrl.deleteAnnotation(annotations[0].id);
+      writerCtrl.replaceState({
+        contextId: "subjects"
+      });
+    } else {
+      // Create new subject reference
+      var subjectReference = writerCtrl.annotate({
+        type: "subject_reference",
+        target: []
+      });
+
+      writerCtrl.replaceState({
+        contextId: "editSubjectReference",
+        subjectReferenceId: subjectReference.id,
+        range: sel.getTextRange()
+      });
+    }
   },
 
   getInitialState: function() {
