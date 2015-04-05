@@ -5,6 +5,9 @@ var $$ = React.createElement;
 var Interview = require('./interview');
 var Writer = require("substance-writer");
 
+var MetadataService = require("./metadata_service");
+var FakeMetadataService = require("./fake_metadata_service");
+
 var EXAMPLE_DOC = require("../data/sample_doc");
 
 // Writer Configuration
@@ -24,15 +27,27 @@ Substance.each(writerModules, function(module) {
   });
 });
 
+// window.devMode = true;
+
+// Create instance of metadata service
+var metadataService;
+if (window.devMode) {
+  metadataService = new FakeMetadataService();
+} else {
+  metadataService = new MetadataService();
+}
+
 var globalContext = {
-  componentFactory: componentFactory
+  componentFactory: componentFactory,
+  metadataService: metadataService
 };
 
 var Composer = React.createClass({
   displayName: "Composer",
 
   childContextTypes: {
-    componentFactory: React.PropTypes.object
+    componentFactory: React.PropTypes.object,
+    metadataService: React.PropTypes.object
   },
 
   getChildContext: function() {

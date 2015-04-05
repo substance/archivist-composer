@@ -60,6 +60,7 @@ var ContainerComponent = React.createClass({
     return $$("div", {
         className: "container-node " + this.props.node.id,
         contentEditable: true,
+        spellCheck: false,
         "data-id": this.props.node.id
       },
       $$('div', {className: "nodes"}, components)

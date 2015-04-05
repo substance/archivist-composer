@@ -36,7 +36,6 @@ var TagEntityTool = React.createClass({
     var writerCtrl = this.props.writerCtrl;
     var sel = writerCtrl.getSelection();
 
-    // Check if already on
     if (sel.isNull() || !sel.isPropertySelection()) return;
 
     var range = sel.getTextRange();
@@ -44,7 +43,12 @@ var TagEntityTool = React.createClass({
 
     if (annotations.length > 0) {
       writerCtrl.deleteAnnotation(annotations[0].id);
+      writerCtrl.replaceState({
+        contextId: "entities"
+      });
     } else {
+      // Do nothing if selection is collapsed
+      if (sel.isCollapsed()) return;
       writerCtrl.replaceState({
         contextId: "tagentity",
         path: sel.getPath(),

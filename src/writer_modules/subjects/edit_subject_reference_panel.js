@@ -8,7 +8,15 @@ var SUBJECTS = require("./subjects_fixture");
 // ----------------
 
 var EditSubjectReferencePanel = React.createClass({
-  displayName: "Edit Annotation",
+  displayName: "Edit Subject Reference",
+
+  handleCancel: function(e) {
+    e.preventDefault();
+    // Go to regular entities panel
+    this.props.writerCtrl.replaceState({
+      contextId: "subjects"
+    });
+  },
 
   // State relevant things
   // ------------
@@ -91,7 +99,7 @@ var EditSubjectReferencePanel = React.createClass({
         Substance.each(subjectRef.target, function(subjectId) {
           $(treeContainerEl).jstree('select_node', subjectId);
         }, this);
-        $(treeContainerEl).on('changed.jstree', self.updateAnnotation.bind(this));
+        $(treeContainerEl).on('changed.jstree', self.updateAnnotation);
       }, 200);
     }, 200, this);
   },
@@ -100,7 +108,11 @@ var EditSubjectReferencePanel = React.createClass({
   // -------------------
 
   render: function() {
-    return $$("div", {className: "panel tag-subject-panel-component"},
+    return $$("div", {className: "panel dialog edit-subject-reference-panel-component"},
+      $$('div', {className: 'dialog-header'},
+        $$('div', {className: 'label', dangerouslySetInnerHTML: {__html: '<i class="fa fa-tag"></i> Select relevant subjects'}}),
+        $$('a', {className: 'cancel', href: '#', onClick: this.handleCancel}, 'Cancel')
+      ),
       $$('div', {className: "panel-content"},
         $$('div', {className: "subjects-tree", ref: 'subjectsTree'})
       )
