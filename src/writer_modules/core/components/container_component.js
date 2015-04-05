@@ -57,7 +57,7 @@ var ContainerComponent = React.createClass({
       });
     });
 
-    return $$("div", {className: "container-node " + this.props.node.id, contentEditable: true },
+    return $$("div", {className: "container-node " + this.props.node.id, contentEditable: true, spellCheck: false },
       $$('div', {className: "nodes"}, components)
     );
   },
