@@ -119,7 +119,7 @@ var TextProperty = React.createClass({
       className: "text-property " + (this.props.className || ""),
       contentEditable: true,
       style: {
-        "white-space": "pre-wrap"
+        whiteSpace: "pre-wrap"
       },
       "data-path": this.props.path.join('.')
     });

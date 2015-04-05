@@ -72,7 +72,7 @@ var ContainerComponent = React.createClass({
     var surface = this.state.surface;
     this.props.writerCtrl.unregisterSurface(surface);
     surface.detach();
-  },
+  }
 
 });
 

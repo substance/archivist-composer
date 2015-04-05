@@ -74,7 +74,6 @@ var SubjectsPanel = React.createClass({
 
     // Only get referenced subjects
     var referencedSubjects = state.subjects.getAllReferencedSubjects();
-
     var subjectNodes = referencedSubjects.map(function(subject) {
       // Dynamically assign active state and a few other things
       subject.active = subject.id === props.subjectId;

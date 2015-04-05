@@ -46,9 +46,11 @@ SubjectsModel.prototype.getAllReferencedSubjects = function() {
   var subjects = [];
 
   Substance.each(subjectRefs, function(subjectRef) {
-    // collect subjects
     Substance.each(subjectRef.target, function(subjectId) {
-      subjects.push(this.tree.get(subjectId));
+      var subject = this.tree.get(subjectId);
+      if (!Substance.includes(subjects, subject)) {
+        subjects.push(subject);  
+      }
     }, this);
   }, this);
 

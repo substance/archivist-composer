@@ -15,9 +15,9 @@ var Subject = React.createClass({
     var className = ["subject", this.props.type];
     if (this.props.active) className.push("active");
 
-    return $$("div", {className: className.join(" "), onClick: this.handleToggle}, [
+    return $$("div", {className: className.join(" "), onClick: this.handleToggle},
       $$('div', {className: 'full-path'}, this.props.fullPath.join(" > "))
-    ]);
+    );
   }
 });
 
