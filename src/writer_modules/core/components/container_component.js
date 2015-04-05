@@ -15,12 +15,32 @@ var ContainerComponent = React.createClass({
     componentFactory: React.PropTypes.object.isRequired
   },
 
+  childContextTypes: {
+    surface: React.PropTypes.object,
+    getHighlightedNodes: React.PropTypes.func
+  },
+
+  getInitialState: function() {
+    return {
+      surface: new Surface(new Surface.FullfledgedEditor(this.props.node))
+    };
+  },
+
+  getChildContext: function() {
+    var props = this.props;
+    return {
+      surface: this.state.surface,
+      getHighlightedNodes: function() {
+        return props.writerCtrl.getHighlightedNodes();
+      }
+    };
+  },
+
   render: function() {
     var containerNode = this.props.node;
     var doc = this.props.doc;
     var writerCtrl = this.props.writerCtrl;
     var componentFactory = this.context.componentFactory;
-
     var components = containerNode.nodes.map(function(nodeId) {
       var node = doc.get(nodeId);
       var ComponentClass = componentFactory.get(node.type);
@@ -42,19 +62,15 @@ var ContainerComponent = React.createClass({
   },
 
   componentDidMount: function() {
-    if (this.surface) {
-      this.surface.dispose();
-    }
-    var surfaceModel = new Surface.FullfledgedEditor(this.props.node);
-
-    this.surface = new Surface(this.getDOMNode(), surfaceModel);
-    this.props.writerCtrl.registerSurface(this.surface, "content");
-
-    this.surface.attach();
+    var surface = this.state.surface;
+    this.props.writerCtrl.registerSurface(surface, "content");
+    surface.attach(this.getDOMNode());
   },
 
   componentWillUnmount: function() {
-    this.props.writerCtrl.unregisterSurface(this.surface);
+    var surface = this.state.surface;
+    this.props.writerCtrl.unregisterSurface(surface);
+    surface.detach();
   },
 
 });

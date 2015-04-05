@@ -12,6 +12,11 @@ var AnnotationView = require('./annotation_view');
 var TextProperty = React.createClass({
   displayName: "text-property",
 
+  contextTypes: {
+    surface: React.PropTypes.object.isRequired,
+    getHighlightedNodes: React.PropTypes.func.isRequired
+  },
+
   shouldComponentUpdate: function() {
     // Note: we return false here as only editing should trigger rerendering.
     // Updates of highlighted nodes are done manually.
@@ -44,7 +49,7 @@ var TextProperty = React.createClass({
   },
 
   updateHighlights: function() {
-    var highlightedAnnotations = this.props.writerCtrl.getHighlightedNodes();
+    var highlightedAnnotations = this.context.getHighlightedNodes();
     var domNode = this.getDOMNode();
     var els = $(domNode).find('.annotation');
     for (var i = 0; i < els.length; i++) {
@@ -63,14 +68,12 @@ var TextProperty = React.createClass({
     var path = this.props.path;
     var text = doc.get(path) || "";
     var annotations = doc.getIndex('annotations').get(path);
-
-    var highlightedAnnotations = this.props.writerCtrl.getHighlightedNodes();
+    var highlightedAnnotations = this.context.getHighlightedNodes();
 
     var annotator = new Annotator();
     annotator.onText = function(context, text) {
       context.children.push(text);
     };
-
     annotator.onEnter = function(entry) {
       var anno = doc.get(entry.id);
       // TODO: we need a component factory, so that we can create the appropriate component
