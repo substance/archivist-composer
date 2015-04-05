@@ -62,6 +62,13 @@ var EntityView = React.createClass({
 var TagEntityPanel = React.createClass({
   displayName: "Tag Entity",
 
+  handleCancel: function(e) {
+    e.preventDefault();
+    // Go to regular entities panel
+    this.props.writerCtrl.replaceState({
+      contextId: "entities"
+    });
+  },
 
   // Data loading methods
   // ------------
@@ -152,7 +159,11 @@ var TagEntityPanel = React.createClass({
       entityNodes = [$$('div', {className: "no-results", text: "Loading suggestions"})];
     }
 
-    return $$("div", {className: "panel tag-entity-panel-component"},
+    return $$("div", {className: "panel dialog tag-entity-panel-component"},
+      $$('div', {className: 'dialog-header'},
+        $$('div', {className: 'label', dangerouslySetInnerHTML: {__html: '<i class="fa fa-bullseye"></i> Choose an entity'}}),
+        $$('a', {className: 'cancel', href: '#', onClick: this.handleCancel}, 'Cancel')
+      ),
       $$('div', {className: "panel-content"},
         $$('div', {className: "search", html: ""},
           $$('input', {

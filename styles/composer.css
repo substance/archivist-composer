@@ -200,9 +200,10 @@ a:hover {
   float: left;
   height: 40px;
   line-height: 40px;
-  padding: 0px 5px;
+  padding: 0px 20px;
   color: #444;
-  font-size: 13px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .writer-component .context-toggles a.toggle-context:hover {
@@ -234,6 +235,60 @@ a:hover {
   right: 0px;
   overflow: auto;
   line-height: 20px;
+}
+
+/* Dialog Panels (aka modal panels)
+-----------------------------------------------------*/
+
+.panel.dialog {
+  top: 0px;
+  background: #F8F8F8;
+}
+
+.panel.dialog .dialog-header {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  overflow: hidden;
+  height: 40px;
+  background: #444;
+  /*border-bottom: 1px solid #ddd;*/
+}
+
+.panel.dialog .dialog-header .label {
+  padding: 0px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 39px;
+  color: white;
+  float: left;
+}
+
+.panel.dialog .dialog-header .cancel {
+  font-size: 12px;
+  color: #fff;
+  font-weight: bold;
+  line-height: 40px;
+  padding: 0px 20px;
+  float: right;
+}
+
+.panel.dialog .dialog-header .cancel:hover {
+  background: rgba(0,0,0,0.1);
+}
+
+.panel.dialog .panel-content {
+  top: 40px;
+}
+
+/* Custom headers for entity tagging and subject tagging */
+.panel.dialog.tag-entity-panel-component .dialog-header {
+  background: rgba(11, 157, 217, 1);
+}
+
+.panel.dialog.edit-subject-reference-panel-component .dialog-header {
+  background: rgba(145, 187, 4, 1);
 }
 
 
