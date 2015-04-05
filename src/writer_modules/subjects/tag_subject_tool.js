@@ -53,6 +53,9 @@ var TagSubjectTool = React.createClass({
         contextId: "subjects"
       });
     } else {
+      // Do nothing if selection is collapsed
+      if (sel.isCollapsed()) return;
+      
       // Create new subject reference
       var subjectReference = writerCtrl.annotate({
         type: "subject_reference",
