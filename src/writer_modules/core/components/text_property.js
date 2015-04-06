@@ -44,6 +44,7 @@ var TextProperty = React.createClass({
     });
     var fragment = contentView.render();
     // Add a <br> so that the node gets rendered and Contenteditable will stop when moving the cursor.
+    // TODO: probably this is not good when using the property inline.
     fragment.appendChild(document.createElement('br'));
     var domNode = this.getDOMNode();
     domNode.innerHTML = "";
