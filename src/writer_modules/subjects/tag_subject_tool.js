@@ -80,7 +80,7 @@ var TagSubjectTool = React.createClass({
   },
 
   render: function() {
-    var classNames = ['tag-entity-tool-component', 'tool'];
+    var classNames = ['tag-subject-tool-component', 'tool'];
     if (this.state.active) classNames.push("active");
     if (this.state.selected) classNames.push("selected");
 
