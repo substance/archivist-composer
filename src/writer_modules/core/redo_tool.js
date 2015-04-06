@@ -1,9 +1,10 @@
 var $$ = React.createElement;
 
-// Save Tool
+
+// Redo Tool
 // ----------------
 
-var SaveTool = React.createClass({
+var RedoTool = React.createClass({
   displayName: "SaveTool",
 
   contextTypes: {
@@ -19,20 +20,13 @@ var SaveTool = React.createClass({
     });
   },
 
+  // Do we really need a backend?
   handleClick: function() {
     var backend = this.context.backend;
     var writerCtrl = this.props.writerCtrl;
     var doc = writerCtrl.doc;
 
-    if (this.state.active) {
-      backend.saveDocument(doc, function(err) {
-        if (err) return console.err('saving of document failed');
-
-        this.setState({
-          active: false
-        })
-      }.bind(this));
-    }
+    console.log('TODO: handle redo');
   },
 
   shouldComponentUpdate: function(nextProps, nextState) {
@@ -41,28 +35,28 @@ var SaveTool = React.createClass({
 
   handleDocumentChange: function(change) {
     this.setState({
-      active: true
+      active: false
     });
   },
 
   getInitialState: function() {
     return {
       active: false
-    }
+    };
   },
 
   render: function() {
-    var classNames = ['save-tool-component', 'tool'];
+    var classNames = ['redo-tool-component', 'tool'];
     if (this.state.active) classNames.push('active');
 
     return $$("a", {
       className: classNames.join(' '),
       href: "#",
-      dangerouslySetInnerHTML: {__html: '<i class="fa fa-save"></i>'},
-      title: 'Save document',
+      dangerouslySetInnerHTML: {__html: '<i class="fa fa-rotate-right"></i>'},
+      title: 'Undo',
       onClick: this.handleClick
     });
   }
 });
 
-module.exports = SaveTool;
+module.exports = RedoTool;

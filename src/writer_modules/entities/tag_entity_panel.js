@@ -8,7 +8,6 @@ var TYPE_LABELS = {
   "definition": "Definition"
 };
 
-
 // Example of a sub view
 // ----------------
 
@@ -47,7 +46,7 @@ var TagEntityPanel = React.createClass({
   displayName: "Tag Entity",
 
   contextTypes: {
-    metadataService: React.PropTypes.object.isRequired
+    backend: React.PropTypes.object.isRequired
   },
 
   handleCancel: function(e) {
@@ -64,16 +63,16 @@ var TagEntityPanel = React.createClass({
   loadEntities: function(searchString) {
     var self = this;
 
-    var metadataService = this.context.metadataService;
+    var backend = this.context.backend;
 
     if (searchString) {
-      metadataService.searchEntities(searchString, function(err, entities) {
+      backend.searchEntities(searchString, function(err, entities) {
         self.setState({
           entities: entities
         });
       });
     } else {
-      metadataService.getSuggestedEntities(function(err, entities) {
+      backend.getSuggestedEntities(function(err, entities) {
         self.setState({
           entities: entities
         });

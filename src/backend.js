@@ -1,15 +1,14 @@
 var Substance = require("substance");
 
-// Writer Controller
+// Archivist Backend
 // ----------------
 //
-// An common interface for all writer modules
 
-var MetadataService = function(opts) {
+var Backend = function(opts) {
   
 };
 
-MetadataService.Prototype = function() {
+Backend.Prototype = function() {
 
   // Entities
   // ------------------
@@ -34,6 +33,6 @@ MetadataService.Prototype = function() {
 };
 
 
-Substance.initClass(MetadataService);
+Substance.initClass(Backend);
 
-module.exports = MetadataService;
+module.exports = Backend;

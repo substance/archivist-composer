@@ -11,7 +11,7 @@ var EntitiesPanel = React.createClass({
   displayName: "Entities",
 
   contextTypes: {
-    metadataService: React.PropTypes.object.isRequired
+    backend: React.PropTypes.object.isRequired
   },
 
   getReferencedEntityIds: function() {
@@ -28,10 +28,10 @@ var EntitiesPanel = React.createClass({
   loadEntities: function() {
     var self = this;
 
-    var metadataService = this.context.metadataService;
+    var backend = this.context.backend;
     var entityIds = self.getReferencedEntityIds();
 
-    metadataService.getEntities(entityIds, function(err, entities) {
+    backend.getEntities(entityIds, function(err, entities) {
       window.cache.entities = entities;
 
       // Finished simulated loading of entities
@@ -56,11 +56,10 @@ var EntitiesPanel = React.createClass({
 
       console.log('currentEntities', currentEntities, 'cached', cachedEntities);
 
+      if (currentEntities.length !== cachedEntities.length) return true;
       var overlappingEntities = Substance.intersection(currentEntities, cachedEntities);
       // Cache condition met when there's a full overlap
-      if (overlappingEntities.length === currentEntities.length) {
-        return false;
-      }
+      if (overlappingEntities.length === currentEntities.length) return false;
     }
 
     return true;

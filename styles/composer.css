@@ -317,6 +317,14 @@ a:hover {
   opacity: 0.2;
 }
 
+.content-tools-component .tools a.tag-entity-tool-component {
+  float: right;
+}
+
+.content-tools-component .tools a.tag-subject-tool-component {
+  float: right;
+}
+
 .content-tools-component .tools a.active {
   opacity: 1.0;
 }
@@ -341,6 +349,10 @@ a:hover {
 .content-panel-component .container-node.content .nodes {
   padding: 20px;
   position: relative;
+}
+
+.content-panel-component .container-node.content .nodes > .content-node.text {
+  padding-bottom: 20px;
 }
 
 

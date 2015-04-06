@@ -1,7 +1,6 @@
 var $$ = React.createElement;
 var Substance = require("substance");
 var SubjectsModel = require("./subjects_model");
-var SUBJECTS = require("./subjects_fixture");
 
 // Sub component
 var Subject = require("./subject");
@@ -14,37 +13,46 @@ var Subject = require("./subject");
 var SubjectsPanel = React.createClass({
   displayName: "Subjects",
 
+  contextTypes: {
+    backend: React.PropTypes.object.isRequired
+  },
+
   // Data loading methods
   // ------------
 
   loadSubjects: function() {
     var writerCtrl = this.props.writerCtrl;
-  	var self = this;
-		Substance.delay(function() {
-			self.setState({
-				subjects: new SubjectsModel(writerCtrl.doc, SUBJECTS)
-			});
-		}, 1);
+    var backend = this.context.backend;
+
+    console.log('loading subjects...');
+    
+    backend.getSubjects(function(err, subjects) {
+      this.setState({
+        subjects: new SubjectsModel(writerCtrl.doc, subjects)
+      });
+    }.bind(this));
   },
 
   // State relevant things
   // ------------
 
   getInitialState: function() {
-    var writerCtrl = this.props.writerCtrl;
-    var subjects = new SubjectsModel(writerCtrl.doc, SUBJECTS);
+    // var writerCtrl = this.props.writerCtrl;
+    // var subjects = new SubjectsModel(writerCtrl.doc, SUBJECTS);
 
+    // return {
+    //   subjects: subjects
+    // };
     return {
-      subjects: subjects
-    };
+      subjects: null
+    }
   },
 
   // Events
   // ------------
 
   componentDidMount: function() {
-    // If not from cache -> load
-    if (this.state.subjects.length === 0) {
+    if (!this.state.subjects) {
       this.loadSubjects();
     }
   },
@@ -71,6 +79,10 @@ var SubjectsPanel = React.createClass({
   	var state = this.state;
   	var props = this.props;
     var self = this;
+
+    if (!state.subjects) {
+      return $$("div", null, "Loading subjects ...");
+    }
 
     // Only get referenced subjects
     var referencedSubjects = state.subjects.getAllReferencedSubjects();
