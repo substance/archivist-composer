@@ -1,5 +1,9 @@
 var Substance = require("substance");
 
+var Interview = require('./interview');
+
+var EXAMPLE_DOC = require("../data/sample_doc");
+
 var ENTITIES = [
   // Prisons
   {"id":"54ef1331afda2d3c024e4818","type":"prison","name":"неизвестно /Австрия","nearest_locality":"неизвестно","country":"Австрия","description":"Респондент В. В. Щебетюк (ID 40) не помнит название села, куда был доставлен в сотаве 20 остарбайтеров. Жили в специальном охраняемым помещении, откуда их выводили на работы. Щебетюк был занят на полевых работах. В селе в том числе содержались поляки-военнопленные. ","__v":0,"prison_type":["частная сельскохозяйственная ферма"],"synonyms":["неизвестно /Австрия","\"работали в Австрии\"; \"не помню даже село\"; \"большой бауэр"," который имел более сто гектаров земли"," ферму большую и в деревне шоколадную фабрику\"; \"В селе"," значит"," там были военнопленные","\nвоеннопленные – польские\"; \"Работали у этого бауэра на полю\""],"id":"54ef1331afda2d3c024e4818"},{"id":"54ef1331afda2d3c024e4817","type":"prison","name":"Гоппенраде","nearest_locality":"Гоппенраде","country":"Германия","description":"город в земле Мекленбург-Передняя Померания","point":[12.2736937,53.73019069999999],"__v":0,"prison_type":["частная сельскохозяйственная ферма"],"synonyms":["Гоппенраде"],"id":"54ef1331afda2d3c024e4817"},{"id":"54ef1331afda2d3c024e4816","type":"prison","name":"Нахтигаль","nearest_locality":"Виттенберг","country":"Германия","description":"","point":[12.6279659,51.8739831],"__v":0,"prison_type":["рабочий лагерь"],"synonyms":["Нахтигаль"],"id":"54ef1331afda2d3c024e4816"},{"id":"54ef1331afda2d3c024e4815","type":"prison","name":"неизвестно","nearest_locality":"Франкфурт-на-Маней","country":"Германия","description":"","point":[8.6821267,50.1109221],"__v":0,"prison_type":[""],"synonyms":["неизвестно","\"распределение"," дезинфекция\""],"id":"54ef1331afda2d3c024e4815"},
@@ -28,16 +32,21 @@ var SEARCH_RESULT = [
 ];
 
 
-// Writer Controller
-// ----------------
-//
-// An common interface for all writer modules
-
-var MetadataService = function(opts) {
+var LocalBackend = function(opts) {
   
 };
 
-MetadataService.Prototype = function() {
+LocalBackend.Prototype = function() {
+
+  // Document
+  // ------------------
+
+  this.getDocument = function(documentId, cb) {
+    var doc = new Interview(EXAMPLE_DOC);
+    window.doc = doc;
+    cb(null, doc);
+  };
+
 
   // Entities
   // ------------------
@@ -59,7 +68,6 @@ MetadataService.Prototype = function() {
 
 };
 
+Substance.initClass(LocalBackend);
 
-Substance.initClass(MetadataService);
-
-module.exports = MetadataService;
+module.exports = LocalBackend;

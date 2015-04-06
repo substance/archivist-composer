@@ -343,6 +343,10 @@ a:hover {
   position: relative;
 }
 
+.content-panel-component .container-node.content .nodes > .content-node.text {
+  padding-bottom: 20px;
+}
+
 
 /* Content Editor
 -----------------------------------------------------*/

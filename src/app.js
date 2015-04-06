@@ -2,19 +2,13 @@
 
 var Substance = require('substance');
 var $$ = React.createElement;
-var Interview = require('./interview');
+
 var Writer = require("substance-writer");
-
-var MetadataService = require("./metadata_service");
-var FakeMetadataService = require("./fake_metadata_service");
-
-var EXAMPLE_DOC = require("../data/sample_doc");
+var Backend = require("./backend");
+var LocalBackend = require("./local_backend");
 
 // Writer Configuration
 var writerModules = require("./writer_modules");
-
-var doc = new Interview(EXAMPLE_DOC);
-window.doc = doc;
 
 // Prepare local cache
 window.cache = {};
@@ -27,19 +21,19 @@ Substance.each(writerModules, function(module) {
   });
 });
 
-// window.devMode = true;
+window.devMode = true;
 
 // Create instance of metadata service
-var metadataService;
+var backend;
 if (window.devMode) {
-  metadataService = new FakeMetadataService();
+  backend = new LocalBackend();
 } else {
-  metadataService = new MetadataService();
+  backend = new Backend();
 }
 
 var globalContext = {
   componentFactory: componentFactory,
-  metadataService: metadataService
+  backend: backend
 };
 
 var Composer = React.createClass({
@@ -47,22 +41,41 @@ var Composer = React.createClass({
 
   childContextTypes: {
     componentFactory: React.PropTypes.object,
-    metadataService: React.PropTypes.object
-  },
+    backend: React.PropTypes.object
+  },  
 
   getChildContext: function() {
     return globalContext;
   },
 
-  render: function() {
-    return $$(Writer, {
-      config: {
-        modules: writerModules
-      },
-      doc: doc,
-      id: "writer"
-    });
+  componentDidMount: function() {
+
+    backend.getDocument("example_document", function(err, doc) {
+      this.setState({
+        doc: doc
+      });
+    }.bind(this));
   },
+
+  getInitialState: function() {
+    return {
+      doc: null
+    };
+  },
+
+  render: function() {
+    if (this.state.doc) {
+      return $$(Writer, {
+        config: {
+          modules: writerModules
+        },
+        doc: doc,
+        id: "writer"
+      });      
+    } else {
+      return $$('div', null, 'Loading document...');
+    }
+  }
 
 });
 
@@ -76,4 +89,3 @@ var app = {
 };
 
 module.exports = app;
-
