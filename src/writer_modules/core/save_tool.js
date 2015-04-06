@@ -36,7 +36,7 @@ var SaveTool = React.createClass({
   },
 
   shouldComponentUpdate: function(nextProps, nextState) {
-    if (this.state.active !== nextState.active) return true;
+    return this.state.active !== nextState.active;
   },
 
   handleDocumentChange: function(change) {

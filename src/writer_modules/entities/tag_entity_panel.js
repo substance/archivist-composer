@@ -63,7 +63,7 @@ var TagEntityPanel = React.createClass({
   loadEntities: function(searchString) {
     var self = this;
 
-    var backend = this.context.metadataService;
+    var backend = this.context.backend;
 
     if (searchString) {
       backend.searchEntities(searchString, function(err, entities) {

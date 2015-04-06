@@ -2,13 +2,15 @@ var $$ = React.createElement;
 var Substance = require("substance");
 var SubjectsModel = require("./subjects_model");
 
-var SUBJECTS = require("./subjects_fixture");
-
 // Edit Subject Reference Panel
 // ----------------
 
 var EditSubjectReferencePanel = React.createClass({
   displayName: "Edit Subject Reference",
+
+  contextTypes: {
+    backend: React.PropTypes.object.isRequired
+  },
 
   handleCancel: function(e) {
     e.preventDefault();
@@ -18,16 +20,30 @@ var EditSubjectReferencePanel = React.createClass({
     });
   },
 
+  // Data loading methods
+  // ------------
+
+  loadSubjects: function() {
+    var writerCtrl = this.props.writerCtrl;
+    var backend = this.context.backend;
+
+    console.log('loading subjects...');
+    
+    backend.getSubjects(function(err, subjects) {
+      this.setState({
+        subjects: new SubjectsModel(writerCtrl.doc, subjects)
+      });
+    }.bind(this));
+  },
+
   // State relevant things
   // ------------
 
   getInitialState: function() {
-    var subjects = new SubjectsModel(this.props.writerCtrl.doc, SUBJECTS);
+    // var subjects = new SubjectsModel(this.props.writerCtrl.doc, SUBJECTS);
 
-    // TODO: create subject tree from cache
     return {
-      searchString: "",
-      subjects: subjects
+      subjects: null
     };
   },
 
@@ -35,7 +51,7 @@ var EditSubjectReferencePanel = React.createClass({
   // ------------
 
   componentDidMount: function() {
-    this.renderSubjectsTree();
+    this.loadSubjects();
   },
 
   componentWillUnmount: function() {
