@@ -4,6 +4,7 @@ var Interview = require('./interview');
 
 var EXAMPLE_DOC = require("../data/sample_doc");
 
+
 var ENTITIES = [
   // Prisons
   {"id":"54ef1331afda2d3c024e4818","type":"prison","name":"неизвестно /Австрия","nearest_locality":"неизвестно","country":"Австрия","description":"Респондент В. В. Щебетюк (ID 40) не помнит название села, куда был доставлен в сотаве 20 остарбайтеров. Жили в специальном охраняемым помещении, откуда их выводили на работы. Щебетюк был занят на полевых работах. В селе в том числе содержались поляки-военнопленные. ","__v":0,"prison_type":["частная сельскохозяйственная ферма"],"synonyms":["неизвестно /Австрия","\"работали в Австрии\"; \"не помню даже село\"; \"большой бауэр"," который имел более сто гектаров земли"," ферму большую и в деревне шоколадную фабрику\"; \"В селе"," значит"," там были военнопленные","\nвоеннопленные – польские\"; \"Работали у этого бауэра на полю\""],"id":"54ef1331afda2d3c024e4818"},{"id":"54ef1331afda2d3c024e4817","type":"prison","name":"Гоппенраде","nearest_locality":"Гоппенраде","country":"Германия","description":"город в земле Мекленбург-Передняя Померания","point":[12.2736937,53.73019069999999],"__v":0,"prison_type":["частная сельскохозяйственная ферма"],"synonyms":["Гоппенраде"],"id":"54ef1331afda2d3c024e4817"},{"id":"54ef1331afda2d3c024e4816","type":"prison","name":"Нахтигаль","nearest_locality":"Виттенберг","country":"Германия","description":"","point":[12.6279659,51.8739831],"__v":0,"prison_type":["рабочий лагерь"],"synonyms":["Нахтигаль"],"id":"54ef1331afda2d3c024e4816"},{"id":"54ef1331afda2d3c024e4815","type":"prison","name":"неизвестно","nearest_locality":"Франкфурт-на-Маней","country":"Германия","description":"","point":[8.6821267,50.1109221],"__v":0,"prison_type":[""],"synonyms":["неизвестно","\"распределение"," дезинфекция\""],"id":"54ef1331afda2d3c024e4815"},
@@ -47,6 +48,47 @@ LocalBackend.Prototype = function() {
     cb(null, doc);
   };
 
+  this.saveDocument = function(doc, cb) {
+    console.log('saving doc...');
+    cb(null);
+  };
+
+  // this.save = function(doc, path, cb) {
+  //   var self = this;
+  //   var json = doc.toJSON();
+  //   json.__v = doc.version;
+
+  //   console.log('local version:', doc.version);
+  //   console.log('local subjectDBVersion:', doc.metadata.subjectDBVersion);
+
+  //   $.ajax({
+  //     type: "PUT",
+  //     url: "/api/documents/"+path,
+  //     contentType: "application/json",
+  //     data: JSON.stringify(json),
+  //     success: function(data) {
+  //       // Remember new document version
+  //       console.log('new documentVersion: ', data.documentVersion);
+  //       console.log('new subjectDBVersion: ', data.subjectDBVersion);
+  //       doc.version = data.documentVersion;
+
+  //       if (doc.metadata.subjectDBVersion !== data.subjectDBVersion) {
+  //         console.log('outdated subjects metadata.. loading again from server');
+
+  //         self.metadata.load(function(err) {
+  //           if (err) return cb(err);
+  //           doc.trigger('metadata:updated');
+  //           cb(null);
+  //         });
+  //       } else {
+  //         cb(null);
+  //       }
+  //     },
+  //     error: function(err) {
+  //       cb(err.responseText);
+  //     }
+  //   });
+  // };
 
   // Entities
   // ------------------
