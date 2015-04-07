@@ -46,6 +46,7 @@ LocalBackend.Prototype = function() {
 
   this.getDocument = function(documentId, cb) {
     var doc = new Interview(EXAMPLE_DOC);
+    console.log('le doc', EXAMPLE_DOC);
     window.doc = doc;
     cb(null, doc);
   };

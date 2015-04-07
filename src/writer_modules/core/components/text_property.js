@@ -52,6 +52,7 @@ var TextProperty = React.createClass({
   },
 
   updateHighlights: function() {
+    if (!this.context.getHighlightedNodes) return;
     var highlightedAnnotations = this.context.getHighlightedNodes();
     var domNode = this.getDOMNode();
     var els = $(domNode).find('.annotation');
@@ -71,7 +72,12 @@ var TextProperty = React.createClass({
     var path = this.props.path;
     var text = doc.get(path) || "";
     var annotations = doc.getIndex('annotations').get(path);
-    var highlightedAnnotations = this.context.getHighlightedNodes();
+
+    var highlightedAnnotations = [];
+
+    if (this.context.getHighlightedNodes) {
+      highlightedAnnotations = this.context.getHighlightedNodes();
+    }
 
     var annotator = new Annotator();
     annotator.onText = function(context, text) {

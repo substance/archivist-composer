@@ -5,8 +5,10 @@ var DocumentNode = Substance.Document.Node.extend({
   properties: {
     "guid": "string",
     "creator": "string",
-    "title": "string",
-    "abstract": "string"
+    "title": "string", // TODO: remove
+    "abstract": "string",
+    "interview_subject_name": "string",
+    "interview_subject_bio": "string"
   }
 });
 
