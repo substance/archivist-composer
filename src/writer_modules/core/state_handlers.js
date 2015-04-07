@@ -10,8 +10,6 @@ var stateHandlers = {
 
     var range = sel.getTextRange();
     var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1]);
-    
-    console.log('le surface', surface);
 
     // Switch to a neutral state if no annotation matches have been found
     if (annotations.length === 0) {
