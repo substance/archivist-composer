@@ -51,15 +51,29 @@ var EditSubjectReferencePanel = React.createClass({
   // ------------
 
   componentDidMount: function() {
+    var doc = this.props.writerCtrl.doc;
+    doc.connect(this, {
+      'document:changed': this.handleDocumentChange
+    });
     this.loadSubjects();
   },
 
+  handleDocumentChange: function(change, info) {
+    // updateSubjectReference
+    if (!info.updateSubjectReference) {
+      this.renderSubjectsTree();
+    }  
+  },
+
   componentWillUnmount: function() {
+    var doc = this.props.writerCtrl.doc;
     var treeContainerEl = this.refs.subjectsTree.getDOMNode();
     $(treeContainerEl).off('changed.jstree');
+    doc.disconnect(this);
   },
 
   componentDidUpdate: function() {
+
     this.renderSubjectsTree();
   },
 
@@ -74,7 +88,7 @@ var EditSubjectReferencePanel = React.createClass({
 
     var tx = this.props.writerCtrl.doc.startTransaction();
     tx.set([this.props.subjectReferenceId, "target"], subjectIds);
-    tx.save();
+    tx.save({}, {updateSubjectReference: true});
   },
 
   // Render jsTree widget accordingly
