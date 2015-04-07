@@ -21,7 +21,7 @@ Substance.each(writerModules, function(module) {
   });
 });
 
-window.devMode = true;
+// window.devMode = true;
 
 // Create instance of metadata service
 var backend;
@@ -50,7 +50,7 @@ var Composer = React.createClass({
 
   componentDidMount: function() {
 
-    backend.getDocument("example_document", function(err, doc) {
+    backend.getDocument(this.props.documentId || "example_document", function(err, doc) {
       this.setState({
         doc: doc
       });
@@ -82,7 +82,9 @@ var Composer = React.createClass({
 var app = {
   start: function() {
     React.render(
-      $$(Composer),
+      $$(Composer, {
+        documentId: window.location.hash.slice(1)
+      }),
       document.body
     );
   }
