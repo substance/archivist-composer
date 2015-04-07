@@ -346,6 +346,12 @@ a:hover {
 
 }
 
+.content-panel-component .interview-subject-name {
+  padding: 20px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
 .content-panel-component .container-node.content .nodes {
   padding: 20px;
   position: relative;
@@ -578,6 +584,26 @@ a:hover {
   background-color: rgba(11, 157, 217, 1);
 }
 
+
+/* Metadata Panel
+-----------------------------------------------------*/
+
+.metadata-panel-component .panel-content {
+  padding: 20px;
+}
+
+.metadata-panel-component .label {
+  font-size: 13px;
+  color: #777;
+}
+
+.metadata-panel-component .text-property {
+  margin: 10px 0;
+  display: block;
+  background: white;
+  padding: 3px;
+  border: 1px solid #eee;
+}
 
 /* Subject component
 -----------------------------------------------------*/
