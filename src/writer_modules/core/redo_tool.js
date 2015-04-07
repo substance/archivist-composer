@@ -11,31 +11,29 @@ var RedoTool = React.createClass({
     backend: React.PropTypes.object.isRequired
   },
 
-  componentDidMount: function() {
-    var writerCtrl = this.props.writerCtrl;
-    var doc = writerCtrl.doc;
+  getDocument: function() {
+    return this.props.writerCtrl.doc;
+  },
 
+  componentDidMount: function() {
+    var doc = this.getDocument();
     doc.connect(this, {
       'document:changed': this.handleDocumentChange
     });
   },
 
-  // Do we really need a backend?
   handleClick: function() {
-    var backend = this.context.backend;
-    var writerCtrl = this.props.writerCtrl;
-    var doc = writerCtrl.doc;
-
-    console.log('TODO: handle redo');
+    var doc = this.getDocument();
+    doc.redo();
   },
 
   shouldComponentUpdate: function(nextProps, nextState) {
     return this.state.active !== nextState.active;
   },
 
-  handleDocumentChange: function(change) {
+  handleDocumentChange: function() {
     this.setState({
-      active: false
+      active: (this.getDocument().undone.length > 0)
     });
   },
 
