@@ -7,6 +7,8 @@ var Toponym = require("./entity_types/toponym");
 var Person = require("./entity_types/person");
 var Definition = require("./entity_types/definition");
 
+var _ = require("substance/helpers");
+
 var EntitiesPanel = React.createClass({
   displayName: "Entities",
 
@@ -17,7 +19,7 @@ var EntitiesPanel = React.createClass({
   getReferencedEntityIds: function() {
     var doc = this.props.writerCtrl.doc;
     var entityReferences = doc.entityReferencesIndex.get();
-    return Substance.map(entityReferences, function(entityRef, key) {
+    return _.map(entityReferences, function(entityRef, key) {
       return entityRef.target;
     });
   },
@@ -51,13 +53,13 @@ var EntitiesPanel = React.createClass({
   cacheInvalid: function() {
     // Sneak into cache
     if (window.cache.entities) {
-      var currentEntities = Substance.uniq(this.getReferencedEntityIds());
-      var cachedEntities = Substance.uniq(Substance.pluck(window.cache.entities, 'id'));
+      var currentEntities = _.uniq(this.getReferencedEntityIds());
+      var cachedEntities = _.uniq(_.pluck(window.cache.entities, 'id'));
 
       console.log('currentEntities', currentEntities, 'cached', cachedEntities);
 
       if (currentEntities.length !== cachedEntities.length) return true;
-      var overlappingEntities = Substance.intersection(currentEntities, cachedEntities);
+      var overlappingEntities = _.intersection(currentEntities, cachedEntities);
       // Cache condition met when there's a full overlap
       if (overlappingEntities.length === currentEntities.length) return false;
     }

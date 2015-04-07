@@ -22,7 +22,8 @@ var UndoTool = React.createClass({
   },
 
   // Do we really need a backend?
-  handleClick: function() {
+  handleClick: function(e) {
+    e.preventDefault();
     var doc = this.getDocument();
     doc.undo();
   },
@@ -50,7 +51,6 @@ var UndoTool = React.createClass({
     return $$("a", {
       className: classNames.join(' '),
       href: "#",
-      // fa-rotate-right
       dangerouslySetInnerHTML: {__html: '<i class="fa fa-undo"></i>'},
       title: 'Undo',
       onClick: this.handleClick
