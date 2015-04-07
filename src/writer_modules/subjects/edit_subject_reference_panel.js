@@ -12,7 +12,7 @@ var EditSubjectReferencePanel = React.createClass({
     backend: React.PropTypes.object.isRequired
   },
 
-  handleCancel: function(e) {
+  handleDone: function(e) {
     e.preventDefault();
     // Go to regular entities panel
     this.props.writerCtrl.replaceState({
@@ -26,8 +26,6 @@ var EditSubjectReferencePanel = React.createClass({
   loadSubjects: function() {
     var writerCtrl = this.props.writerCtrl;
     var backend = this.context.backend;
-
-    console.log('loading subjects...');
     
     backend.getSubjects(function(err, subjects) {
       this.setState({
@@ -40,8 +38,6 @@ var EditSubjectReferencePanel = React.createClass({
   // ------------
 
   getInitialState: function() {
-    // var subjects = new SubjectsModel(this.props.writerCtrl.doc, SUBJECTS);
-
     return {
       subjects: null
     };
@@ -59,7 +55,6 @@ var EditSubjectReferencePanel = React.createClass({
   },
 
   handleDocumentChange: function(change, info) {
-    // updateSubjectReference
     if (!info.updateSubjectReference) {
       this.renderSubjectsTree();
     }  
@@ -73,7 +68,6 @@ var EditSubjectReferencePanel = React.createClass({
   },
 
   componentDidUpdate: function() {
-
     this.renderSubjectsTree();
   },
 
@@ -102,6 +96,14 @@ var EditSubjectReferencePanel = React.createClass({
     var subjectsTree = subjects.getTree();
     var subjectRef = doc.get(this.props.subjectReferenceId);
 
+    // HACK: This guard is needed due to undo behavior
+    // When a new annotation is toggled and then undo is executed
+    // renderSubjectsTree is called one last time before 
+    if (!subjectRef) {
+      return;
+    }
+
+    console.log('props', this.props);
     // TreeView for selecting a subject
     // --------------
 
@@ -141,10 +143,10 @@ var EditSubjectReferencePanel = React.createClass({
     return $$("div", {className: "panel dialog edit-subject-reference-panel-component"},
       $$('div', {className: 'dialog-header'},
         $$('div', {className: 'label', dangerouslySetInnerHTML: {__html: '<i class="fa fa-tag"></i> Select relevant subjects'}}),
-        $$('a', {className: 'cancel', href: '#', onClick: this.handleCancel}, 'Cancel')
+        $$('a', {className: 'done', href: '#', onClick: this.handleDone}, 'Done')
       ),
       $$('div', {className: "panel-content"},
-        $$('div', {className: "subjects-tree", ref: 'subjectsTree'})
+        $$('div', {className: "subjects-tree", ref: 'subjectsTree'}, "Loading subjects")
       )
     );
   }
