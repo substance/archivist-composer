@@ -21,7 +21,7 @@ Substance.each(writerModules, function(module) {
   });
 });
 
-window.devMode = true;
+// window.devMode = true;
 
 // Create instance of metadata service
 var backend;
@@ -71,7 +71,7 @@ var Composer = React.createClass({
         },
         doc: doc,
         id: "writer"
-      });      
+      });
     } else {
       return $$('div', null, 'Loading document...');
     }
