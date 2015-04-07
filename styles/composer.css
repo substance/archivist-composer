@@ -435,6 +435,10 @@ a:hover {
   font-weight: bold;
 }
 
+.annotation.emphasis {
+  font-style: italic;
+}
+
 /* Entity Reference */
 
 .annotation.entity-reference {
