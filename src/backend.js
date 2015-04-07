@@ -57,7 +57,9 @@ Backend.Prototype = function() {
   // ------------------
 
   this.getSubjects = function(cb) {
-    cb(null, SUBJECTS);
+    $.getJSON("http://localhost:5000/api/metadata", function(subjectDB) {
+      cb(null, subjectDB.subjects);
+    });
   };
 };
 
