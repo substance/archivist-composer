@@ -348,6 +348,10 @@ a:hover {
   background: #eee;
 }
 
+.content-tools-component .tools a.selected:hover {
+  background: #666;
+}
+
 /* Generic Panel styles
 -----------------------------------------------------*/
 
