@@ -15,7 +15,8 @@ var Prison = React.createClass({
       $$("div", {className: "type"}, "Prison"),
       $$("div", {className: "name"}, this.props.name),
       $$("div", {className: "synonyms"}, "Also known as: "+ this.props.synonyms),
-      $$("div", {className: "country"}, "Country: "+this.props.country)
+      $$("div", {className: "country"}, "Country: "+this.props.country),
+      $$("div", {className: "description"}, this.props.description)
     );
   }
 });

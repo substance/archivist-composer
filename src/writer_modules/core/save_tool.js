@@ -16,7 +16,8 @@ var SaveTool = React.createClass({
     var doc = writerCtrl.doc;
 
     doc.connect(this, {
-      'document:changed': this.handleDocumentChange
+      'document:changed': this.handleDocumentChange,
+      'document:saved': this.handleDocumentSaved
     });
   },
 
@@ -45,7 +46,7 @@ var SaveTool = React.createClass({
         } else {
           notifications.addMessage({
             type: "info",
-            message: "Saved document"
+            message: "No changes"
           });
           this.setState({
             active: false
@@ -57,6 +58,12 @@ var SaveTool = React.createClass({
 
   shouldComponentUpdate: function(nextProps, nextState) {
     return this.state.active !== nextState.active;
+  },
+
+  handleDocumentSaved: function() {
+    this.setState({
+      active: false
+    });    
   },
 
   handleDocumentChange: function(change) {

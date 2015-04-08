@@ -14,7 +14,7 @@ var Person = React.createClass({
     return $$("div", {className: className.join(" "), onClick: this.handleToggle},
       $$("div", {className: "type"}, "Person"),
       $$("div", {className: "name"}, this.props.name),
-      $$("div", {className: "country"}, "Country: "+this.props.country)
+      $$("div", {className: "description"}, this.props.description)
     );
   }
 });
