@@ -9,7 +9,7 @@ var SUBJECTS = [{"_id":"54bae4cda868bc6fab4bcd0e","name":"Казни (в том 
 //
 
 var Backend = function(opts) {
-  
+  this.cache = {};
 };
 
 Backend.Prototype = function() {
@@ -57,9 +57,15 @@ Backend.Prototype = function() {
   // ------------------
 
   this.getSubjects = function(cb) {
+    if (this.cache.subjectDB) {
+      return cb(null, this.cache.subjectDB.subjects);
+    }
+
     $.getJSON("http://localhost:5000/api/metadata", function(subjectDB) {
+      // Store in cache
+      this.cache.subjectDB = subjectDB;
       cb(null, subjectDB.subjects);
-    });
+    }.bind(this));
   };
 };
 
