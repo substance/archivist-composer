@@ -115,9 +115,14 @@ var TextProperty = React.createClass({
   },
 
 
-  // TODO: we need to join the ContentEditable dance...
-  // when this is edited directly we usually do not need to update
-  propertyDidChange: function(/*documentChange, ops, info*/) {
+  propertyDidChange: function(change, ops, info) {
+    // Note: Surface provides the source element as element
+    // whenever editing is done by Contenteditable (as opposed to programmatically)
+    // In that case we trust in CE and do not rerender.
+    if (info.source === this.getDOMNode()) {
+      // console.log('Skipping update...');
+      return;
+    }
     // TODO: maybe we want to find an incremental solution
     // However, this is surprisingly fast so that almost no flickering can be observed.
     this.renderManually();
