@@ -448,6 +448,11 @@ a:hover {
   color: rgb(200, 57, 57);
 }
 
+.status-bar-component.success {
+  background: #E3EAD6;
+  color: rgb(71, 98, 71);
+}
+
 .status-bar-component .document-status {
   float: left;
   padding: 0 20px;
