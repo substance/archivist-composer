@@ -1,3 +1,5 @@
+"use strict";
+
 var Substance = require("substance");
 var Interview = require('./interview');
 
@@ -11,12 +13,20 @@ var Backend = function(opts) {
 
 Backend.Prototype = function() {
 
+  // Utils
+  // ------------------
+
+  this.getSubjectDBVersion = function() {
+    return this.cache.subjectDB ? this.cache.subjectDB.subjectDBVersion : null;
+  };
+
   // Document
   // ------------------
 
   this.getDocument = function(documentId, cb) {
     $.getJSON("/api/documents/"+documentId, function(rawDoc) {
       var doc = new Interview(rawDoc);
+      doc.version = rawDoc.__v;
       // For easy reference
       window.doc = doc;
       cb(null, doc);
@@ -24,10 +34,37 @@ Backend.Prototype = function() {
   };
 
   this.saveDocument = function(doc, cb) {
-    console.log('saving doc...');
-    cb(null);
-  };
+    var json = doc.toJSON();
+    json.__v = doc.version;
 
+    console.log('saving doc, current version is', doc.version);
+
+    $.ajax({
+      type: "PUT",
+      url: "/api/documents/"+doc.id,
+      contentType: "application/json",
+      data: JSON.stringify(json),
+      success: function(data) {
+        // Remember new document version
+        doc.version = data.documentVersion;
+
+        console.log('new doc version', doc.version);
+        // Check if subjectsDB changed
+        var currentSubjectDBVersion = this.getSubjectDBVersion();
+        var newSubjectDBVersion = data.subjectDBVersion;
+        
+        // Update the subjects cache if outdated
+        if (this.cache.subjects && this.cache.subjectDBVersion  !== newSubjectDBVersion) {
+          this.fetchSubjects();
+        } else {
+          cb(null);
+        }
+      }.bind(this),
+      error: function(err) {
+        cb(err.responseText);
+      }
+    });
+  };
 
   // Entities
   // ------------------
@@ -50,19 +87,24 @@ Backend.Prototype = function() {
     });
   };
 
+
+  this.fetchSubjects = function(cb) {
+    $.getJSON("http://localhost:5000/api/metadata", function(subjectDB) {
+      // Store in cache
+      this.cache.subjectDB = subjectDB;
+      cb(null, subjectDB.subjects);
+    }.bind(this));  
+  };
+
   // Subjects
   // ------------------
 
   this.getSubjects = function(cb) {
     if (this.cache.subjectDB) {
       return cb(null, this.cache.subjectDB.subjects);
+    } else {
+      this.fetchSubjects(cb);
     }
-
-    $.getJSON("http://localhost:5000/api/metadata", function(subjectDB) {
-      // Store in cache
-      this.cache.subjectDB = subjectDB;
-      cb(null, subjectDB.subjects);
-    }.bind(this));
   };
 };
 

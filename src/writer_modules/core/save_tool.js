@@ -19,18 +19,20 @@ var SaveTool = React.createClass({
     });
   },
 
-  handleClick: function() {
+  handleClick: function(e) {
+    e.preventDefault();
     var backend = this.context.backend;
     var writerCtrl = this.props.writerCtrl;
     var doc = writerCtrl.doc;
 
-    if (this.state.active) {
+    if (this.state.active && !doc.__isSaving) {
+      doc.__isSaving = true;
       backend.saveDocument(doc, function(err) {
+        doc.__isSaving = false;
         if (err) return console.err('saving of document failed');
-
         this.setState({
           active: false
-        })
+        });
       }.bind(this));
     }
   },
