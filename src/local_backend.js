@@ -1,7 +1,5 @@
 var Substance = require("substance");
-
 var Interview = require('./interview');
-
 var EXAMPLE_DOC = require("../data/sample_doc");
 
 
@@ -52,8 +50,7 @@ LocalBackend.Prototype = function() {
   };
 
   this.saveDocument = function(doc, cb) {
-    console.log('saving doc...');
-    cb(null);
+    cb(new Error("Saving not supported in dev mode"));
   };
 
   // Entities
@@ -80,7 +77,6 @@ LocalBackend.Prototype = function() {
   this.getSubjects = function(cb) {
     cb(null, SUBJECTS);
   };
-
 
 };
 

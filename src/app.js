@@ -7,6 +7,8 @@ var Writer = require("substance-writer");
 var Backend = require("./backend");
 var LocalBackend = require("./local_backend");
 
+var NotificationService = require("./notification_service");
+
 // Writer Configuration
 var writerModules = require("./writer_modules");
 
@@ -31,9 +33,13 @@ if (window.devMode) {
   backend = new Backend();
 }
 
+// Create notification service
+var notifications = new NotificationService();
+
 var globalContext = {
   componentFactory: componentFactory,
-  backend: backend
+  backend: backend,
+  notifications: notifications
 };
 
 var Composer = React.createClass({
@@ -41,7 +47,8 @@ var Composer = React.createClass({
 
   childContextTypes: {
     componentFactory: React.PropTypes.object,
-    backend: React.PropTypes.object
+    backend: React.PropTypes.object,
+    notifications: React.PropTypes.object
   },  
 
   getChildContext: function() {

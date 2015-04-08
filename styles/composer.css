@@ -167,8 +167,9 @@ a:hover {
   position: absolute;
   left: 0px;
   right: 0px;
+  overflow: hidden;
   /*bottom: 25px;*/
-  bottom: 0px;
+  bottom: 25px;
   top: 0px;
 }
 
@@ -426,6 +427,41 @@ a:hover {
   background-color: rgba(145, 187, 4, 1);
 }
 
+/* StatusBar Component
+-----------------------------------------------------*/
+
+.status-bar-component {
+  background: #eee;
+  border-top: 1px solid #ddd;
+  position: fixed;
+  height: 25px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  overflow: hidden;
+  line-height: 25px;
+  font-size: 12px;
+}
+
+.status-bar-component.error {
+  background: #F4E2E2;
+  color: rgb(200, 57, 57);
+}
+
+.status-bar-component .document-status {
+  float: left;
+  padding: 0 20px;
+}
+
+.status-bar-component .icon {
+  float: right;
+  padding: 0 20px;
+}
+
+
+.status-bar-component .message {
+  float: right;
+}
 
 /* Node Components
 -----------------------------------------------------*/
@@ -473,6 +509,8 @@ a:hover {
 .annotation.subject-reference.active {
   background: rgba(145, 187, 4, 0.6);
 }
+
+
 
 
 
