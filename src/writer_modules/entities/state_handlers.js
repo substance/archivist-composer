@@ -70,6 +70,9 @@ var stateHandlers = {
     var range = sel.getTextRange();
     var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1], "entity_reference");
 
+    var surface = writerCtrl.getSurface();
+    if (surface.name !== "content") return false;
+
     if (annotations.length > 0) {
       var ref = annotations[0];
       writerCtrl.replaceState({
@@ -96,6 +99,7 @@ var stateHandlers = {
     if (state.contextId === "entities" && state.entityId) {
       // Use reference handler
       var references = Object.keys(doc.references.get(state.entityId));
+      console.log('references', references);
       return references;
     }
   }

@@ -48,16 +48,13 @@ var EditSubjectReferencePanel = React.createClass({
 
   componentDidMount: function() {
     var doc = this.props.writerCtrl.doc;
-    doc.connect(this, {
-      'document:changed': this.handleDocumentChange
-    });
+    doc.getEventProxy('path').add([this.props.subjectReferenceId, "target"], this, this.handleDocumentChange);
     this.loadSubjects();
   },
 
-  handleDocumentChange: function(change, info) {
-    if (!info.updateSubjectReference) {
-      this.renderSubjectsTree();
-    }
+  handleDocumentChange: function(change, ops, info) {
+    if (info.updateSubjectReference) return;
+    this.renderSubjectsTree();
   },
 
   componentWillUnmount: function() {

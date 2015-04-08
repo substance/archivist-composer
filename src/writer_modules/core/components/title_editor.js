@@ -37,18 +37,14 @@ var TitleEditor = React.createClass({
     this.surface.detach();
   },
 
-  createTextProperty: function(property) {
+  render: function() {
     return $$(TextProperty, {
       doc: this.props.writerCtrl.doc,
       tagName: "div",
       className: "interview-subject-name",
-      path: [ "document", property],
+      path: [ "document", "title"],
       writerCtrl: this.props.writerCtrl,
     });
-  },
-
-  render: function() {
-    return this.createTextProperty("title");
   }
 });
 

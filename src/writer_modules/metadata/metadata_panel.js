@@ -56,6 +56,8 @@ var MetadataPanel = React.createClass({
           $$('div', {className: 'label'}, "Interview Subject Name"),
           this.createTextProperty("interview_subject_name"),
           $$('div', {className: 'label'}, "Biography"),
+          this.createTextProperty("interview_subject_bio"),
+          $$('div', {className: 'label'}, "Biography"),
           this.createTextProperty("interview_subject_bio")
         )
       )
