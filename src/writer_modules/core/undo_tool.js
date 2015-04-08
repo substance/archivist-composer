@@ -24,6 +24,9 @@ var UndoTool = React.createClass({
   // Do we really need a backend?
   handleClick: function(e) {
     e.preventDefault();
+    if (!this.state.active) {
+      return;
+    }
     var doc = this.getDocument();
     doc.undo();
   },

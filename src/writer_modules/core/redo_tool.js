@@ -24,6 +24,9 @@ var RedoTool = React.createClass({
 
   handleClick: function(e) {
     e.preventDefault();
+    if (!this.state.active) {
+      return;
+    }
     var doc = this.getDocument();
     doc.redo();
   },
