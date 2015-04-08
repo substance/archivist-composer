@@ -37,7 +37,7 @@ var sampleDoc = {
       "id": "text_1",
       "content": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis scelerisque ligula. Proin tristique ligula id magna finibus rhoncus. Quisque dictum viverra sapien, vel elementum metus condimentum nec. Donec ac tellus nunc. Nullam fermentum pharetra justo, accumsan tristique quam tempus a. Quisque vitae luctus velit. Praesent lacinia enim ex, sed pulvinar neque dictum ultricies. Sed est metus, bibendum sed suscipit ut, cursus ut mi. Pellentesque sagittis mi nisi, eu blandit metus congue id. Pellentesque eget magna porta, rutrum odio et, commodo lacus. Sed vitae vehicula ante. Quisque suscipit iaculis est, vitae aliquet lacus dictum ut. Nulla enim dolor, pulvinar at odio vitae, sollicitudin eleifend ex. Maecenas eget ligula eget sem efficitur consectetur nec vel sem. In massa mauris, consequat vitae enim eget, vehicula aliquet turpis.'
     },
-    
+
     "text_2": {
       "type": "text",
       "id": "text_2",
@@ -84,6 +84,16 @@ var sampleDoc = {
         614,
         628
       ]
+    },
+
+    "dummy_anno_1": {
+      "id": "dummy_anno_1",
+      "type": "container_annotation",
+      "container": "content",
+      "startPath": ["text_2", "content"],
+      "startOffset": 100,
+      "endPath": ["text_4", "content"],
+      "endOffset": 40,
     },
 
     "text_3": {

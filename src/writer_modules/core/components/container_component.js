@@ -22,7 +22,7 @@ var ContainerComponent = React.createClass({
 
   getInitialState: function() {
     return {
-      surface: new Surface(new Surface.FullfledgedEditor(this.props.doc))
+      surface: new Surface(new Surface.FullfledgedEditor('content', this.props.doc))
     };
   },
 

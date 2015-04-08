@@ -71,10 +71,12 @@ var TextProperty = React.createClass({
     var doc = this.props.doc;
     var path = this.props.path;
     var text = doc.get(path) || "";
+
     var annotations = doc.getIndex('annotations').get(path);
+    // get container annotation anchors if available
+    annotations = annotations.concat(this.getContainerAnnotationAnchors());
 
     var highlightedAnnotations = [];
-
     if (this.context.getHighlightedNodes) {
       highlightedAnnotations = this.context.getHighlightedNodes();
     }
@@ -84,7 +86,7 @@ var TextProperty = React.createClass({
       context.children.push(text);
     };
     annotator.onEnter = function(entry) {
-      var anno = doc.get(entry.id);
+      var node = entry.node;
       // TODO: we need a component factory, so that we can create the appropriate component
       var ViewClass = AnnotationView;
       var classNames = [];
@@ -95,7 +97,7 @@ var TextProperty = React.createClass({
         ViewClass: ViewClass,
         props: {
           doc: doc,
-          node: anno,
+          node: node,
           classNames: classNames,
         },
         children: []
@@ -114,6 +116,23 @@ var TextProperty = React.createClass({
     return root.children;
   },
 
+  getContainerAnnotationAnchors: function() {
+    var anchors = null;
+    var doc = this.props.doc;
+    var path = this.props.path;
+    if (!this.context.surface) {
+      return;
+    }
+    var containerName = this.context.surface.getContainerName();
+    if (!containerName) {
+      return;
+    }
+    var containerNode = doc.get(containerName);
+    if (containerNode && (containerNode instanceof Substance.Document.ContainerNode)) {
+      anchors = doc.getIndex('container-annotations').get(containerName, path);
+    }
+    return anchors;
+  },
 
   propertyDidChange: function(change, ops, info) {
     // Note: Surface provides the source element as element
