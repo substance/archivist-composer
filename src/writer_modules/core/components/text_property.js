@@ -132,6 +132,7 @@ var TextProperty = React.createClass({
     return $$('span', {
       className: "text-property " + (this.props.className || ""),
       contentEditable: true,
+      spellCheck: false,
       style: {
         whiteSpace: "pre-wrap"
       },
