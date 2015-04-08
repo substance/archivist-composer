@@ -265,7 +265,7 @@ a:hover {
   float: left;
 }
 
-.panel.dialog .dialog-header .cancel {
+.panel.dialog .dialog-header .cancel, .panel.dialog .dialog-header .done {
   font-size: 12px;
   color: #fff;
   font-weight: bold;
@@ -274,7 +274,7 @@ a:hover {
   float: right;
 }
 
-.panel.dialog .dialog-header .cancel:hover {
+.panel.dialog .dialog-header .cancel:hover, .panel.dialog .dialog-header .done:hover {
   background: rgba(0,0,0,0.1);
 }
 

@@ -103,7 +103,6 @@ var EditSubjectReferencePanel = React.createClass({
       return;
     }
 
-    console.log('props', this.props);
     // TreeView for selecting a subject
     // --------------
 
