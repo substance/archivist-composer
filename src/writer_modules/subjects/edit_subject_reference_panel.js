@@ -26,7 +26,7 @@ var EditSubjectReferencePanel = React.createClass({
   loadSubjects: function() {
     var writerCtrl = this.props.writerCtrl;
     var backend = this.context.backend;
-    
+
     backend.getSubjects(function(err, subjects) {
       this.setState({
         subjects: new SubjectsModel(writerCtrl.doc, subjects)
@@ -57,7 +57,7 @@ var EditSubjectReferencePanel = React.createClass({
   handleDocumentChange: function(change, info) {
     if (!info.updateSubjectReference) {
       this.renderSubjectsTree();
-    }  
+    }
   },
 
   componentWillUnmount: function() {
@@ -98,7 +98,9 @@ var EditSubjectReferencePanel = React.createClass({
 
     // HACK: This guard is needed due to undo behavior
     // When a new annotation is toggled and then undo is executed
-    // renderSubjectsTree is called one last time before 
+    // renderSubjectsTree is called one last time before something happened
+    // TODO: essentially, this component is not interested in document:changes
+    // other than 'updates'
     if (!subjectRef) {
       return;
     }
