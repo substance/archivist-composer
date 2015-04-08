@@ -42,7 +42,8 @@ var ContainerComponent = React.createClass({
     var doc = this.props.doc;
     var writerCtrl = this.props.writerCtrl;
     var componentFactory = this.context.componentFactory;
-    var components = containerNode.nodes.map(function(nodeId) {
+    var components = [$$(TitleEditor, {writerCtrl: writerCtrl})];
+    var components = components.concat(containerNode.nodes.map(function(nodeId) {
       var node = doc.get(nodeId);
       var ComponentClass = componentFactory.get(node.type);
       if (!ComponentClass) {
@@ -55,10 +56,9 @@ var ContainerComponent = React.createClass({
         // TODO: we should use DI instead of coupling to the writer
         writerCtrl: writerCtrl
       });
-    });
+    }));
 
     return $$("div", {class: "interview-content"},
-      $$(TitleEditor, {writerCtrl: writerCtrl}),
       $$("div", {
         className: "container-node " + this.props.node.id,
         contentEditable: true,
