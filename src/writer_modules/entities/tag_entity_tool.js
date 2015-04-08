@@ -31,8 +31,9 @@ var TagEntityTool = React.createClass({
     }
   },
 
-  handleClick: function() {
-    // toggle annotation
+  handleClick: function(e) {
+    e.preventDefault();
+    
     var writerCtrl = this.props.writerCtrl;
     var sel = writerCtrl.getSelection();
 

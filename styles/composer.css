@@ -317,6 +317,14 @@ a:hover {
   opacity: 0.2;
 }
 
+.content-tools-component .tools a.strong-tool-component {
+  float: right;
+}
+
+.content-tools-component .tools a.emphasis-tool-component {
+  float: right;
+}
+
 .content-tools-component .tools a.tag-entity-tool-component {
   float: right;
 }
