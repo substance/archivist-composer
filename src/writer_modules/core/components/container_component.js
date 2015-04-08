@@ -1,7 +1,7 @@
 var Substance = require('substance');
 var $$ = React.createElement;
-
 var Surface = Substance.Surface;
+var TitleEditor = require("./title_editor");
 
 // Container Node
 // ----------------
@@ -57,13 +57,16 @@ var ContainerComponent = React.createClass({
       });
     });
 
-    return $$("div", {
+    return $$("div", {class: "interview-content"},
+      $$(TitleEditor, {writerCtrl: writerCtrl}),
+      $$("div", {
         className: "container-node " + this.props.node.id,
         contentEditable: true,
         spellCheck: false,
         "data-id": this.props.node.id
       },
-      $$('div', {className: "nodes"}, components)
+        $$('div', {className: "nodes"}, components)
+      )
     );
   },
 
