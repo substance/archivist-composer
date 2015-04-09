@@ -95,7 +95,7 @@ var sampleDoc = {
     "tr_3": {
       "type": "table_row",
       "id": "tr_3",
-      "cells": ["td_31", "td_32", "td_33", "td_24", "td_25", "td_26"]
+      "cells": ["td_31", "td_32", "td_33", "td_34", "td_35", "td_36"]
     },
     "tr_4": {
       "type": "table_row",
