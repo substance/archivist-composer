@@ -1,6 +1,7 @@
 var Substance = require('substance');
 var $$ = React.createElement;
 var Annotator = Substance.Document.Annotator;
+var ContainerAnnotation = Substance.Document.ContainerAnnotation;
 
 var NodeView = require('./node_view');
 var AnnotationView = require('./annotation_view');
@@ -14,7 +15,8 @@ var TextProperty = React.createClass({
 
   contextTypes: {
     surface: React.PropTypes.object.isRequired,
-    getHighlightedNodes: React.PropTypes.func.isRequired
+    getHighlightedNodes: React.PropTypes.func.isRequired,
+    getActiveContainerAnnotations: React.PropTypes.func.isRequired,
   },
 
   shouldComponentUpdate: function() {
@@ -90,7 +92,12 @@ var TextProperty = React.createClass({
       // TODO: we need a component factory, so that we can create the appropriate component
       var ViewClass = AnnotationView;
       var classNames = [];
-      if (highlightedAnnotations.indexOf(entry.id) >= 0) {
+      var children = [];
+      if (node instanceof ContainerAnnotation.Anchor) {
+        children = [
+          $('<span>').addClass('anchor-caret')[0]
+        ];
+      } else if (highlightedAnnotations.indexOf(entry.id) >= 0) {
         classNames.push('active');
       }
       return {
@@ -100,7 +107,7 @@ var TextProperty = React.createClass({
           node: node,
           classNames: classNames,
         },
-        children: []
+        children: children
       };
     };
     annotator.onExit = function(entry, context, parentContext) {
