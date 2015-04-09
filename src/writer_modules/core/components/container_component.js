@@ -32,8 +32,6 @@ var ContainerComponent = React.createClass({
     var subjectReferenceId = e.currentTarget.dataset.id;
     var writerCtrl = this.props.writerCtrl;
 
-    console.log('refid', subjectReferenceId);
-
     if (writerCtrl.state.contextId === "editSubjectReference") {
       writerCtrl.replaceState({
         contextId: "subjects"
@@ -63,8 +61,9 @@ var ContainerComponent = React.createClass({
     var subjectReferences = doc.subjectReferencesIndex.get();
     var subjectRefComponents = [];
     _.each(subjectReferences, function(sref) {
-      subjectRefComponents.push($$('div', {
+      subjectRefComponents.push($$('a', {
         className: "subject-reference",
+        href: "#",
         "data-id": sref.id,
         onClick: this.handleToggleSubjectReference
       }));
