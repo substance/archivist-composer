@@ -356,17 +356,18 @@ a:hover {
 -----------------------------------------------------*/
 
 .content-panel-component .container-node.content {
-
+  position: relative;
 }
 
-.content-panel-component .interview-subject-name {
-  padding: 20px;
+.content-panel-component .title {
+  padding: 20px 0px;
   font-size: 22px;
   font-weight: 600;
 }
 
 .content-panel-component .container-node.content .nodes {
-  padding: 20px;
+  padding: 40px;
+  padding-right: 60px;
   position: relative;
 }
 
@@ -507,7 +508,7 @@ a:hover {
 }
 
 /* Subject Reference */
-.annotation.subject-reference {
+/*.annotation.subject-reference {
   background: rgba(145, 187, 4, 0.2);
 }
 
@@ -517,13 +518,13 @@ a:hover {
 
 .annotation.subject-reference.active {
   background: rgba(145, 187, 4, 0.6);
-}
+}*/
 
 
 /* Container Annotations
 -----------------------------------------------------*/
 
-.container-annotation.end-anchor {
+.subject-reference.start-anchor {
   display: inline-block;
   position: relative;
   top: 0px;
@@ -531,6 +532,39 @@ a:hover {
   background: rgba(145, 187, 4, 1);
   width: 5px;
   height: 20px;
+}
+
+.subject-reference.end-anchor {
+  display: inline-block;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  background: rgba(145, 187, 4, 1);
+  width: 5px;
+  height: 20px;
+}
+
+/* Brackets for subject annotations
+-----------------------------------------------------*/
+
+.container-node.content .subject-references {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 30px;
+  background: blue;
+  /*height: 100px;*/
+}
+
+.container-node.content .subject-references .subject-reference {
+  border-bottom: 1px solid rgba(145, 187, 4, 1);
+  border-top: 1px solid rgba(145, 187, 4, 1);
+  border-right: 1px solid rgba(145, 187, 4, 1);
+
+  width: 20px;
+  position: absolute;
+  top: 50px;
+  height: 100px;
 }
 
 

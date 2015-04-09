@@ -41,7 +41,7 @@ var TitleEditor = React.createClass({
     return $$(TextProperty, {
       doc: this.props.writerCtrl.doc,
       tagName: "div",
-      className: "interview-subject-name",
+      className: "title",
       path: [ "document", "title"],
       writerCtrl: this.props.writerCtrl,
     });

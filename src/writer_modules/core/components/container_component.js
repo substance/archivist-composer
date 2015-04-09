@@ -2,6 +2,7 @@ var Substance = require('substance');
 var $$ = React.createElement;
 var Surface = Substance.Surface;
 var TitleEditor = require("./title_editor");
+var _ = require("substance/helpers");
 
 // Container Node
 // ----------------
@@ -41,6 +42,22 @@ var ContainerComponent = React.createClass({
     var containerNode = this.props.node;
     var doc = this.props.doc;
     var writerCtrl = this.props.writerCtrl;
+
+    // Prepare subject reference components
+    // ---------
+
+    var subjectReferences = doc.subjectReferencesIndex.get();
+    var subjectRefComponents = [];
+    _.each(subjectReferences, function(sref) {
+      subjectRefComponents.push($$('div', {
+        className: "subject-reference",
+        "data-id": sref.id
+      }));
+    });
+
+    // Prepare container components (aka nodes)
+    // ---------
+
     var componentFactory = this.context.componentFactory;
     var components = [$$(TitleEditor, {writerCtrl: writerCtrl})];
     var components = components.concat(containerNode.nodes.map(function(nodeId) {
@@ -58,6 +75,9 @@ var ContainerComponent = React.createClass({
       });
     }));
 
+    // Top level structure
+    // ---------
+
     return $$("div", {class: "interview-content"},
       $$("div", {
         className: "container-node " + this.props.node.id,
@@ -65,7 +85,8 @@ var ContainerComponent = React.createClass({
         spellCheck: false,
         "data-id": this.props.node.id
       },
-        $$('div', {className: "nodes"}, components)
+        $$('div', {className: "nodes"}, components),
+        $$('div', {className: "subject-references"}, subjectRefComponents)
       )
     );
   },
@@ -75,6 +96,8 @@ var ContainerComponent = React.createClass({
     this.props.doc.getEventProxy('path').add([this.props.node.id, 'nodes'], this, this.containerDidChange);
     this.props.writerCtrl.registerSurface(surface, "content");
     surface.attach(this.getDOMNode());
+
+    this.render
   },
 
   componentWillUnmount: function() {
