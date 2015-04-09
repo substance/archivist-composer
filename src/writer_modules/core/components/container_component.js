@@ -86,7 +86,7 @@ var ContainerComponent = React.createClass({
         "data-id": this.props.node.id
       },
         $$('div', {className: "nodes"}, components),
-        $$('div', {className: "subject-references"}, subjectRefComponents)
+        $$('div', {className: "subject-references", contentEditable: false}, subjectRefComponents)
       )
     );
   },
@@ -97,7 +97,37 @@ var ContainerComponent = React.createClass({
     this.props.writerCtrl.registerSurface(surface, "content");
     surface.attach(this.getDOMNode());
 
-    this.render
+    $(window).resize(this.updateBrackets);
+    this.updateBrackets();
+  }, 
+
+  updateBrackets: function() {
+    var doc = this.props.doc;
+    var subjectReferences = doc.subjectReferencesIndex.get();
+
+    _.each(subjectReferences, function(subjRef) {
+      var anchors = $(this.getDOMNode()).find('.nodes [data-id='+subjRef.id+']');
+
+      var startAnchorEl, endAnchorEl;
+      if ($(anchors[0]).hasClass('start-anchor')) {
+        startAnchorEl = anchors[0];
+        endAnchorEl = anchors[1];
+      } else {
+        startAnchorEl = anchors[1];
+        endAnchorEl = anchors[0];
+      }
+
+      var startTop = $(startAnchorEl).position().top;
+      var endTop = $(endAnchorEl).position().top;
+      var height = endTop - startTop;
+
+      var subjectRefEl = $(this.getDOMNode()).find('.subject-references .subject-reference[data-id='+subjRef.id+']');
+
+      subjectRefEl.css({
+        top: startTop,
+        height: height
+      });
+    }, this);
   },
 
   componentWillUnmount: function() {

@@ -235,7 +235,7 @@ a:hover {
   left: 0px;
   right: 0px;
   overflow: auto;
-  line-height: 20px;
+  line-height: 24px;
 }
 
 /* Dialog Panels (aka modal panels)
@@ -527,11 +527,11 @@ a:hover {
 .subject-reference.start-anchor {
   display: inline-block;
   position: relative;
-  top: 0px;
+  top: 5px;
   left: 0px;
   background: rgba(145, 187, 4, 1);
-  width: 5px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
 }
 
 .subject-reference.end-anchor {
@@ -540,8 +540,8 @@ a:hover {
   top: 0px;
   left: 0px;
   background: rgba(145, 187, 4, 1);
-  width: 5px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
 }
 
 /* Brackets for subject annotations
@@ -551,9 +551,8 @@ a:hover {
   position: absolute;
   right: 0px;
   top: 0px;
+  bottom: 0px;
   width: 30px;
-  background: blue;
-  /*height: 100px;*/
 }
 
 .container-node.content .subject-references .subject-reference {
@@ -561,10 +560,11 @@ a:hover {
   border-top: 1px solid rgba(145, 187, 4, 1);
   border-right: 1px solid rgba(145, 187, 4, 1);
 
-  width: 20px;
+  width: 15px;
   position: absolute;
   top: 50px;
   height: 100px;
+  cursor: pointer;
 }
 
 
