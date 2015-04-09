@@ -211,6 +211,10 @@ a:hover {
   font-weight: 600;
 }
 
+.writer-component .context-toggles a.toggle-context.dialog {
+  float: right;
+}
+
 .writer-component .context-toggles a.toggle-context:hover {
   background: #eee;
   border-bottom: 1px solid #bbb;
@@ -246,7 +250,7 @@ a:hover {
 -----------------------------------------------------*/
 
 .panel.dialog {
-  top: 0px;
+  /*top: 0px;*/
   background: #F8F8F8;
 }
 
@@ -257,8 +261,8 @@ a:hover {
   right: 0px;
   overflow: hidden;
   height: 40px;
-  background: #444;
-  /*border-bottom: 1px solid #ddd;*/
+  /*background: #fff;*/
+  border-bottom: 1px solid #ddd;
 }
 
 .panel.dialog .dialog-header .label {
@@ -266,13 +270,13 @@ a:hover {
   font-size: 12px;
   font-weight: 600;
   line-height: 39px;
-  color: white;
+  /*color: white;*/
   float: left;
 }
 
 .panel.dialog .dialog-header .cancel, .panel.dialog .dialog-header .done {
   font-size: 12px;
-  color: #fff;
+  /*color: #fff;*/
   font-weight: bold;
   line-height: 40px;
   padding: 0px 20px;
@@ -289,11 +293,11 @@ a:hover {
 
 /* Custom headers for entity tagging and subject tagging */
 .panel.dialog.tag-entity-panel-component .dialog-header {
-  background: rgba(11, 157, 217, 1);
+  /*background: rgba(11, 157, 217, 1);*/
 }
 
 .panel.dialog.edit-subject-reference-panel-component .dialog-header {
-  background: rgba(145, 187, 4, 1);
+  /*background: rgba(145, 187, 4, 1);*/
 }
 
 
@@ -702,7 +706,8 @@ a:hover {
 -----------------------------------------------------*/
 
 .tree-component {
-  font-size: 13px;
+  font-size: 12px;
+  padding: 10px;
 }
 
 .tree-component .tree-node {
@@ -711,6 +716,15 @@ a:hover {
   overflow: auto;
   position: relative;
 }
+
+.tree-component .tree-node a {
+  color: #999;
+}
+
+.tree-component .tree-node.selected > a {
+  color: #333;
+}
+
 
 .tree-component .tree-node:hover {
   /*background: #eee;*/
@@ -721,26 +735,29 @@ a:hover {
   position: absolute;
   padding: 2px 6px;
   top: -2px;
-  color: #444;
+  /*color: #444;*/
   left: 5px;
 }
+
 
 .tree-component .tree-node .select-toggle {
   position: absolute;
   left: 25px;
-  color: #444;
+  /*color: #444;*/
   margin-right: 10px;
+  font-size: 15px;
 }
+
+
 
 .tree-component .tree-node .name {
-  color: #777;
+  display: block;
+  font-weight: 600;
+  /*color: #777;*/
   padding-left: 25px;
-  /*float: left;*/
 }
 
-.tree-component .tree-node .name:hover {
-  color: #444;
-}
+
 
 /* Metadata Panel
 -----------------------------------------------------*/

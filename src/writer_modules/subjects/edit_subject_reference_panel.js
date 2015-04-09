@@ -8,7 +8,7 @@ var Tree = require("./tree_component");
 // ----------------
 
 var EditSubjectReferencePanel = React.createClass({
-  displayName: "Edit Subject Reference",
+  displayName: "Tag subjects",
 
   contextTypes: {
     backend: React.PropTypes.object.isRequired
@@ -73,9 +73,9 @@ var EditSubjectReferencePanel = React.createClass({
   updateSubjectReference: function(selectedNodes) {
     var subjectIds = Object.keys(selectedNodes);
     console.log('TODO: update subjectReferenceId', subjectIds);
-    var tx = this.props.writerCtrl.doc.startTransaction();
-    tx.set([this.props.subjectReferenceId, "target"], subjectIds);
-    tx.save({}, {updateSubjectReference: true});
+    // var tx = this.props.writerCtrl.doc.startTransaction();
+    // tx.set([this.props.subjectReferenceId, "target"], subjectIds);
+    // tx.save({}, {updateSubjectReference: true});
   },
 
   // Rendering

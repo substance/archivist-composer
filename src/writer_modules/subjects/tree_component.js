@@ -38,7 +38,7 @@ var TreeNode = React.createClass({
     var selectedIcon = node._selected ? "fa-check-square-o" : "fa-square-o";
     var hideExpand = childNodes.length === 0;
 
-    return $$("div", {className: 'tree-node'},
+    return $$("div", {className: 'tree-node'+ (node._selected ? ' selected' : '') + (node._expanded ? ' expanded' : '')},
       $$('a', {
         "data-id": node.id,
         className: 'expand-toggle'+ (hideExpand ? ' hidden' : ''),
@@ -94,7 +94,6 @@ var Tree = React.createClass({
 
     function __expand(node) {
       if (!node) return;
-      // var parent = tree.get(node.parent);
       node._expanded = true;
       __expand(tree.get(node.parent));
     }
