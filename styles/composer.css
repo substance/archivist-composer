@@ -870,7 +870,7 @@ a:hover {
   right: 15px;
   font-size: 18px;
   cursor: pointer;
-} 
+}
 
 .search-result-state {
   padding: 4px 14px 4px 22px;
@@ -1100,4 +1100,24 @@ a:hover {
   -webkit-user-select: text;
   user-select: text;
   /* Because for user-select:none, Safari won't allow input*/
+}
+
+/* Tables
+-----------------------------------------------------*/
+
+.table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+.table th, .table td {
+  padding: 2px 5px;
+  border: solid 1px #ccc;
+  /*outline: 0;*/
+}
+
+.table th {
+  font-weight: bold;
 }
