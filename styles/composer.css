@@ -481,7 +481,7 @@ a:hover {
   padding-bottom: 20px;
 }
 
-/* Annotations
+/* Text Annotations
 -----------------------------------------------------*/
 
 .annotation.strong {
@@ -520,10 +520,18 @@ a:hover {
 }
 
 
+/* Container Annotations
+-----------------------------------------------------*/
 
-
-
-
+.container-annotation.end-anchor {
+  display: inline-block;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  background: rgba(145, 187, 4, 1);
+  width: 5px;
+  height: 20px;
+}
 
 
 
