@@ -121,11 +121,11 @@ var TextProperty = React.createClass({
     var doc = this.props.doc;
     var path = this.props.path;
     if (!this.context.surface) {
-      return;
+      return [];
     }
     var containerName = this.context.surface.getContainerName();
     if (!containerName) {
-      return;
+      return [];
     }
     var containerNode = doc.get(containerName);
     if (containerNode && (containerNode instanceof Substance.Document.ContainerNode)) {
