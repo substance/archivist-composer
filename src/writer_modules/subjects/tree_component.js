@@ -74,13 +74,7 @@ var Tree = React.createClass({
     this.updateTree(this.props.selectedNodes);
   },
 
-  // DONT DO THIS!
-  // componentWillUpdate: function() {
-  //   this.updateTree();
-  // },
-
   // Preprocess tree to flag nodes accordingly
-
   updateTree: function(newSelectedNodes) {
     var tree = this.props.tree;
     window.tree = tree;
@@ -101,7 +95,6 @@ var Tree = React.createClass({
     tree.walkTree(function(node) {
       node._selected = selectedNodes[node.id];
       if (node._selected) {
-        console.log('node', node);
         __expand(tree.get(node.parent));
       }
     });

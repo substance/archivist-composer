@@ -28,7 +28,6 @@ var ContainerComponent = React.createClass({
   },
 
   handleToggleSubjectReference: function(e) {
-    e.preventDefault();
     var subjectReferenceId = e.currentTarget.dataset.id;
     var writerCtrl = this.props.writerCtrl;
 
@@ -42,6 +41,8 @@ var ContainerComponent = React.createClass({
         subjectReferenceId: subjectReferenceId
       });
     }
+
+    // e.preventDefault();
   },
 
   getChildContext: function() {

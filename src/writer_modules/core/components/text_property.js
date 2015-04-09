@@ -36,11 +36,9 @@ var TextProperty = React.createClass({
     if (this.context.getActiveContainerAnnotations) {
      annos = this.context.getActiveContainerAnnotations();
     }
-    console.log('Active container annotations:', annos);
     this.state.activeContainerAnnotations = annos;
 
     if (!Substance.isEqual(oldAnnos, annos)) {
-      console.log('... need rerender.');
       this.renderManually();
     }
 
@@ -259,8 +257,7 @@ var TextProperty = React.createClass({
       },
       "data-path": this.props.path.join('.')
     });
-  },
-
+  }
 });
 
 TextProperty.ContentView = NodeView.extend({
