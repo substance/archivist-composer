@@ -70,11 +70,16 @@ var TreeNode = React.createClass({
 var Tree = React.createClass({
   displayName: "Tree",
 
-  // TODO: use a copy of the existing tree so we don't mess up the data all the time
   componentWillMount: function() {
     this.updateTree();
   },
 
+  componentWillUpdate: function() {
+    this.updateTree();
+  },
+
+  // Preprocess tree to flag nodes accordingly
+  
   updateTree: function() {
     var tree = this.props.tree;
     window.tree = tree;
