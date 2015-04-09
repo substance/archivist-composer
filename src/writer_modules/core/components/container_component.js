@@ -31,6 +31,25 @@ var ContainerComponent = React.createClass({
     return this.props.writerCtrl.getHighlightedNodes();
   },
 
+  handleToggleSubjectReference: function(e) {
+    e.preventDefault();
+    var subjectReferenceId = e.currentTarget.dataset.id;
+    var writerCtrl = this.props.writerCtrl;
+
+    console.log('refid', subjectReferenceId);
+
+    if (writerCtrl.state.contextId === "editSubjectReference") {
+      writerCtrl.replaceState({
+        contextId: "subjects"
+      });
+    } else {
+      writerCtrl.replaceState({
+        contextId: "editSubjectReference",
+        subjectReferenceId: subjectReferenceId
+      });
+    }    
+  },
+
   getChildContext: function() {
     return {
       surface: this.state.surface,
@@ -51,9 +70,10 @@ var ContainerComponent = React.createClass({
     _.each(subjectReferences, function(sref) {
       subjectRefComponents.push($$('div', {
         className: "subject-reference",
-        "data-id": sref.id
+        "data-id": sref.id,
+        onClick: this.handleToggleSubjectReference
       }));
-    });
+    }, this);
 
     // Prepare container components (aka nodes)
     // ---------

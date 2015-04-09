@@ -68,19 +68,19 @@ var stateHandlers = {
   // can display contextual information.
 
   handleSelectionChange: function(writerCtrl, sel, annotations) {
-    if (sel.isNull() || !sel.isPropertySelection()) return;
+    // if (sel.isNull() || !sel.isPropertySelection()) return;
 
-    var range = sel.getTextRange();
-    var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1], "subject_reference");
+    // var range = sel.getTextRange();
+    // var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1], "subject_reference");
 
-    if (annotations.length > 0) {
-      var ref = annotations[0];
-      writerCtrl.replaceState({
-        contextId: EditSubjectReferencePanel.contextId,
-        subjectReferenceId: ref.id
-      });
-      return true;
-    }
+    // if (annotations.length > 0) {
+    //   var ref = annotations[0];
+    //   writerCtrl.replaceState({
+    //     contextId: EditSubjectReferencePanel.contextId,
+    //     subjectReferenceId: ref.id
+    //   });
+    //   return true;
+    // }
   },
 
   // Determine highlighted nodes
