@@ -569,11 +569,16 @@ a:hover {
 .entity .synonyms {
   font-size: 12px;
   padding-top: 10px;
+  margin-right: 100px;
 }
 
 .entity .country {
   font-size: 12px;
   padding-top: 10px;
+  position: absolute;
+  right: 15px;
+  display: block;
+  top: 40px;
 }
 
 /* Prison Entity */

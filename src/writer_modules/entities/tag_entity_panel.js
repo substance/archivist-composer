@@ -28,8 +28,19 @@ var EntityView = React.createClass({
       $$("div", {className: "name"}, this.props.name || this.props.title)
     ];
 
+    if (this.props.synonyms) {
+      props.push($$("div", {className: "synonyms"}, "Also known as: "+this.props.synonyms));
+    }
+
     if (this.props.country) {
-      props.push($$("div", {className: "country"}, "Country"+this.props.country));
+      props.push($$("div", {className: "country"}, "Country: "+this.props.country));
+    }
+
+    if (this.props.type == 'person') {
+      var description = this.props.description;
+      // Trim person description if it's too long
+      if (description.length > 100) description = description.substring(0, 100) + '...';
+      props.push($$("div", {className: "description"}, description));
     }
 
     return $$("div", {
