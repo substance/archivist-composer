@@ -33,6 +33,8 @@ NodeView.Prototype = function() {
         } else if (child instanceof NodeView) {
           var el = child.render();
           element.appendChild(el);
+        } else if (child instanceof window.Element) {
+          element.appendChild(child);
         }
       }
     }

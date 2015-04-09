@@ -1,6 +1,7 @@
 var Substance = require('substance');
 var $$ = React.createElement;
 var Annotator = Substance.Document.Annotator;
+var ContainerAnnotation = Substance.Document.ContainerAnnotation;
 
 var NodeView = require('./node_view');
 var AnnotationView = require('./annotation_view');
@@ -14,7 +15,8 @@ var TextProperty = React.createClass({
 
   contextTypes: {
     surface: React.PropTypes.object.isRequired,
-    getHighlightedNodes: React.PropTypes.func.isRequired
+    getHighlightedNodes: React.PropTypes.func.isRequired,
+    getActiveContainerAnnotations: React.PropTypes.func.isRequired,
   },
 
   shouldComponentUpdate: function() {
@@ -71,10 +73,12 @@ var TextProperty = React.createClass({
     var doc = this.props.doc;
     var path = this.props.path;
     var text = doc.get(path) || "";
+
     var annotations = doc.getIndex('annotations').get(path);
+    // get container annotation anchors if available
+    annotations = annotations.concat(this.getContainerAnnotationAnchors());
 
     var highlightedAnnotations = [];
-
     if (this.context.getHighlightedNodes) {
       highlightedAnnotations = this.context.getHighlightedNodes();
     }
@@ -84,21 +88,26 @@ var TextProperty = React.createClass({
       context.children.push(text);
     };
     annotator.onEnter = function(entry) {
-      var anno = doc.get(entry.id);
+      var node = entry.node;
       // TODO: we need a component factory, so that we can create the appropriate component
       var ViewClass = AnnotationView;
       var classNames = [];
-      if (highlightedAnnotations.indexOf(entry.id) >= 0) {
+      var children = [];
+      if (node instanceof ContainerAnnotation.Anchor) {
+        children = [
+          $('<span>').addClass('anchor-caret')[0]
+        ];
+      } else if (highlightedAnnotations.indexOf(entry.id) >= 0) {
         classNames.push('active');
       }
       return {
         ViewClass: ViewClass,
         props: {
           doc: doc,
-          node: anno,
+          node: node,
           classNames: classNames,
         },
-        children: []
+        children: children
       };
     };
     annotator.onExit = function(entry, context, parentContext) {
@@ -114,6 +123,23 @@ var TextProperty = React.createClass({
     return root.children;
   },
 
+  getContainerAnnotationAnchors: function() {
+    var anchors = null;
+    var doc = this.props.doc;
+    var path = this.props.path;
+    if (!this.context.surface) {
+      return [];
+    }
+    var containerName = this.context.surface.getContainerName();
+    if (!containerName) {
+      return [];
+    }
+    var containerNode = doc.get(containerName);
+    if (containerNode && (containerNode instanceof Substance.Document.ContainerNode)) {
+      anchors = doc.getIndex('container-annotations').get(containerName, path);
+    }
+    return anchors;
+  },
 
   propertyDidChange: function(change, ops, info) {
     // Note: Surface provides the source element as element

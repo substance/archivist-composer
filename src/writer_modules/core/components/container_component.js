@@ -2,6 +2,7 @@ var Substance = require('substance');
 var $$ = React.createElement;
 var Surface = Substance.Surface;
 var TitleEditor = require("./title_editor");
+var _ = require("substance/helpers");
 
 // Container Node
 // ----------------
@@ -16,24 +17,36 @@ var ContainerComponent = React.createClass({
   },
 
   childContextTypes: {
+    // provided to editor components so that they know in which context they are
     surface: React.PropTypes.object,
-    getHighlightedNodes: React.PropTypes.func
   },
 
   getInitialState: function() {
     return {
-      surface: new Surface(new Surface.FullfledgedEditor(this.props.doc))
+      surface: new Surface(new Surface.FullfledgedEditor('content', this.props.doc))
     };
   },
 
-  getHighlightedNodes: function() {
-    return this.props.writerCtrl.getHighlightedNodes();
+  handleToggleSubjectReference: function(e) {
+    e.preventDefault();
+    var subjectReferenceId = e.currentTarget.dataset.id;
+    var writerCtrl = this.props.writerCtrl;
+
+    if (writerCtrl.state.contextId === "editSubjectReference") {
+      writerCtrl.replaceState({
+        contextId: "subjects"
+      });
+    } else {
+      writerCtrl.replaceState({
+        contextId: "editSubjectReference",
+        subjectReferenceId: subjectReferenceId
+      });
+    }
   },
 
   getChildContext: function() {
     return {
-      surface: this.state.surface,
-      getHighlightedNodes: this.getHighlightedNodes
+      surface: this.state.surface
     };
   },
 
@@ -41,6 +54,24 @@ var ContainerComponent = React.createClass({
     var containerNode = this.props.node;
     var doc = this.props.doc;
     var writerCtrl = this.props.writerCtrl;
+
+    // Prepare subject reference components
+    // ---------
+
+    var subjectReferences = doc.subjectReferencesIndex.get();
+    var subjectRefComponents = [];
+    _.each(subjectReferences, function(sref) {
+      subjectRefComponents.push($$('a', {
+        className: "subject-reference",
+        href: "#",
+        "data-id": sref.id,
+        onClick: this.handleToggleSubjectReference
+      }));
+    }, this);
+
+    // Prepare container components (aka nodes)
+    // ---------
+
     var componentFactory = this.context.componentFactory;
     var components = [$$(TitleEditor, {writerCtrl: writerCtrl})];
     var components = components.concat(containerNode.nodes.map(function(nodeId) {
@@ -58,6 +89,9 @@ var ContainerComponent = React.createClass({
       });
     }));
 
+    // Top level structure
+    // ---------
+
     return $$("div", {class: "interview-content"},
       $$("div", {
         className: "container-node " + this.props.node.id,
@@ -65,7 +99,8 @@ var ContainerComponent = React.createClass({
         spellCheck: false,
         "data-id": this.props.node.id
       },
-        $$('div', {className: "nodes"}, components)
+        $$('div', {className: "nodes"}, components),
+        $$('div', {className: "subject-references", contentEditable: false}, subjectRefComponents)
       )
     );
   },
@@ -75,6 +110,38 @@ var ContainerComponent = React.createClass({
     this.props.doc.getEventProxy('path').add([this.props.node.id, 'nodes'], this, this.containerDidChange);
     this.props.writerCtrl.registerSurface(surface, "content");
     surface.attach(this.getDOMNode());
+
+    $(window).resize(this.updateBrackets);
+    this.updateBrackets();
+  },
+
+  updateBrackets: function() {
+    var doc = this.props.doc;
+    var subjectReferences = doc.subjectReferencesIndex.get();
+
+    _.each(subjectReferences, function(subjRef) {
+      var anchors = $(this.getDOMNode()).find('.nodes [data-id='+subjRef.id+']');
+
+      var startAnchorEl, endAnchorEl;
+      if ($(anchors[0]).hasClass('start-anchor')) {
+        startAnchorEl = anchors[0];
+        endAnchorEl = anchors[1];
+      } else {
+        startAnchorEl = anchors[1];
+        endAnchorEl = anchors[0];
+      }
+
+      var startTop = $(startAnchorEl).position().top;
+      var endTop = $(endAnchorEl).position().top;
+      var height = endTop - startTop;
+
+      var subjectRefEl = $(this.getDOMNode()).find('.subject-references .subject-reference[data-id='+subjRef.id+']');
+
+      subjectRefEl.css({
+        top: startTop,
+        height: height
+      });
+    }, this);
   },
 
   componentWillUnmount: function() {
