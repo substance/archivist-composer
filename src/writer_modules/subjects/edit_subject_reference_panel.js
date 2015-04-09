@@ -54,17 +54,16 @@ var EditSubjectReferencePanel = React.createClass({
     this.loadSubjects();
   },
 
-  // handleDocumentChange: function(change, ops, info) {
-  //   // if (info.updateSubjectReference) return;
-  //   // this.renderSubjectsTree();
-  // },
+  handleDocumentChange: function(change, ops, info) {
+    if (info.updateSubjectReference) return;
+    var doc = this.props.writerCtrl.doc;
+    var selectedSubjects = doc.get(this.props.subjectReferenceId).target;
+    this.refs.treeWidget.updateTree(selectedSubjects);
+  },
 
   componentWillUnmount: function() {
     this.props.writerCtrl.doc.disconnect(this);
-  },
-
-  componentDidUpdate: function() {
-    // this.renderSubjectsTree();
+    doc.getEventProxy('path').remove([this.props.subjectReferenceId, "target"], this, this.handleDocumentChange);
   },
 
   // Write changes in selection to document model
@@ -72,10 +71,14 @@ var EditSubjectReferencePanel = React.createClass({
 
   updateSubjectReference: function(selectedNodes) {
     var subjectIds = Object.keys(selectedNodes);
-    console.log('TODO: update subjectReferenceId', subjectIds);
-    // var tx = this.props.writerCtrl.doc.startTransaction();
-    // tx.set([this.props.subjectReferenceId, "target"], subjectIds);
-    // tx.save({}, {updateSubjectReference: true});
+
+    var tx = this.props.writerCtrl.doc.startTransaction();
+    try {
+      tx.set([this.props.subjectReferenceId, "target"], subjectIds);
+      tx.save({}, {updateSubjectReference: true});      
+    } finally {
+      tx.cleanup();
+    }
   },
 
   // Rendering
@@ -87,6 +90,7 @@ var EditSubjectReferencePanel = React.createClass({
 
     if (this.state.subjects) {
       treeEl = $$(Tree, {
+        ref: "treeWidget",
         selectedNodes: doc.get(this.props.subjectReferenceId).target,
         tree: this.state.subjects.tree,
         onSelectionChanged: this.updateSubjectReference

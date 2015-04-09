@@ -578,6 +578,10 @@ a:hover {
   cursor: pointer;
 }
 
+.container-node.content .subject-references .subject-reference.selected {
+  border-width: 3px;
+}
+
 
 
 /* Archivist Extensions
@@ -749,15 +753,12 @@ a:hover {
 }
 
 
-
 .tree-component .tree-node .name {
   display: block;
   font-weight: 600;
   /*color: #777;*/
   padding-left: 25px;
 }
-
-
 
 /* Metadata Panel
 -----------------------------------------------------*/

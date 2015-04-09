@@ -71,7 +71,7 @@ var Tree = React.createClass({
   displayName: "Tree",
 
   componentWillMount: function() {
-    this.updateTree();
+    this.updateTree(this.props.selectedNodes);
   },
 
   // DONT DO THIS!
@@ -81,14 +81,14 @@ var Tree = React.createClass({
 
   // Preprocess tree to flag nodes accordingly
 
-  updateTree: function() {
+  updateTree: function(newSelectedNodes) {
     var tree = this.props.tree;
     window.tree = tree;
 
     // Preprocess tree to flag nodes accordingly
     var selectedNodes = {};
 
-    _.each(this.props.selectedNodes, function(nodeId) {
+    _.each(newSelectedNodes, function(nodeId) {
       selectedNodes[nodeId] = true;
     });
 

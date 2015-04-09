@@ -60,9 +60,11 @@ var ContainerComponent = React.createClass({
 
     var subjectReferences = doc.subjectReferencesIndex.get();
     var subjectRefComponents = [];
+    var activeContainerAnnotations = writerCtrl.getActiveContainerAnnotations();
+
     _.each(subjectReferences, function(sref) {
       subjectRefComponents.push($$('a', {
-        className: "subject-reference",
+        className: "subject-reference"+(_.includes(activeContainerAnnotations, sref.id) ? ' selected' : ''),
         href: "#",
         "data-id": sref.id,
         onClick: this.handleToggleSubjectReference
@@ -74,7 +76,7 @@ var ContainerComponent = React.createClass({
 
     var componentFactory = this.context.componentFactory;
     var components = [$$(TitleEditor, {writerCtrl: writerCtrl})];
-    var components = components.concat(containerNode.nodes.map(function(nodeId) {
+    components = components.concat(containerNode.nodes.map(function(nodeId) {
       var node = doc.get(nodeId);
       var ComponentClass = componentFactory.get(node.type);
       if (!ComponentClass) {
@@ -111,6 +113,10 @@ var ContainerComponent = React.createClass({
     this.props.writerCtrl.registerSurface(surface, "content");
     surface.attach(this.getDOMNode());
 
+    // HACK: For initial rendering because text view depends on some view-related information
+    // that gets available after the first render
+    this.forceUpdate();
+
     $(window).resize(this.updateBrackets);
     this.updateBrackets();
   },
@@ -120,7 +126,7 @@ var ContainerComponent = React.createClass({
     var subjectReferences = doc.subjectReferencesIndex.get();
 
     _.each(subjectReferences, function(subjRef) {
-      var anchors = $(this.getDOMNode()).find('.nodes [data-id='+subjRef.id+']');
+      var anchors = $(this.getDOMNode()).find('.nodes .anchor[data-id='+subjRef.id+']');
 
       var startAnchorEl, endAnchorEl;
       if ($(anchors[0]).hasClass('start-anchor')) {
