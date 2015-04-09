@@ -20,14 +20,15 @@ var stateHandlers = {
         nextContextId = "subjects";
       }
 
-      // Change to TOC or metadata panel
-      writerCtrl.replaceState({
-        contextId: nextContextId
-      });
-      return true;
+      if (prevContextId !== nextContextId) {
+        console.log('RESET to default writer state, triggered by selection change!', sel);
+        writerCtrl.replaceState({
+          contextId: nextContextId
+        });
+        return true;        
+      }
     }
   }
-
 };
 
 module.exports = stateHandlers;
