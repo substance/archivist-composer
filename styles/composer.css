@@ -84,6 +84,10 @@ a:hover {
   color: rgba(11, 157, 217, 1);
 }
 
+.hidden {
+  display: none !important;
+}
+
 /* Layout stuff
 ---------------------------------
 */
@@ -685,6 +689,50 @@ a:hover {
   background-color: rgba(11, 157, 217, 1);
 }
 
+
+/* Tree component
+-----------------------------------------------------*/
+
+.tree-component {
+  font-size: 13px;
+}
+
+.tree-component .tree-node {
+  padding: 2px 0px;
+  padding-left: 20px;
+  overflow: auto;
+  position: relative;
+}
+
+.tree-component .tree-node:hover {
+  /*background: #eee;*/
+}
+
+.tree-component .tree-node .expand-toggle {
+  display: block;
+  position: absolute;
+  padding: 2px 6px;
+  top: -2px;
+  color: #444;
+  left: 5px;
+}
+
+.tree-component .tree-node .select-toggle {
+  position: absolute;
+  left: 25px;
+  color: #444;
+  margin-right: 10px;
+}
+
+.tree-component .tree-node .name {
+  color: #777;
+  padding-left: 25px;
+  /*float: left;*/
+}
+
+.tree-component .tree-node .name:hover {
+  color: #444;
+}
 
 /* Metadata Panel
 -----------------------------------------------------*/
