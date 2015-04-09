@@ -46,10 +46,10 @@ Tree.Prototype = function() {
 
     function _walkTree(rootNode, fn, ctx) {
       if (rootNode !== "root") {
-        fn.call(ctx, rootNode);  
+        fn.call(ctx, rootNode);
       }
-
-      Substance.each(self.getChildren(rootNode.id), function(child) {
+      var children = self.getChildren(rootNode.id);
+      Substance.each(self.getChildren(rootNode.id || rootNode), function(child) {
         _walkTree(child, fn, ctx);
       });
     }
