@@ -74,12 +74,13 @@ var Tree = React.createClass({
     this.updateTree();
   },
 
-  componentWillUpdate: function() {
-    this.updateTree();
-  },
+  // DONT DO THIS!
+  // componentWillUpdate: function() {
+  //   this.updateTree();
+  // },
 
   // Preprocess tree to flag nodes accordingly
-  
+
   updateTree: function() {
     var tree = this.props.tree;
     window.tree = tree;
