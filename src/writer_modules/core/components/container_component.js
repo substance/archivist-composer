@@ -17,18 +17,14 @@ var ContainerComponent = React.createClass({
   },
 
   childContextTypes: {
+    // provided to editor components so that they know in which context they are
     surface: React.PropTypes.object,
-    getHighlightedNodes: React.PropTypes.func
   },
 
   getInitialState: function() {
     return {
       surface: new Surface(new Surface.FullfledgedEditor('content', this.props.doc))
     };
-  },
-
-  getHighlightedNodes: function() {
-    return this.props.writerCtrl.getHighlightedNodes();
   },
 
   handleToggleSubjectReference: function(e) {
@@ -47,13 +43,12 @@ var ContainerComponent = React.createClass({
         contextId: "editSubjectReference",
         subjectReferenceId: subjectReferenceId
       });
-    }    
+    }
   },
 
   getChildContext: function() {
     return {
-      surface: this.state.surface,
-      getHighlightedNodes: this.getHighlightedNodes
+      surface: this.state.surface
     };
   },
 
@@ -119,7 +114,7 @@ var ContainerComponent = React.createClass({
 
     $(window).resize(this.updateBrackets);
     this.updateBrackets();
-  }, 
+  },
 
   updateBrackets: function() {
     var doc = this.props.doc;
