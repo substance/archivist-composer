@@ -95,10 +95,9 @@ var ContainerComponent = React.createClass({
     // Top level structure
     // ---------
 
-    return $$("div", {class: "interview-content"},
+    return $$("div", {className: "interview-content", contentEditable: true},
       $$("div", {
         className: "container-node " + this.props.node.id,
-        contentEditable: true,
         spellCheck: false,
         "data-id": this.props.node.id
       },

@@ -29,8 +29,10 @@ var BasicToolMixin = {
     }
   },
 
-  handleClick: function(e) {
+  handleMouseDown: function(e) {
     e.preventDefault();
+    // e.stopPropagation();
+
     // toggle annotation
     var writerCtrl = this.props.writerCtrl;
     var sel = writerCtrl.getSelection();
@@ -69,7 +71,7 @@ var BasicToolMixin = {
       className: classNames.join(' '),
       href: "#",
       title: 'Emphasis',
-      onClick: this.handleClick,
+      onMouseDown: this.handleMouseDown,
       dangerouslySetInnerHTML: {__html: '<i class="fa '+this.toolIcon+'"></i>'}
     });
   }

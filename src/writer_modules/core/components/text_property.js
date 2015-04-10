@@ -58,7 +58,6 @@ var TextProperty = React.createClass({
   },
 
   renderManually: function() {
-    console.log('Rendering TextProperty %s ...', JSON.stringify(this.props.path));
     var contentView = new TextProperty.ContentView({
       doc: this.props.doc,
       node: this.props.node,
