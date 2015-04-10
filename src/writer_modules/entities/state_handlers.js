@@ -6,7 +6,7 @@ var stateHandlers = {
 
   // Handle Context Panel creation
   // -----------------
-  // 
+  //
   // Returns a new panel element if a particular state is matched
 
   handleContextPanelCreation: function(writerCtrl) {
@@ -37,13 +37,11 @@ var stateHandlers = {
   // can display contextual information.
 
   handleSelectionChange: function(writerCtrl, sel, annotations) {
-    if (sel.isNull() || !sel.isPropertySelection()) return;
+    if (sel.isNull() || !sel.isPropertySelection() || !sel.isCollapsed()) return;
     var range = sel.getTextRange();
     var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1], "entity_reference");
-
     var surface = writerCtrl.getSurface();
     if (surface.name !== "content") return false;
-
     if (annotations.length > 0) {
       var ref = annotations[0];
       writerCtrl.replaceState({
@@ -56,9 +54,9 @@ var stateHandlers = {
 
   // Determine highlighted nodes
   // -----------------
-  // 
+  //
   // => inspects state
-  // 
+  //
   // Based on writer state, determine which nodes should be highlighted in the content panel
   // @returns a list of nodes to be highlighted
 
