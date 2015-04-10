@@ -9,9 +9,9 @@ var LocalBackend = require("./local_backend");
 var NotificationService = require("./notification_service");
 
 // Writer Configuration
-var writerModules = [Writer.CoreModule];
+// var writerModules = [Writer.CoreModule];
 
-// var writerModules = require("./writer_modules");
+var writerModules = require("./writer_modules");
 
 // Prepare local cache
 window.cache = {};
@@ -57,7 +57,6 @@ var Composer = React.createClass({
   },
 
   componentDidMount: function() {
-
     backend.getDocument(this.props.documentId || "example_document", function(err, doc) {
       this.setState({
         doc: doc
