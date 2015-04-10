@@ -1,8 +1,8 @@
 var Substance = require('substance');
 var $$ = React.createElement;
 var Surface = Substance.Surface;
-var TitleEditor = require("./title_editor");
 var _ = require("substance/helpers");
+var TextProperty = require('./text_property');
 
 // Container Node
 // ----------------
@@ -76,7 +76,13 @@ var ContainerComponent = React.createClass({
     // ---------
 
     var componentFactory = this.context.componentFactory;
-    var components = [$$(TitleEditor, {writerCtrl: writerCtrl})];
+    var components = [$$(TextProperty, {
+      doc: this.props.writerCtrl.doc,
+      tagName: "div",
+      className: "title",
+      path: [ "document", "title"],
+      writerCtrl: this.props.writerCtrl,
+    })];
     components = components.concat(containerNode.nodes.map(function(nodeId) {
       var node = doc.get(nodeId);
       var ComponentClass = componentFactory.get(node.type);
@@ -97,10 +103,10 @@ var ContainerComponent = React.createClass({
 
     return $$("div", {className: "interview-content", contentEditable: true},
       $$("div", {
-        className: "container-node " + this.props.node.id,
-        spellCheck: false,
-        "data-id": this.props.node.id
-      },
+          className: "container-node " + this.props.node.id,
+          spellCheck: false,
+          "data-id": this.props.node.id
+        },
         $$('div', {className: "nodes"}, components),
         $$('div', {className: "subject-references", contentEditable: false}, subjectRefComponents)
       )
