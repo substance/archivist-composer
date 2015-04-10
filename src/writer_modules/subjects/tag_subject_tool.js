@@ -43,7 +43,7 @@ var TagSubjectTool = React.createClass({
         }
         var anno = writerCtrl.doc.get(writerCtrl.state.subjectReferenceId);
         if (!anno) {
-          console.error("Ooops. Could not find subject-reference while being in 'editSubjectReference'.")
+          console.error("Ooops. Could not find subject-reference while being in 'editSubjectReference'.");
           return this.setState({
             active: false,
             selected: false
@@ -99,7 +99,7 @@ var TagSubjectTool = React.createClass({
           target: []
         };
         tx.create(subjectReference);
-        tx.save({selection: sel});
+        tx.save({selection: sel.collapse('left')});
         writerCtrl.replaceState({
           contextId: "editSubjectReference",
           subjectReferenceId: subjectReference.id,
@@ -113,7 +113,7 @@ var TagSubjectTool = React.createClass({
     } else if (this.state.mode === 'delete') {
       try {
         tx.delete(writerCtrl.state.subjectReferenceId);
-        tx.save();
+        tx.save({selection: sel.collapse('left')});
         writerCtrl.replaceState({
           contextId: "subjects"
         });
@@ -133,15 +133,15 @@ var TagSubjectTool = React.createClass({
           tx.set([anno.id, 'startPath'], newRange.start.path);
         }
         if (!Substance.isEqual(anno.endPath, newRange.end.path)) {
-          tx.set([anno.id, 'endPath'], newRange.start.path);
+          tx.set([anno.id, 'endPath'], newRange.end.path);
         }
         if (!Substance.isEqual(anno.startOffset, newRange.start.offset)) {
           tx.set([anno.id, 'startOffset'], newRange.start.offset);
         }
         if (!Substance.isEqual(anno.endOffset, newRange.end.offset)) {
-          tx.set([anno.id, 'endOffset'], newRange.start.offset);
+          tx.set([anno.id, 'endOffset'], newRange.end.offset);
         }
-        tx.save({ selection: sel });
+        tx.save({});
         // HACK: using a custom event instead of automatic data bindings
         doc.emit('container-annotation-update');
       } finally {
