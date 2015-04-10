@@ -31,7 +31,7 @@ var TagEntityTool = React.createClass({
     }
   },
 
-  handleClick: function(e) {
+  handleMouseDown: function(e) {
     e.preventDefault();
     
     var writerCtrl = this.props.writerCtrl;
@@ -74,7 +74,7 @@ var TagEntityTool = React.createClass({
       className: classNames.join(' '),
       href: "#",
       title: 'Tag Entity',
-      onClick: this.handleClick,
+      onMouseDown: this.handleMouseDown,
       dangerouslySetInnerHTML: {__html: '<i class="fa fa-bullseye"></i>'}
     });
   }

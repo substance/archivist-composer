@@ -22,7 +22,7 @@ var UndoTool = React.createClass({
   },
 
   // Do we really need a backend?
-  handleClick: function(e) {
+  handleMouseDown: function(e) {
     e.preventDefault();
     if (!this.state.active) {
       return;
@@ -56,7 +56,7 @@ var UndoTool = React.createClass({
       href: "#",
       dangerouslySetInnerHTML: {__html: '<i class="fa fa-undo"></i>'},
       title: 'Undo',
-      onClick: this.handleClick
+      onMouseDown: this.handleMouseDown
     });
   }
 });

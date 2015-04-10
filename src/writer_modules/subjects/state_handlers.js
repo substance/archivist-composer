@@ -1,6 +1,7 @@
 var SubjectsPanel = require("./subjects_panel");
 var EditSubjectReferencePanel = require("./edit_subject_reference_panel");
 var $$ = React.createElement;
+var _ = require("substance/helpers");
 
 var stateHandlers = {
 
@@ -66,6 +67,11 @@ var stateHandlers = {
     // When a subject has been clicked in the subjects panel
     if (state.contextId === EditSubjectReferencePanel.contextId && state.subjectReferenceId) {
       return [ state.subjectReferenceId ];
+    }
+    if (state.contextId === "subjects" && state.subjectId) {
+      var doc = writerCtrl.doc;
+      var references = Object.keys(doc.subjectReferencesIndex.get(state.subjectId));
+      return references;
     }
   }
 };

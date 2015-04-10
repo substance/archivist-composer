@@ -26,35 +26,6 @@ var stateHandlers = {
     }
   },
 
-  // Handle click on reference
-  // -----------------
-  // 
-  // => modifies state
-  // 
-  // When user clicks on a reference somewhere, the extension gets the chance to
-  // manipulate writer state (e.g. switching the contextId) so a custom panel
-  // can display contextual information (see Entities Panel). Also data can be loaded asynchronously
-  // using a custom transition
-  // handleReferenceToggle: function(writerCtrl, reference) {
-  //   var state = writerCtrl.getState();
-
-  //   if (reference.type === "entity_reference") {
-  //     if (state.contextId === "entities" && reference.target === state.entityId) {
-  //       // Toggle off
-  //       writerCtrl.replaceState({
-  //         contextId: "entities"
-  //       });
-  //     } else {
-  //       // Toggle on
-  //       writerCtrl.replaceState({
-  //         contextId: "entities",
-  //         entityId: reference.target
-  //       });
-  //     }
-  //     return true;
-  //   }
-  // },
-
 
   // Handle selection change
   // -----------------
@@ -99,7 +70,6 @@ var stateHandlers = {
     if (state.contextId === "entities" && state.entityId) {
       // Use reference handler
       var references = Object.keys(doc.references.get(state.entityId));
-      console.log('references', references);
       return references;
     }
   }

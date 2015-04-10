@@ -22,7 +22,7 @@ var RedoTool = React.createClass({
     });
   },
 
-  handleClick: function(e) {
+  handleMouseDown: function(e) {
     e.preventDefault();
     if (!this.state.active) {
       return;
@@ -56,7 +56,7 @@ var RedoTool = React.createClass({
       href: "#",
       dangerouslySetInnerHTML: {__html: '<i class="fa fa-rotate-right"></i>'},
       title: 'Undo',
-      onClick: this.handleClick
+      onMouseDown: this.handleMouseDown
     });
   }
 });

@@ -12,7 +12,7 @@ var stateHandlers = {
     var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1]);
 
     // Switch to a neutral state if no annotation matches have been found
-    if (annotations.length === 0) {
+    if (annotations.length === 0 && writerCtrl.state.contextId !== "editSubjectReference") {
       var prevContextId = writerCtrl.state.contextId;
       var nextContextId = "entities";
 
@@ -20,13 +20,10 @@ var stateHandlers = {
         nextContextId = "subjects";
       }
 
-      if (prevContextId !== nextContextId) {
-        console.log('RESET to default writer state, triggered by selection change!', sel);
-        writerCtrl.replaceState({
-          contextId: nextContextId
-        });
-        return true;        
-      }
+      writerCtrl.replaceState({
+        contextId: nextContextId
+      });
+      return true;
     }
   }
 };
