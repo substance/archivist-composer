@@ -21,7 +21,7 @@ var TextProperty = React.createClass({
   },
 
   getInitialState: function() {
-    return { activeContainerAnnotations: {__length__: 0} };
+    return { activeContainerAnnotations: [] };
   },
 
   shouldComponentUpdate: function() {
@@ -175,28 +175,32 @@ var TextProperty = React.createClass({
     if (!containerName) {
       return fragments;
     }
-    // Get container annotation anchors that lie on this property
+
+    // 1. Get container annotation anchors that lie on this property
+    // Note: Anchors are always rendered as they are used to compute the area to display the annotaiton bracket
     var containerNode = doc.get(containerName);
     var anchors = null;
     if (containerNode && (containerNode instanceof Substance.Document.ContainerNode)) {
-      anchors = doc.getIndex('container-annotations').get(containerName, path);
+      anchors = doc.getIndex('container-annotations').get(path);
+      anchors = Substance.filter(anchors, function(anchor) {
+        return (anchor.container === containerName);
+      });
       fragments = fragments.concat(anchors);
     }
 
+    // 2. Then create fragments for if the associated container annotation is active
     var container = surface.getContainer();
     if (!container) {
       return fragments;
     }
-    // If the associated container annotation is active
-    // render a fragment for highlighting
     Substance.each(anchors, function(anchor) {
       var id = anchor.id;
       if (this.isContainerAnnotationActive(id)) {
         var range;
         if (anchor.isStart) {
-          range = [anchor.getOffset(), text.length];
+          range = [anchor.offset, text.length];
         } else {
-          range = [0, anchor.getOffset()];
+          range = [0, anchor.offset];
         }
         var anno = doc.get(id)
         fragments.push(new TextProperty.AnnotationFragment(anno, range));
