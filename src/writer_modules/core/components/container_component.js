@@ -164,6 +164,7 @@ var ContainerComponent = React.createClass({
     // update the surface afterwards so that it can re-analyze the component layout
     setTimeout(function() {
       self.state.surface.update();
+      self.updateBrackets();
     });
   },
 
