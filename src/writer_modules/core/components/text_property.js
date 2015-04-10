@@ -6,6 +6,7 @@ var ContainerAnnotation = Substance.Document.ContainerAnnotation;
 var View = require('./view');
 var NodeView = require('./node_view');
 var AnnotationView = require('./annotation_view');
+var AnnotationHandle = require('./annotation_handle');
 
 // TextProperty
 // ----------------
@@ -125,9 +126,7 @@ var TextProperty = React.createClass({
           classNames: [],
       };
       if (node instanceof ContainerAnnotation.Anchor) {
-        children = [
-          $('<span>').addClass('anchor-caret')[0]
-        ];
+        ViewClass = AnnotationHandle;
         if (activeContainerAnnotations[entry.id]) {
           props.classNames.push('active');
         }
