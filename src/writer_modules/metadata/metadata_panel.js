@@ -2,7 +2,7 @@ var Substance = require("substance");
 var $$ = React.createElement;
 var Surface = Substance.Surface;
 
-var TextProperty = require('../core/components/text_property');
+var TextProperty = require("substance/writer").TextProperty;
 
 // Metadat Panel
 // ------------------
