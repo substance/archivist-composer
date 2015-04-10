@@ -4,7 +4,6 @@ var EntitiesModule = require("./entities");
 var MetadataModule = require("./metadata");
 
 module.exports = [
-
   SubjectsModule,
   EntitiesModule,
   CoreModule,

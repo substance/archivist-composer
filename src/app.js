@@ -6,11 +6,12 @@ var $$ = React.createElement;
 var Writer = require("substance/writer");
 var Backend = require("./backend");
 var LocalBackend = require("./local_backend");
-
 var NotificationService = require("./notification_service");
 
 // Writer Configuration
-var writerModules = require("./writer_modules");
+var writerModules = [Writer.CoreModule];
+
+// var writerModules = require("./writer_modules");
 
 // Prepare local cache
 window.cache = {};
