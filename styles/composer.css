@@ -211,8 +211,36 @@ a:hover {
   font-weight: 600;
 }
 
-.writer-component .context-toggles a.toggle-context.dialog {
+.writer-component .context-toggles .dialog {
   float: right;
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  padding: 0px 20px;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  background: #444;
+  color: white;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.writer-component .context-toggles .dialog.editSubjectReference {
+  background: rgba(145, 187, 4, 1);
+}
+
+.writer-component .context-toggles .dialog.tagentity {
+  background: rgba(11, 157, 217, 1);
+}
+
+
+.writer-component .context-toggles .dialog .close-dialog {
+  padding: 5px 10px;
+  color: rgba(255,255,255,0.4);
+}
+
+.writer-component .context-toggles .dialog .close-dialog:hover {
+  color: rgba(255,255,255, 1);
 }
 
 .writer-component .context-toggles a.toggle-context:hover {
@@ -287,9 +315,9 @@ a:hover {
   background: rgba(0,0,0,0.1);
 }
 
-.panel.dialog .panel-content {
+/*.panel.dialog .panel-content {
   top: 40px;
-}
+}*/
 
 /* Custom headers for entity tagging and subject tagging */
 .panel.dialog.tag-entity-panel-component .dialog-header {

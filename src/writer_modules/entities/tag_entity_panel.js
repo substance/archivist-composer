@@ -156,10 +156,6 @@ var TagEntityPanel = React.createClass({
     }
 
     return $$("div", {className: "panel dialog tag-entity-panel-component"},
-      $$('div', {className: 'dialog-header'},
-        $$('div', {className: 'label', dangerouslySetInnerHTML: {__html: '<i class="fa fa-bullseye"></i> Choose an entity'}}),
-        $$('a', {className: 'cancel', href: '#', onClick: this.handleCancel}, 'Cancel')
-      ),
       $$('div', {className: "panel-content"},
         $$('div', {className: "search", html: ""},
           $$('input', {

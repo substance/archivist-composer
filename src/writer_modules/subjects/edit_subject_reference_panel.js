@@ -100,10 +100,6 @@ var EditSubjectReferencePanel = React.createClass({
     }
 
     return $$("div", {className: "panel dialog edit-subject-reference-panel-component"},
-      $$('div', {className: 'dialog-header'},
-        $$('div', {className: 'label', dangerouslySetInnerHTML: {__html: '<i class="fa fa-tag"></i> Select relevant subjects'}}),
-        $$('a', {className: 'done', href: '#', onClick: this.handleDone}, 'Done')
-      ),
       $$('div', {className: "panel-content"},
         treeEl
       )
