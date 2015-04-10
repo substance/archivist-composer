@@ -6,11 +6,13 @@ var Document = Substance.Document;
 var CoreModule = require("./modules/core");
 var SubjectsModule = require("./modules/subjects");
 var EntitiesModule = require("./modules/entities");
+var TimecodesModule = require("./modules/timecodes");
 
 var modules = [
   CoreModule,
   SubjectsModule,
-  EntitiesModule
+  EntitiesModule,
+  TimecodesModule
 ];
 
 var Interview = function(data) {

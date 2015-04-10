@@ -354,6 +354,10 @@ a:hover {
   opacity: 0.2;
 }
 
+.content-tools-component .tools a.timecode-tool-component {
+  float: right;
+}
+
 .content-tools-component .tools a.strong-tool-component {
   float: right;
 }
@@ -521,6 +525,15 @@ a:hover {
 /* Text Annotations
 -----------------------------------------------------*/
 
+.annotation.timecode {
+  font-family: Courier;
+  background: #444;
+  color: #fff;
+  font-size: 13px;
+  padding: 2px 0;
+  font-weight: 600;
+}
+
 .annotation.strong {
   font-weight: bold;
 }
@@ -604,6 +617,10 @@ a:hover {
   top: 50px;
   height: 100px;
   cursor: pointer;
+}
+
+.container-node.content .subject-references .subject-reference:nth-child(odd) {
+  right: 20px;
 }
 
 .container-node.content .subject-references .subject-reference.selected {
