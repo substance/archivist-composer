@@ -1,3 +1,6 @@
+'use strict';
+
+var Substance = require('substance');
 var $$ = React.createElement;
 
 // TagSubjectTool
@@ -15,60 +18,137 @@ var TagSubjectTool = React.createClass({
 
   handleSelectionChange: function(sel) {
     var writerCtrl = this.props.writerCtrl;
-
-    // TODO: this will allow container selections (!)
-    if (sel.isNull() || !sel.isPropertySelection()) {
-      this.setState({
+    // Note: toggling of a subject reference is only possible when
+    // the subject reference is selected and the
+    // TODO: Deleting the reference this way is IMO not a good experience
+    // as 1. data get 'lost' easily, 2. the interaction is not at all a convention
+    // (-> compare with links in word or gdocs).
+    if (sel.isNull() || sel.isCollapsed() ) {
+      return this.setState({
         active: false,
         selected: false
       });
     } else {
-      var range = sel.getTextRange();
-      var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1], "subject_reference");
-
-      var selected = annotations.length > 0;
-      var active = !sel.isCollapsed();
-
-      this.setState({
-        active: active,
-        selected: selected
-      });
+      var newState = {
+        active: true,
+        selected: false
+      };
+      if (writerCtrl.state.contextId === "editSubjectReference") {
+        var container = writerCtrl.getSurface().getContainer();
+        if (!container) {
+          return this.setState({
+            active: false,
+            selected: false
+          });
+        }
+        var anno = writerCtrl.doc.get(writerCtrl.state.subjectReferenceId);
+        if (!anno) {
+          console.error("Ooops. Could not find subject-reference while being in 'editSubjectReference'.")
+          return this.setState({
+            active: false,
+            selected: false
+          });
+        }
+        var annoSel = Substance.Document.Selection.create(container,
+          anno.startPath, anno.startOffset, anno.endPath, anno.endOffset);
+        if (!annoSel.overlaps(sel)) {
+          return this.setState({
+            active: false,
+            selected: false
+          });
+        }
+        if (annoSel.includesWithOneBoundary(sel)) {
+          newState.mode = 'truncate';
+          newState.selected = true;
+        } else if (annoSel.includes(sel)) {
+          newState.mode = 'delete';
+          newState.selected = true;
+        } else {
+          newState.mode = 'expand';
+        }
+        newState.annotationSelection = annoSel;
+      } else {
+        newState.mode = 'create';
+      }
+      this.setState(newState);
     }
   },
 
-  handleClick: function(e) {
+  handleMouseDown: function(e) {
     e.preventDefault();
-    
+    if (!this.state.active) {
+      return;
+    }
     // toggle subject_reference on or off
     var writerCtrl = this.props.writerCtrl;
+    var doc = writerCtrl.doc;
     var sel = writerCtrl.getSelection();
+    if (sel.isNull() || sel.isCollapsed()) return;
+    var range = sel.getRange();
 
-    // Check if already on
-    if (sel.isNull() || !sel.isPropertySelection()) return;
-
-    var range = sel.getTextRange();
-    var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1], "subject_reference");
-
-    if (annotations.length > 0) {
-      writerCtrl.deleteAnnotation(annotations[0].id);
-      writerCtrl.replaceState({
-        contextId: "subjects"
-      });
-    } else {
-      // Do nothing if selection is collapsed
-      if (sel.isCollapsed()) return;
-
-      // Create new subject reference
-      var subjectReference = writerCtrl.annotate({
-        type: "subject_reference",
-        target: []
-      });
-
-      writerCtrl.replaceState({
-        contextId: "editSubjectReference",
-        subjectReferenceId: subjectReference.id,
-        range: sel.getTextRange()
-      });
+    var tx = doc.startTransaction({selection: sel});
+    if (this.state.mode === 'create') {
+      try {
+        var subjectReference = {
+          type: "subject_reference",
+          id: Substance.uuid("subject_reference"),
+          startPath: range.start.path,
+          startOffset: range.start.offset,
+          endPath: range.end.path,
+          endOffset: range.end.offset,
+          target: []
+        };
+        tx.create(subjectReference);
+        tx.save({selection: sel});
+        writerCtrl.replaceState({
+          contextId: "editSubjectReference",
+          subjectReferenceId: subjectReference.id,
+          range: range
+        });
+        // HACK: using a custom event instead of automatic data bindings
+        doc.emit('container-annotation-update');
+      } finally {
+        tx.cleanup();
+      }
+    } else if (this.state.mode === 'delete') {
+      try {
+        tx.delete(writerCtrl.state.subjectReferenceId);
+        tx.save();
+        writerCtrl.replaceState({
+          contextId: "subjects"
+        });
+      } finally {
+        tx.cleanup();
+      }
+    } else if (this.state.mode === 'expand' || this.state.mode === 'truncate') {
+      try {
+        var anno = writerCtrl.doc.get(writerCtrl.state.subjectReferenceId);
+        if (this.state.mode === 'expand') {
+          sel = this.state.annotationSelection.expand(sel);
+        } else {
+          sel = this.state.annotationSelection.truncate(sel);
+        }
+        var newRange = sel.getRange();
+        if (!Substance.isEqual(anno.startPath, newRange.start.path)) {
+          tx.set([anno.id, 'startPath'], newRange.start.path);
+        }
+        if (!Substance.isEqual(anno.endPath, newRange.end.path)) {
+          tx.set([anno.id, 'endPath'], newRange.start.path);
+        }
+        if (!Substance.isEqual(anno.startOffset, newRange.start.offset)) {
+          tx.set([anno.id, 'startOffset'], newRange.start.offset);
+        }
+        if (!Substance.isEqual(anno.endOffset, newRange.end.offset)) {
+          tx.set([anno.id, 'endOffset'], newRange.start.offset);
+        }
+        tx.save({ selection: sel });
+        // HACK: using a custom event instead of automatic data bindings
+        doc.emit('container-annotation-update');
+      } finally {
+        tx.cleanup();
+      }
+    } else  {
+      throw new Error('Illegal state');
     }
   },
 
@@ -83,13 +163,12 @@ var TagSubjectTool = React.createClass({
     var classNames = ['tag-subject-tool-component', 'tool'];
     if (this.state.active) classNames.push("active");
     if (this.state.selected) classNames.push("selected");
-
     return $$("a", {
       className: classNames.join(' '),
       href: "#",
       dangerouslySetInnerHTML: {__html: '<i class="fa fa-tag"></i>'},
       title: 'Tag Subject',
-      onClick: this.handleClick
+      onMouseDown: this.handleMouseDown
     });
   }
 });
