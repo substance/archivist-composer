@@ -619,6 +619,10 @@ a:hover {
   cursor: pointer;
 }
 
+.container-node.content .subject-references .subject-reference:nth-child(odd) {
+  right: 20px;
+}
+
 .container-node.content .subject-references .subject-reference.selected {
   border-width: 3px;
 }
