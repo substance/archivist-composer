@@ -3,7 +3,7 @@
 var Substance = require('substance');
 var $$ = React.createElement;
 
-var Writer = require("substance-writer");
+var Writer = require("substance/writer");
 var Backend = require("./backend");
 var LocalBackend = require("./local_backend");
 
