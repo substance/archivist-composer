@@ -54,7 +54,7 @@ var EditSubjectReferencePanel = React.createClass({
     this.loadSubjects();
   },
 
-  handleDocumentChange: function(change, ops, info) {
+  handleDocumentChange: function(change, info) {
     if (info.updateSubjectReference) return;
     var doc = this.props.writerCtrl.doc;
     var selectedSubjects = doc.get(this.props.subjectReferenceId).target;
@@ -63,7 +63,7 @@ var EditSubjectReferencePanel = React.createClass({
 
   componentWillUnmount: function() {
     this.props.writerCtrl.doc.disconnect(this);
-    doc.getEventProxy('path').remove([this.props.subjectReferenceId, "target"], this, this.handleDocumentChange);
+    doc.getEventProxy('path').remove([this.props.subjectReferenceId, "target"], this);
   },
 
   // Write changes in selection to document model
@@ -71,11 +71,10 @@ var EditSubjectReferencePanel = React.createClass({
 
   updateSubjectReference: function(selectedNodes) {
     var subjectIds = Object.keys(selectedNodes);
-
     var tx = this.props.writerCtrl.doc.startTransaction();
     try {
       tx.set([this.props.subjectReferenceId, "target"], subjectIds);
-      tx.save({}, {updateSubjectReference: true});      
+      tx.save({}, {updateSubjectReference: true});
     } finally {
       tx.cleanup();
     }
