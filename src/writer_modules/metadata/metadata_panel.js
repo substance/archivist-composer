@@ -50,7 +50,7 @@ var MetadataPanel = React.createClass({
   render: function() {
     var props = this.props;
 
-    return $$("div", {className: "panel metadata-panel-component", contentEditable: true},
+    return $$("div", {className: "panel metadata-panel-component", contentEditable: true, 'data-id': "metadata"},
       $$('div', {className: 'panel-content'},
         $$('div', {className: 'biography'},
           $$('div', {className: 'label', contentEditable: false}, "Interview Subject Name"),
