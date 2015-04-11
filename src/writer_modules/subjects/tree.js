@@ -14,7 +14,7 @@ Tree.Prototype = function() {
     // Build a map of parents referencing their kids
     this.parentIndex = {};
     Substance.each(this.nodes, function(node) {
-      var parent = node.parent || "root";
+      var parent = node.parent || "root";
       if (!this.parentIndex[parent]) {
         this.parentIndex[parent] = [ node ];
       } else {

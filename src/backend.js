@@ -33,7 +33,7 @@ Backend.Prototype = function() {
     });
   };
 
-  this.saveDocument = function(doc, cb) {
+  this.saveDocument = function(doc, cb) {
     var json = doc.toJSON();
     json.__v = doc.version;
 

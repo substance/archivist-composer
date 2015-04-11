@@ -48,7 +48,7 @@ LocalBackend.Prototype = function() {
     cb(null, doc);
   };
 
-  this.saveDocument = function(doc, cb) {
+  this.saveDocument = function(doc, cb) {
     cb(new Error("Saving not supported in dev mode"));
   };
 
