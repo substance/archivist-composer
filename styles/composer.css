@@ -593,7 +593,7 @@ a:hover {
 }
 
 .container-annotation.active.annotation-fragment {
-  background-color: rgba(145, 187, 4, 0.1);
+  background-color: rgba(145, 187, 4, 0.2);
 }
 
 /* Brackets for subject annotations
@@ -604,7 +604,7 @@ a:hover {
   right: 0px;
   top: 0px;
   bottom: 0px;
-  width: 30px;
+  width: 60px;
 }
 
 .container-node.content .subject-references .subject-reference {
@@ -612,19 +612,33 @@ a:hover {
   border-top: 1px solid rgba(145, 187, 4, 1);
   border-right: 1px solid rgba(145, 187, 4, 1);
 
-  width: 15px;
+  width: 10px;
   position: absolute;
-  top: 50px;
+  top: 30px;
   height: 100px;
   cursor: pointer;
 }
 
-.container-node.content .subject-references .subject-reference:nth-child(odd) {
+.container-node.content .subject-references .subject-reference:nth-child(even) {
   right: 20px;
 }
 
 .container-node.content .subject-references .subject-reference.selected {
   border-width: 3px;
+}
+
+
+
+/* Selection style sheets
+-----------------------------------------------------*/
+
+
+::selection {
+  background: rgba(0,124,255,0.2);
+}
+
+::-moz-selection {
+  background: rgba(0,124,255,0.2);
 }
 
 
