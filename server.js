@@ -8,11 +8,11 @@ var path = require("path");
 var CJSServer = require('substance-cjs');
 
 var app = express();
-
 var port = process.env.PORT || 4001;
-app.use(express.cookieParser());
-app.use(express.bodyParser());
-app.use(express.methodOverride());
+
+// app.use(express.cookieParser());
+// app.use(express.bodyParser());
+// app.use(express.methodOverride());
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname);
@@ -52,7 +52,7 @@ app.use(express.static(__dirname));
 // Serve Lens in dev mode
 // --------
 
-app.use(app.router);
+// app.use(app.router);
 
 http.createServer(app).listen(port, function(){
   console.log("Lens running on port " + port);
