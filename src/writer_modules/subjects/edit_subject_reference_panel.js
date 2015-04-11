@@ -90,6 +90,7 @@ var EditSubjectReferencePanel = React.createClass({
     if (this.state.subjects) {
       treeEl = $$(Tree, {
         ref: "treeWidget",
+        subjectReferenceId: this.props.subjectReferenceId,
         selectedNodes: doc.get(this.props.subjectReferenceId).target,
         tree: this.state.subjects.tree,
         onSelectionChanged: this.updateSubjectReference

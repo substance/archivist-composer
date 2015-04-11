@@ -58,34 +58,6 @@ var sampleDoc = {
       ]
     },
 
-    // "subject_reference_1": {
-    //   "id": "subject_reference_1",
-    //   "type": "subject_reference",
-    //   "path": [
-    //     "text_2",
-    //     "content"
-    //   ],
-    //   "target": ["54bae4cda868bc6fab4bcd0e", "54bae99ca868bc3ec7fb5ad8"], // these are external objects
-    //   "range": [
-    //     99,
-    //     122
-    //   ]
-    // },
-
-    // "subject_reference_2": {
-    //   "id": "subject_reference_2",
-    //   "type": "subject_reference",
-    //   "path": [
-    //     "text_2",
-    //     "content"
-    //   ],
-    //   "target": ["54bae4d0a868bc6fab4bcd16", "54bae99ca868bc3ec7fb5ad8"], // these are external objects
-    //   "range": [
-    //     614,
-    //     628
-    //   ]
-    // },
-
     "subject_reference_1": {
       "id": "subject_reference_1",
       "type": "subject_reference",
@@ -95,6 +67,18 @@ var sampleDoc = {
       "endPath": ["text_4", "content"],
       "endOffset": 40,
       "target": ["54bae4cda868bc6fab4bcd0e", "54bae99ca868bc3ec7fb5ad8"]
+    },
+
+
+    "subject_reference_2": {
+      "id": "subject_reference_2",
+      "type": "subject_reference",
+      "container": "content",
+      "startPath": ["text_1", "content"],
+      "startOffset": 100,
+      "endPath": ["text_2", "content"],
+      "endOffset": 40,
+      "target": ["54bae99ca868bc3ec7fb5ad8"]
     },
 
     "text_3": {

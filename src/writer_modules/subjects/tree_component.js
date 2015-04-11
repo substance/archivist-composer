@@ -74,10 +74,20 @@ var Tree = React.createClass({
     this.updateTree(this.props.selectedNodes);
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    this.updateTree(nextProps.selectedNodes);
+  },
+
   // Preprocess tree to flag nodes accordingly
+  // This prepares the state element, before a render happens
   updateTree: function(newSelectedNodes) {
     var tree = this.props.tree;
-    window.tree = tree;
+
+    // Reset everything
+    tree.walkTree(function(node) {
+      delete node._selected;
+      delete node._expanded;
+    });
 
     // Preprocess tree to flag nodes accordingly
     var selectedNodes = {};
@@ -99,10 +109,10 @@ var Tree = React.createClass({
       }
     });
 
-    this.setState({
+    this.state = {
       tree: tree,
       selectedNodes: selectedNodes
-    });
+    };
   },
 
   getInitialState: function() {
