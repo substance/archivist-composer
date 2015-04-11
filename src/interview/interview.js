@@ -29,7 +29,7 @@ var Interview = function(data) {
 
   // Call initializes of modules
   Substance.each(modules, function(ext) {
-    ext.initialize(this);
+    if (ext.initialize) ext.initialize(this);
   }, this);
 };
 
