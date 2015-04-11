@@ -604,7 +604,7 @@ a:hover {
   right: 0px;
   top: 0px;
   bottom: 0px;
-  width: 60px;
+  width: 50px;
 }
 
 .container-node.content .subject-references .subject-reference {
@@ -619,8 +619,12 @@ a:hover {
   cursor: pointer;
 }
 
+.container-node.content .subject-references .subject-reference:hover {
+  border-width: 2px;
+}
+
 .container-node.content .subject-references .subject-reference:nth-child(even) {
-  right: 20px;
+  right: 15px;
 }
 
 .container-node.content .subject-references .subject-reference.selected {

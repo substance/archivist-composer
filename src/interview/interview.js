@@ -3,13 +3,15 @@
 var Substance = require('substance');
 var Document = Substance.Document;
 
-var CoreModule = require("./modules/core");
+var SubstanceCore = require("substance/article").CoreModule;
+var BaseModule = require("./modules/base");
 var SubjectsModule = require("./modules/subjects");
 var EntitiesModule = require("./modules/entities");
 var TimecodesModule = require("./modules/timecodes");
 
 var modules = [
-  CoreModule,
+  SubstanceCore,
+  BaseModule,
   SubjectsModule,
   EntitiesModule,
   TimecodesModule

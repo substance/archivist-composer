@@ -56,8 +56,6 @@ var EntitiesPanel = React.createClass({
       var currentEntities = _.uniq(this.getReferencedEntityIds());
       var cachedEntities = _.uniq(_.pluck(window.cache.entities, 'id'));
 
-      console.log('currentEntities', currentEntities, 'cached', cachedEntities);
-
       if (currentEntities.length !== cachedEntities.length) return true;
       var overlappingEntities = _.intersection(currentEntities, cachedEntities);
       // Cache condition met when there's a full overlap
