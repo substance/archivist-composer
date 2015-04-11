@@ -29,18 +29,19 @@ var TagSubjectTool = React.createClass({
         selected: false
       });
     } else {
+      var container = writerCtrl.getSurface().getContainer();
+      if (!container) {
+        return this.setState({
+          active: false,
+          selected: false
+        });
+      }
       var newState = {
         active: true,
-        selected: false
+        selected: false,
+        containerId: container.id
       };
       if (writerCtrl.state.contextId === "editSubjectReference") {
-        var container = writerCtrl.getSurface().getContainer();
-        if (!container) {
-          return this.setState({
-            active: false,
-            selected: false
-          });
-        }
         var anno = writerCtrl.doc.get(writerCtrl.state.subjectReferenceId);
         if (!anno) {
           console.error("Ooops. Could not find subject-reference while being in 'editSubjectReference'.");
@@ -92,6 +93,7 @@ var TagSubjectTool = React.createClass({
         var subjectReference = {
           type: "subject_reference",
           id: Substance.uuid("subject_reference"),
+          container: this.state.containerId,
           startPath: range.start.path,
           startOffset: range.start.offset,
           endPath: range.end.path,
