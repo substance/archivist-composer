@@ -57,7 +57,6 @@ SubjectsModel.prototype.getAllReferencedSubjects = function() {
   return subjects;
 };
 
-
 SubjectsModel.prototype.getFullPathForSubject = function(subjectId) {
   var tree = this.tree;
   var res = [];
