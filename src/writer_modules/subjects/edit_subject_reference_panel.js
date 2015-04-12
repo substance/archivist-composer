@@ -57,7 +57,7 @@ var EditSubjectReferencePanel = React.createClass({
   },
 
   handleDocumentChange: function(change, info) {
-    console.log('handle document change');
+    // console.log('handle document change');
     var refId = this.props.subjectReferenceId;
 
     if (info.updateSubjectReference) return;
