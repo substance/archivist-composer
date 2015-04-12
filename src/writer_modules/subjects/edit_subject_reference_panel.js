@@ -52,7 +52,7 @@ var EditSubjectReferencePanel = React.createClass({
     var doc = this.props.writerCtrl.doc;
     doc.connect(this, {
       'document:changed': this.handleDocumentChange
-    })
+    });
     this.loadSubjects();
   },
 
