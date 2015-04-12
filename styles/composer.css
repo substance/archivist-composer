@@ -74,10 +74,10 @@ a {
   color: #1B6685;
   font-weight: normal;
   text-decoration: none;
-  -moz-transition: background-color 100ms linear, color 100ms linear, opacity 100ms linear;
+/*   -moz-transition: background-color 100ms linear, color 100ms linear, opacity 100ms linear;
   -o-transition: background-color 100ms linear, color 100ms linear, opacity 100ms linear;
   -webkit-transition: background-color 100ms linear, color 100ms linear, opacity 100ms linear;
-  transition: background-color 100ms linear, color 100ms linear, opacity 100ms linear;
+  transition: background-color 100ms linear, color 100ms linear, opacity 100ms linear;*/
 }
 
 a:hover {
@@ -324,8 +324,25 @@ a:hover {
   /*background: rgba(11, 157, 217, 1);*/
 }
 
-.panel.dialog.edit-subject-reference-panel-component .dialog-header {
-  /*background: rgba(145, 187, 4, 1);*/
+.panel.dialog.edit-subject-reference-panel-component .header {
+  padding: 20px;
+}
+
+.panel.dialog.edit-subject-reference-panel-component .header a {
+  display: block;
+  float: right;
+  font-weight: 600;
+  /*background: #444;*/
+  color: #ccc;
+  border: 1px solid #ccc;
+  padding: 0px 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.panel.dialog.edit-subject-reference-panel-component .header a:hover {
+  color: #444;
+  border-color: #444;
 }
 
 

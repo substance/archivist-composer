@@ -67,6 +67,22 @@ var EditSubjectReferencePanel = React.createClass({
     }
   },
 
+  handleDeleteReference: function(e) {
+    var writerCtrl = this.props.writerCtrl;
+    var doc = this.props.writerCtrl.doc;
+    var tx = doc.startTransaction();
+
+    try {
+      tx.delete(this.props.subjectReferenceId);
+      tx.save();
+      writerCtrl.replaceState({
+        contextId: "subjects"
+      });
+    } finally {
+      tx.cleanup();
+    }
+  },
+
   componentWillUnmount: function() {
     this.props.writerCtrl.doc.disconnect(this);
   },
@@ -105,6 +121,9 @@ var EditSubjectReferencePanel = React.createClass({
 
     return $$("div", {className: "panel dialog edit-subject-reference-panel-component"},
       $$('div', {className: "panel-content"},
+        $$('div', {className: "header"},
+          $$('a', {href: "#", className: "delete-reference", onClick: this.handleDeleteReference}, "Delete Annotation")
+        ),
         treeEl
       )
     );
