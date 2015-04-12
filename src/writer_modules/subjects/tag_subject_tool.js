@@ -107,8 +107,6 @@ var TagSubjectTool = React.createClass({
           subjectReferenceId: subjectReference.id,
           range: range
         });
-        // HACK: using a custom event instead of automatic data bindings
-        doc.emit('container-annotation-update');
       } finally {
         tx.cleanup();
       }
@@ -144,14 +142,15 @@ var TagSubjectTool = React.createClass({
           tx.set([anno.id, 'endOffset'], newRange.end.offset);
         }
         tx.save({});
-        // HACK: using a custom event instead of automatic data bindings
-        doc.emit('container-annotation-update');
       } finally {
         tx.cleanup();
       }
     } else  {
       throw new Error('Illegal state');
     }
+
+    // HACK: using a custom event instead of automatic data bindings
+    doc.emit('container-annotation-update');
   },
 
   getInitialState: function() {
