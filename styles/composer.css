@@ -638,11 +638,11 @@ a:hover {
 
 
 ::selection {
-  background: rgba(0,124,255,0.2);
+  background: rgba(0,0,0,0.1);
 }
 
 ::-moz-selection {
-  background: rgba(0,124,255,0.2);
+  background: rgba(0,0,0,0.1);
 }
 
 

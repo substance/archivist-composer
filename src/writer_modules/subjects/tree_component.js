@@ -71,16 +71,16 @@ var Tree = React.createClass({
   displayName: "Tree",
 
   componentWillMount: function() {
-    this.updateTree(this.props.selectedNodes);
+    this._prepare(this.props.selectedNodes);
   },
 
   componentWillReceiveProps: function(nextProps) {
-    this.updateTree(nextProps.selectedNodes);
+    this._prepare(nextProps.selectedNodes);
   },
 
   // Preprocess tree to flag nodes accordingly
   // This prepares the state element, before a render happens
-  updateTree: function(newSelectedNodes) {
+  _prepare: function(newSelectedNodes) {
     var tree = this.props.tree;
 
     // Reset everything

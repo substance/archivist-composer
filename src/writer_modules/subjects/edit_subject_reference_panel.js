@@ -50,20 +50,25 @@ var EditSubjectReferencePanel = React.createClass({
 
   componentDidMount: function() {
     var doc = this.props.writerCtrl.doc;
-    doc.getEventProxy('path').add([this.props.subjectReferenceId, "target"], this, this.handleDocumentChange);
+    doc.connect(this, {
+      'document:changed': this.handleDocumentChange
+    })
     this.loadSubjects();
   },
 
   handleDocumentChange: function(change, info) {
+    console.log('handle document change');
+    var refId = this.props.subjectReferenceId;
+
     if (info.updateSubjectReference) return;
-    var doc = this.props.writerCtrl.doc;
-    var selectedSubjects = doc.get(this.props.subjectReferenceId).target;
-    this.refs.treeWidget.updateTree(selectedSubjects);
+
+    if (change.isAffected([refId, "target"])) {
+      this.forceUpdate();
+    }
   },
 
   componentWillUnmount: function() {
     this.props.writerCtrl.doc.disconnect(this);
-    doc.getEventProxy('path').remove([this.props.subjectReferenceId, "target"], this);
   },
 
   // Write changes in selection to document model
@@ -90,7 +95,6 @@ var EditSubjectReferencePanel = React.createClass({
     if (this.state.subjects) {
       treeEl = $$(Tree, {
         ref: "treeWidget",
-        subjectReferenceId: this.props.subjectReferenceId,
         selectedNodes: doc.get(this.props.subjectReferenceId).target,
         tree: this.state.subjects.tree,
         onSelectionChanged: this.updateSubjectReference
