@@ -89,7 +89,7 @@ Backend.Prototype = function() {
 
 
   this.fetchSubjects = function(cb) {
-    $.getJSON("http://localhost:5000/api/metadata", function(subjectDB) {
+    $.getJSON("/api/metadata", function(subjectDB) {
       // Store in cache
       this.cache.subjectDB = subjectDB;
       cb(null, subjectDB.subjects);
