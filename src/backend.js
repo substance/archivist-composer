@@ -2,6 +2,7 @@
 
 var Substance = require("substance");
 var Interview = require('./interview');
+var _ = require("substance/helpers");
 
 // Archivist Backend
 // ----------------
@@ -70,10 +71,38 @@ Backend.Prototype = function() {
   // ------------------
 
   this.getEntities = function(entityIds, cb) {
+    var entitiesToFetch = [];
+    var entities = [];
+
+    // Try to use cached items
+    _.each(entityIds, function(entityId) {
+      var entity = this.cache.entities[entityId];
+      if (entity) {
+        entities.push(entity);
+      } else {
+        entitiesToFetch.push(entityId);
+      }
+    }.bind(this));
+
+    this.fetchEntities(entitiesToFetch, function(err, fetchedEntities) {
+      // Store in cache
+      _.each(fetchedEntities, function(entity) {
+        this.cache[entity.id] = entity;
+        entities.push(entity);
+      });
+      cb(null, entities);
+    }.bind(this));
+  };
+
+  this.fetchEntities = function(entityIds, cb) {
+    if (entityIds.length === 0) return cb(null, []);
+    console.log('Fetching entities', entityIds);
+
     $.getJSON("/api/entities?entityIds="+entityIds.join(','), function(entities) {
       cb(null, entities);
     });
   };
+
 
   this.getSuggestedEntities = function(cb) {
     $.getJSON("/api/search", function(entities) {
