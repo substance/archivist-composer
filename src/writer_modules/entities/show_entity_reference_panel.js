@@ -19,10 +19,11 @@ var ShowEntityReferencePanel = React.createClass({
   // Data loading methods
   // ------------
 
-  loadEntity: function() {
-    var doc = this.props.writerCtrl.doc;
+  loadEntity: function(props) {
+    props = props || this.props;
+    var doc = props.writerCtrl.doc;
     var self = this;
-    var entityRef = doc.get(this.props.entityReferenceId);
+    var entityRef = doc.get(props.entityReferenceId);
 
     var backend = this.context.backend;
 
@@ -50,8 +51,8 @@ var ShowEntityReferencePanel = React.createClass({
     this.loadEntity();
   },
 
-  componentWillReceiveProps: function() {
-    this.loadEntity();
+  componentWillReceiveProps: function(nextProps) {
+    this.loadEntity(nextProps);
   },
 
   handleToggle: function(entityId) {
