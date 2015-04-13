@@ -9,17 +9,12 @@ var _ = require("substance/helpers");
 //
 
 var Backend = function(opts) {
-  this.cache = {};
+  this.cache = {
+    "entities": {}
+  };
 };
 
 Backend.Prototype = function() {
-
-  // Utils
-  // ------------------
-
-  this.getSubjectDBVersion = function() {
-    return this.cache.subjectDB ? this.cache.subjectDB.subjectDBVersion : null;
-  };
 
   // Document
   // ------------------
@@ -87,9 +82,9 @@ Backend.Prototype = function() {
     this.fetchEntities(entitiesToFetch, function(err, fetchedEntities) {
       // Store in cache
       _.each(fetchedEntities, function(entity) {
-        this.cache[entity.id] = entity;
+        this.cache.entities[entity.id] = entity;
         entities.push(entity);
-      });
+      }, this);
       cb(null, entities);
     }.bind(this));
   };
@@ -134,6 +129,10 @@ Backend.Prototype = function() {
     } else {
       this.fetchSubjects(cb);
     }
+  };
+
+  this.getSubjectDBVersion = function() {
+    return this.cache.subjectDB ? this.cache.subjectDB.subjectDBVersion : null;
   };
 };
 

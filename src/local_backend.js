@@ -34,9 +34,6 @@ var SUBJECTS = [{"_id":"54bae4cda868bc6fab4bcd0e","name":"Казни (в том 
 
 
 var LocalBackend = function(opts) {
-  this.cache = {
-    "entities": {}
-  };
 };
 
 LocalBackend.Prototype = function() {
@@ -59,41 +56,10 @@ LocalBackend.Prototype = function() {
 
   this.getEntities = function(entityIds, cb) {
     // Clone array so we can make
-    var entitiesToFetch = [];
-    var entities = [];
-
-    // Try to use cached items
-    _.each(entityIds, function(entityId) {
-      var entity = this.cache.entities[entityId];
-      if (entity) {
-        entities.push(entity);
-      } else {
-        entitiesToFetch.push(entityId);
-      }
-    }.bind(this));
-
-
-    this.fetchEntities(entitiesToFetch, function(err, fetchedEntities) {
-      // Store in cache
-      _.each(fetchedEntities, function(entity) {
-        this.cache[entity.id] = entity;
-        entities.push(entity);
-      });
-      cb(null, entities);
-    }.bind(this));
-  };
-
-  this.fetchEntities = function(entityIds, cb) {
-    if (entityIds.length === 0) return cb(null, []);
-    console.log('Fetching entities', entityIds);
-
     var entities = Substance.filter(ENTITIES, function(entity) {
       return Substance.includes(entityIds, entity.id);
     });
-
-    _.delay(function() {
-      cb(null, entities)
-    }, 2000);
+    cb(null, entities);
   };
 
   this.getSuggestedEntities = function(cb) {
