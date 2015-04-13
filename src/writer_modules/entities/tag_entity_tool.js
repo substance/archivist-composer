@@ -58,6 +58,10 @@ var TagEntityTool = React.createClass({
     }
   },
 
+  handleClick: function(e) {
+    e.preventDefault(e);
+  },
+
   getInitialState: function() {
     return {
       active: false,
@@ -75,6 +79,7 @@ var TagEntityTool = React.createClass({
       href: "#",
       title: 'Tag Entity',
       onMouseDown: this.handleMouseDown,
+      onClick: this.onClick,
       dangerouslySetInnerHTML: {__html: '<i class="fa fa-bullseye"></i>'}
     });
   }

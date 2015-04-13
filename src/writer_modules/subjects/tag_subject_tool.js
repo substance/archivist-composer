@@ -75,6 +75,10 @@ var TagSubjectTool = React.createClass({
     }
   },
 
+  handleClick: function(e) {
+    e.preventDefault(e);
+  },
+
   handleMouseDown: function(e) {
     e.preventDefault();
     if (!this.state.active) {
@@ -169,7 +173,8 @@ var TagSubjectTool = React.createClass({
       href: "#",
       dangerouslySetInnerHTML: {__html: '<i class="fa fa-tag"></i>'},
       title: 'Tag Subject',
-      onMouseDown: this.handleMouseDown
+      onMouseDown: this.handleMouseDown,
+      onClick: this.handleClick
     });
   }
 });
