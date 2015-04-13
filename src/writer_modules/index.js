@@ -11,6 +11,6 @@ module.exports = [
   EntitiesModule,
   SubjectsModule,
   TimecodesModule,
-  CoreModule,
-  MetadataModule
+  CoreModule// ,
+  // MetadataModule
 ];

@@ -21,8 +21,8 @@ var TagEntityTool = React.createClass({
     } else {
       var range = sel.getTextRange();
       var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1], "entity_reference");
-      var selected = annotations.length > 0;
-      var active = !sel.isCollapsed();
+      var selected = false;
+      var active = annotations.length === 0 && !sel.isCollapsed();
 
       this.setState({
         active: active,
@@ -34,6 +34,8 @@ var TagEntityTool = React.createClass({
   handleMouseDown: function(e) {
     e.preventDefault();
     
+    if (!this.state.active) return;
+
     var writerCtrl = this.props.writerCtrl;
     var sel = writerCtrl.getSelection();
 
@@ -79,7 +81,7 @@ var TagEntityTool = React.createClass({
       href: "#",
       title: 'Tag Entity',
       onMouseDown: this.handleMouseDown,
-      onClick: this.onClick,
+      onClick: this.handleClick,
       dangerouslySetInnerHTML: {__html: '<i class="fa fa-bullseye"></i>'}
     });
   }
