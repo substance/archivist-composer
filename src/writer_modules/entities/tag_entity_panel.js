@@ -1,5 +1,4 @@
 var $$ = React.createElement;
-var Substance = require("substance");
 
 var TYPE_LABELS = {
   "prison": "Prison",
@@ -156,6 +155,16 @@ var TagEntityPanel = React.createClass({
     }
 
     return $$("div", {className: "panel dialog tag-entity-panel-component"},
+      $$('div', {className: "dialog-header"},
+        $$('a', {
+          href: "#",
+          className: 'back',
+          onClick: this.handleCancel,
+          dangerouslySetInnerHTML: {__html: '<i class="fa fa-chevron-left"></i>'}
+        }),
+        $$('div', {className: 'label'}, "Select entity")
+      ),
+
       $$('div', {className: "panel-content"},
         $$('div', {className: "search", html: ""},
           $$('input', {

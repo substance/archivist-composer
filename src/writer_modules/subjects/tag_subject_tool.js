@@ -63,7 +63,8 @@ var TagSubjectTool = React.createClass({
           newState.selected = true;
         } else if (annoSel.includes(sel)) {
           newState.mode = 'delete';
-          newState.selected = true;
+          newState.selected = false; // true;
+          newState.active = false;
         } else {
           newState.mode = 'expand';
         }
@@ -73,6 +74,10 @@ var TagSubjectTool = React.createClass({
       }
       this.setState(newState);
     }
+  },
+
+  handleClick: function(e) {
+    e.preventDefault(e);
   },
 
   handleMouseDown: function(e) {
@@ -169,7 +174,8 @@ var TagSubjectTool = React.createClass({
       href: "#",
       dangerouslySetInnerHTML: {__html: '<i class="fa fa-tag"></i>'},
       title: 'Tag Subject',
-      onMouseDown: this.handleMouseDown
+      onMouseDown: this.handleMouseDown,
+      onClick: this.handleClick
     });
   }
 });

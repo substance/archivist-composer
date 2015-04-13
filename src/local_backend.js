@@ -1,7 +1,7 @@
 var Substance = require("substance");
 var Interview = require('./interview');
 var EXAMPLE_DOC = require("../data/sample_doc");
-
+var _ = require("substance/helpers");
 
 var ENTITIES = [
   // Prisons
@@ -34,7 +34,6 @@ var SUBJECTS = [{"_id":"54bae4cda868bc6fab4bcd0e","name":"Казни (в том 
 
 
 var LocalBackend = function(opts) {
-  
 };
 
 LocalBackend.Prototype = function() {
@@ -56,6 +55,7 @@ LocalBackend.Prototype = function() {
   // ------------------
 
   this.getEntities = function(entityIds, cb) {
+    // Clone array so we can make
     var entities = Substance.filter(ENTITIES, function(entity) {
       return Substance.includes(entityIds, entity.id);
     });

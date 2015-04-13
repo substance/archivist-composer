@@ -14,7 +14,7 @@ var EditSubjectReferencePanel = React.createClass({
     backend: React.PropTypes.object.isRequired
   },
 
-  handleDone: function(e) {
+  handleCancel: function(e) {
     e.preventDefault();
     // Go to regular entities panel
     this.props.writerCtrl.replaceState({
@@ -52,7 +52,7 @@ var EditSubjectReferencePanel = React.createClass({
     var doc = this.props.writerCtrl.doc;
     doc.connect(this, {
       'document:changed': this.handleDocumentChange
-    })
+    });
     this.loadSubjects();
   },
 
@@ -64,6 +64,22 @@ var EditSubjectReferencePanel = React.createClass({
 
     if (change.isAffected([refId, "target"])) {
       this.forceUpdate();
+    }
+  },
+
+  handleDeleteReference: function(e) {
+    var writerCtrl = this.props.writerCtrl;
+    var doc = this.props.writerCtrl.doc;
+    var tx = doc.startTransaction();
+
+    try {
+      tx.delete(this.props.subjectReferenceId);
+      tx.save();
+      writerCtrl.replaceState({
+        contextId: "subjects"
+      });
+    } finally {
+      tx.cleanup();
     }
   },
 
@@ -104,6 +120,23 @@ var EditSubjectReferencePanel = React.createClass({
     }
 
     return $$("div", {className: "panel dialog edit-subject-reference-panel-component"},
+      $$('div', {className: "dialog-header"},
+        $$('a', {
+          href: "#",
+          className: 'back',
+          onClick: this.handleCancel,
+          dangerouslySetInnerHTML: {__html: '<i class="fa fa-chevron-left"></i>'}
+        }),
+        $$('div', {className: 'label'}, "Related subjects"),
+        $$('div', {className: 'actions'},
+          $$('a', {
+            href: "#",
+            className: "delete-reference",
+            onClick: this.handleDeleteReference,
+            dangerouslySetInnerHTML: {__html: '<i class="fa fa-trash"></i> Remove'}
+          })
+        )
+      ),
       $$('div', {className: "panel-content"},
         treeEl
       )

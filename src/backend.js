@@ -2,23 +2,19 @@
 
 var Substance = require("substance");
 var Interview = require('./interview');
+var _ = require("substance/helpers");
 
 // Archivist Backend
 // ----------------
 //
 
 var Backend = function(opts) {
-  this.cache = {};
+  this.cache = {
+    "entities": {}
+  };
 };
 
 Backend.Prototype = function() {
-
-  // Utils
-  // ------------------
-
-  this.getSubjectDBVersion = function() {
-    return this.cache.subjectDB ? this.cache.subjectDB.subjectDBVersion : null;
-  };
 
   // Document
   // ------------------
@@ -70,10 +66,38 @@ Backend.Prototype = function() {
   // ------------------
 
   this.getEntities = function(entityIds, cb) {
+    var entitiesToFetch = [];
+    var entities = [];
+
+    // Try to use cached items
+    _.each(entityIds, function(entityId) {
+      var entity = this.cache.entities[entityId];
+      if (entity) {
+        entities.push(entity);
+      } else {
+        entitiesToFetch.push(entityId);
+      }
+    }.bind(this));
+
+    this.fetchEntities(entitiesToFetch, function(err, fetchedEntities) {
+      // Store in cache
+      _.each(fetchedEntities, function(entity) {
+        this.cache.entities[entity.id] = entity;
+        entities.push(entity);
+      }, this);
+      cb(null, entities);
+    }.bind(this));
+  };
+
+  this.fetchEntities = function(entityIds, cb) {
+    if (entityIds.length === 0) return cb(null, []);
+    console.log('Fetching entities', entityIds);
+
     $.getJSON("/api/entities?entityIds="+entityIds.join(','), function(entities) {
       cb(null, entities);
     });
   };
+
 
   this.getSuggestedEntities = function(cb) {
     $.getJSON("/api/search", function(entities) {
@@ -89,7 +113,7 @@ Backend.Prototype = function() {
 
 
   this.fetchSubjects = function(cb) {
-    $.getJSON("http://localhost:5000/api/metadata", function(subjectDB) {
+    $.getJSON("/api/metadata", function(subjectDB) {
       // Store in cache
       this.cache.subjectDB = subjectDB;
       cb(null, subjectDB.subjects);
@@ -105,6 +129,10 @@ Backend.Prototype = function() {
     } else {
       this.fetchSubjects(cb);
     }
+  };
+
+  this.getSubjectDBVersion = function() {
+    return this.cache.subjectDB ? this.cache.subjectDB.subjectDBVersion : null;
   };
 };
 

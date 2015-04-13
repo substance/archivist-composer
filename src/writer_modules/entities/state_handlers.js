@@ -1,5 +1,7 @@
 var EntitiesPanel = require("./entities_panel");
 var TagEntityPanel = require("./tag_entity_panel");
+
+var ShowEntityReferencePanel = require("./show_entity_reference_panel")
 var $$ = React.createElement;
 
 var stateHandlers = {
@@ -14,8 +16,13 @@ var stateHandlers = {
 
     if (state.contextId === "entities") {
       return $$(EntitiesPanel, {
-        writerCtrl: writerCtrl, // writerCtrl needed?
+        writerCtrl: writerCtrl,
         entityId: state.entityId
+      });
+    } else if (state.contextId === "showEntityReference") {
+      return $$(ShowEntityReferencePanel, {
+        writerCtrl: writerCtrl,
+        entityReferenceId: state.entityReferenceId
       });
     } else if (state.contextId === "tagentity") {
       return $$(TagEntityPanel, {
@@ -25,7 +32,6 @@ var stateHandlers = {
       });
     }
   },
-
 
   // Handle selection change
   // -----------------
@@ -44,9 +50,10 @@ var stateHandlers = {
     if (surface.name !== "content") return false;
     if (annotations.length > 0) {
       var ref = annotations[0];
+      console.log('Ref', ref);
       writerCtrl.replaceState({
-        contextId: EntitiesPanel.contextId,
-        entityId: ref.target
+        contextId: ShowEntityReferencePanel.contextId,
+        entityReferenceId: ref.id
       });
       return true;
     }
@@ -69,6 +76,8 @@ var stateHandlers = {
       // Use reference handler
       var references = Object.keys(doc.references.get(state.entityId));
       return references;
+    } else if (state.contextId === "showEntityReference" && state.entityReferenceId) {
+      return [state.entityReferenceId];
     }
   }
 };
