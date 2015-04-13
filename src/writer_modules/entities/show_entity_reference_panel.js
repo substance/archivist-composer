@@ -113,12 +113,26 @@ var ShowEntityReferencePanel = React.createClass({
     }
 
     return $$("div", {className: "panel dialog show-entity-reference-panel-component"},
+      // Dialog Header
+      $$('div', {className: "dialog-header"},
+        $$('a', {
+          href: "#",
+          className: 'back',
+          onClick: this.handleCancel,
+          dangerouslySetInnerHTML: {__html: '<i class="fa fa-chevron-left"></i>'}
+        }),
+        $$('div', {className: 'label'}, "Related entity"),
+        $$('div', {className: 'actions'},
+          $$('a', {
+            href: "#",
+            className: "delete-reference",
+            onClick: this.handleDeleteReference,
+            dangerouslySetInnerHTML: {__html: '<i class="fa fa-trash"></i> Remove'}
+          })
+        )
+      ),
+      // Panel Content
       $$('div', {className: 'panel-content'},
-        $$('div', {className: "header"},
-          $$('div', {className: 'name'}, "Entity"),
-          $$('a', {href: "#", className: "delete-reference", onClick: this.handleDeleteReference}, "Delete"),
-          $$('a', {href: "#", className: "cancel", onClick: this.handleCancel}, "Cancel")
-        ),
         $$('div', {className: 'entities'},
           entityItem
         )

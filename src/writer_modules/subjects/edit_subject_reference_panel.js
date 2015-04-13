@@ -14,7 +14,7 @@ var EditSubjectReferencePanel = React.createClass({
     backend: React.PropTypes.object.isRequired
   },
 
-  handleDone: function(e) {
+  handleCancel: function(e) {
     e.preventDefault();
     // Go to regular entities panel
     this.props.writerCtrl.replaceState({
@@ -120,11 +120,24 @@ var EditSubjectReferencePanel = React.createClass({
     }
 
     return $$("div", {className: "panel dialog edit-subject-reference-panel-component"},
+      $$('div', {className: "dialog-header"},
+        $$('a', {
+          href: "#",
+          className: 'back',
+          onClick: this.handleCancel,
+          dangerouslySetInnerHTML: {__html: '<i class="fa fa-chevron-left"></i>'}
+        }),
+        $$('div', {className: 'label'}, "Related subjects"),
+        $$('div', {className: 'actions'},
+          $$('a', {
+            href: "#",
+            className: "delete-reference",
+            onClick: this.handleDeleteReference,
+            dangerouslySetInnerHTML: {__html: '<i class="fa fa-trash"></i> Remove'}
+          })
+        )
+      ),
       $$('div', {className: "panel-content"},
-        $$('div', {className: "header"},
-          $$('div', {className: 'name'}, "Related subjects"),
-          $$('a', {href: "#", className: "delete-reference", onClick: this.handleDeleteReference}, "Delete")
-        ),
         treeEl
       )
     );

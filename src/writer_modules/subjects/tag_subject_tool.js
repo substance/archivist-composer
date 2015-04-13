@@ -63,7 +63,8 @@ var TagSubjectTool = React.createClass({
           newState.selected = true;
         } else if (annoSel.includes(sel)) {
           newState.mode = 'delete';
-          newState.selected = true;
+          newState.selected = false; // true;
+          newState.active = false;
         } else {
           newState.mode = 'expand';
         }

@@ -278,7 +278,7 @@ a:hover {
 -----------------------------------------------------*/
 
 .panel.dialog {
-  /*top: 0px;*/
+  top: 0px;
   background: #F8F8F8;
 }
 
@@ -289,82 +289,76 @@ a:hover {
   right: 0px;
   overflow: hidden;
   height: 40px;
-  /*background: #fff;*/
   border-bottom: 1px solid #ddd;
+}
+
+.panel.dialog .dialog-header .back {
+  padding-left: 20px;
+  display: block;
+  float: left;
+  line-height: 40px;
+  font-size: 16px;
 }
 
 .panel.dialog .dialog-header .label {
   padding: 0px 20px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 39px;
   /*color: white;*/
   float: left;
 }
 
-/*.panel.dialog .dialog-header .cancel, .panel.dialog .dialog-header .done {
-  font-size: 12px;
-  font-weight: bold;
-  line-height: 40px;
-  padding: 0px 20px;
+.panel.dialog .dialog-header .actions {
+  overflow: hidden;
   float: right;
 }
 
-.panel.dialog .dialog-header .cancel:hover, .panel.dialog .dialog-header .done:hover {
-  background: rgba(0,0,0,0.1);
-}*/
-
-
-
-.panel.dialog .header {
-  padding: 10px 20px;
-  overflow: auto;
-  border-bottom: 1px solid #ddd;
-  /*background: #ccc;*/
-  /*background: #F8F8F8;*/
-}
-
-
-.panel.show-entity-reference-panel-component .header {
-  border-bottom: 3px solid rgba(11, 157, 217, 1);
-}
-
-.panel.show-entity-reference-panel-component .header .name {
+.panel.dialog .dialog-header .actions a {
+  display: block;
+  float: left;
   font-weight: 600;
-  color: rgba(11, 157, 217, 1);
+  padding: 0px 4px;
+  font-size: 12px;
+  line-height: 40px;
+  margin-right: 20px;
 }
 
-.panel.edit-subject-reference-panel-component .header {
+.panel.dialog .panel-content {
+  top: 40px;
+}
+
+
+/* Custom styles for subject references */
+.panel.dialog.edit-subject-reference-panel-component .dialog-header {
   border-bottom: 3px solid rgba(145, 187, 4, 1);
 }
 
-.panel.edit-subject-reference-panel-component .header .name {
-  font-weight: 600;
+.panel.dialog.edit-subject-reference-panel-component .dialog-header .label {
   color: rgba(145, 187, 4, 1);
 }
 
-
-.panel.dialog .header a {
-  display: block;
-  float: right;
-  font-weight: 600;
-  /*background: #444;*/
-  /*color: #ccc;*/
-  /*border: 1px solid #ccc;*/
-  padding: 0px 4px;
-  font-size: 12px;
-  margin-left: 10px;
+.panel.dialog.edit-subject-reference-panel-component .dialog-header .back {
+  color: rgba(145, 187, 4, 1);
 }
 
-.panel.dialog .header .name {
-  float: left;
+/* Custom styles for entity references */
+.panel.dialog.show-entity-reference-panel-component .dialog-header,
+.panel.dialog.tag-entity-panel-component .dialog-header {
+  border-bottom: 3px solid rgba(11, 157, 217, 1);
 }
 
-/*.panel.dialog .header a:hover {
-  color: #444;
-  border-color: #444;
+.panel.dialog.show-entity-reference-panel-component .dialog-header .label,
+.panel.dialog.tag-entity-panel-component .dialog-header .label {
+  color: rgba(11, 157, 217, 1);
 }
-*/
+
+.panel.dialog.show-entity-reference-panel-component .dialog-header .back,
+.panel.dialog.tag-entity-panel-component .dialog-header .back {
+  color: rgba(11, 157, 217, 1);
+}
+
+
 
 /* Content Tools
 -----------------------------------------------------*/
