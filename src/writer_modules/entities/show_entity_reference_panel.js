@@ -24,10 +24,6 @@ var ShowEntityReferencePanel = React.createClass({
     var self = this;
     var entityRef = doc.get(this.props.entityReferenceId);
 
-    if (!entityRef) {
-      console.error('EntityReference not found in document', this.props.entityReferenceId);
-      return;
-    }
     var backend = this.context.backend;
 
     backend.getEntities([entityRef.target], function(err, entities) {
