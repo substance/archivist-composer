@@ -19,6 +19,23 @@ NotificationService.Prototype = function() {
     this.emit('messages:updated', this.messages);
   };
 
+  this.log = function(msg) {
+    this.addMessage({
+      type: 'info',
+      message: msg
+    });
+  };
+
+  this.error = function(msg) {
+    this.addMessage({
+      type: 'error',
+      message: msg
+    });
+  };
+
+  this.warn = this.log;
+  this.info = this.log;
+
   this.clearMessages = function() {
     this.messages = [];
     this.emit('messages:updated', this.messages);

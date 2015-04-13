@@ -36,10 +36,21 @@ if (window.devMode) {
 // Create notification service
 var notifications = new NotificationService();
 
+var htmlImporter = new Substance.Document.HtmlImporter({
+  // configuration
+    trimWhitespaces: true,
+    REMOVE_INNER_WS: true
+});
+var htmlExporter = new Substance.Document.HtmlExporter({
+  // configuration
+});
+
 var globalContext = {
   componentFactory: componentFactory,
   backend: backend,
-  notifications: notifications
+  notifications: notifications,
+  htmlImporter: htmlImporter,
+  htmlExporter: htmlExporter
 };
 
 var Composer = React.createClass({
@@ -48,8 +59,10 @@ var Composer = React.createClass({
   childContextTypes: {
     componentFactory: React.PropTypes.object,
     backend: React.PropTypes.object,
-    notifications: React.PropTypes.object
-  },  
+    notifications: React.PropTypes.object,
+    htmlImporter: React.PropTypes.object,
+    htmlExporter: React.PropTypes.object
+  },
 
   getChildContext: function() {
     return globalContext;
@@ -76,7 +89,7 @@ var Composer = React.createClass({
         config: {
           modules: writerModules
         },
-        doc: doc,
+        doc: this.state.doc,
         id: "writer"
       });
     } else {

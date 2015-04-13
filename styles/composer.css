@@ -846,3 +846,12 @@ a:hover {
   background: white;
   border-left: 2px solid rgba(145, 187, 4, 1);
 }
+
+.clipboard {
+  visibility: hidden;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 0px;
+  width: 0px;
+}
