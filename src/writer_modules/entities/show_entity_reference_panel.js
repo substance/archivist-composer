@@ -6,7 +6,6 @@ var Prison = require("./entity_types/prison");
 var Toponym = require("./entity_types/toponym");
 var Person = require("./entity_types/person");
 var Definition = require("./entity_types/definition");
-
 var _ = require("substance/helpers");
 
 var ShowEntityReferencePanel = React.createClass({
@@ -84,6 +83,14 @@ var ShowEntityReferencePanel = React.createClass({
     });
   },
 
+  handleEdit: function(e) {
+    e.preventDefault();
+    this.props.writerCtrl.replaceState({
+      contextId: "tagentity",
+      entityReferenceId: this.props.entityReferenceId
+    });
+  },
+
   handleDeleteReference: function(e) {
     e.preventDefault();
     var writerCtrl = this.props.writerCtrl;
@@ -124,6 +131,12 @@ var ShowEntityReferencePanel = React.createClass({
         }),
         $$('div', {className: 'label'}, "Related entity"),
         $$('div', {className: 'actions'},
+          $$('a', {
+            href: "#",
+            className: "edit-reference",
+            onClick: this.handleEdit,
+            dangerouslySetInnerHTML: {__html: '<i class="fa fa-pencil"></i> Edit'}
+          }),
           $$('a', {
             href: "#",
             className: "delete-reference",

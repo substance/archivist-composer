@@ -28,7 +28,8 @@ var stateHandlers = {
       return $$(TagEntityPanel, {
         writerCtrl: writerCtrl,
         path: state.path,
-        range: state.range
+        range: state.range,
+        entityReferenceId: state.entityReferenceId
       });
     }
   },
@@ -50,7 +51,6 @@ var stateHandlers = {
     if (surface.name !== "content") return false;
     if (annotations.length > 0) {
       var ref = annotations[0];
-      console.log('Ref', ref);
       writerCtrl.replaceState({
         contextId: ShowEntityReferencePanel.contextId,
         entityReferenceId: ref.id
@@ -76,7 +76,7 @@ var stateHandlers = {
       // Use reference handler
       var references = Object.keys(doc.references.get(state.entityId));
       return references;
-    } else if (state.contextId === "showEntityReference" && state.entityReferenceId) {
+    } else if (state.entityReferenceId) {
       return [state.entityReferenceId];
     }
   }

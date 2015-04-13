@@ -61,10 +61,19 @@ var TagEntityPanel = React.createClass({
 
   handleCancel: function(e) {
     e.preventDefault();
-    // Go to regular entities panel
-    this.props.writerCtrl.replaceState({
-      contextId: "entities"
-    });
+    console.log('props', this.props);
+    if (this.props.entityReferenceId) {
+      // Go back to show entities panel
+      this.props.writerCtrl.replaceState({
+        contextId: "showEntityReference",
+        entityReferenceId: this.props.entityReferenceId
+      });
+    } else {
+      // Go to regular entities panel
+      this.props.writerCtrl.replaceState({
+        contextId: "entities"
+      });
+    }
   },
 
   // Data loading methods
@@ -113,28 +122,43 @@ var TagEntityPanel = React.createClass({
     this.loadEntities(searchString);
   },
 
-
   // Called with entityId when an entity has been clicked
   handleSelection: function(entityId) {
     var writerCtrl = this.props.writerCtrl;
+    var entityReferenceId = this.props.entityReferenceId;
 
-    var path = this.props.path;
-    var range = this.props.range;
+    if (entityReferenceId) {
+      var tx = writerCtrl.doc.startTransaction();
+      try {
+        tx.set([entityReferenceId, "target"], entityId);
+        tx.save({});
+      } finally {
+        tx.cleanup();
+      }
 
-    var annotation = writerCtrl.annotate({
-      type: "entity_reference",
-      target: entityId,
-      path: path,
-      range: range
-    });
+      writerCtrl.replaceState({
+        contextId: "showEntityReference",
+        entityReferenceId: entityReferenceId
+      });
 
-    console.log('created annotation', annotation);
+    } else {
+      var path = this.props.path;
+      var range = this.props.range;
 
-    // Switch state to highlight newly created reference
-    writerCtrl.replaceState({
-      contextId: "entities",
-      entityId: entityId
-    });
+      var annotation = writerCtrl.annotate({
+        type: "entity_reference",
+        target: entityId,
+        path: path,
+        range: range
+      });
+
+      // Switch state to highlight newly created reference
+      writerCtrl.replaceState({
+        contextId: "showEntityReference",
+        entityReferenceId: annotation.id
+      });
+    }
+
   },
 
   // Rendering

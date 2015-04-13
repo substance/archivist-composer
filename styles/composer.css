@@ -792,7 +792,8 @@ a:hover {
   background-color: rgba(11, 157, 217, 1);
 }
 
-.scrollbar-component.showEntityReference .highlight {
+.scrollbar-component.showEntityReference .highlight,
+.scrollbar-component.tagentity .highlight {
   background-color: rgba(11, 157, 217, 1);
 }
 
