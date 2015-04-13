@@ -122,7 +122,8 @@ var EditSubjectReferencePanel = React.createClass({
     return $$("div", {className: "panel dialog edit-subject-reference-panel-component"},
       $$('div', {className: "panel-content"},
         $$('div', {className: "header"},
-          $$('a', {href: "#", className: "delete-reference", onClick: this.handleDeleteReference}, "Delete Annotation")
+          $$('div', {className: 'name'}, "Related subjects"),
+          $$('a', {href: "#", className: "delete-reference", onClick: this.handleDeleteReference}, "Delete")
         ),
         treeEl
       )

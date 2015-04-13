@@ -302,9 +302,8 @@ a:hover {
   float: left;
 }
 
-.panel.dialog .dialog-header .cancel, .panel.dialog .dialog-header .done {
+/*.panel.dialog .dialog-header .cancel, .panel.dialog .dialog-header .done {
   font-size: 12px;
-  /*color: #fff;*/
   font-weight: bold;
   line-height: 40px;
   padding: 0px 20px;
@@ -313,38 +312,59 @@ a:hover {
 
 .panel.dialog .dialog-header .cancel:hover, .panel.dialog .dialog-header .done:hover {
   background: rgba(0,0,0,0.1);
-}
-
-/*.panel.dialog .panel-content {
-  top: 40px;
 }*/
 
-/* Custom headers for entity tagging and subject tagging */
-.panel.dialog.tag-entity-panel-component .dialog-header {
-  /*background: rgba(11, 157, 217, 1);*/
+
+
+.panel.dialog .header {
+  padding: 10px 20px;
+  overflow: auto;
+  border-bottom: 1px solid #ddd;
+  /*background: #ccc;*/
+  /*background: #F8F8F8;*/
 }
 
-.panel.dialog.edit-subject-reference-panel-component .header {
-  padding: 20px;
+
+.panel.show-entity-reference-panel-component .header {
+  border-bottom: 3px solid rgba(11, 157, 217, 1);
 }
 
-.panel.dialog.edit-subject-reference-panel-component .header a {
+.panel.show-entity-reference-panel-component .header .name {
+  font-weight: 600;
+  color: rgba(11, 157, 217, 1);
+}
+
+.panel.edit-subject-reference-panel-component .header {
+  border-bottom: 3px solid rgba(145, 187, 4, 1);
+}
+
+.panel.edit-subject-reference-panel-component .header .name {
+  font-weight: 600;
+  color: rgba(145, 187, 4, 1);
+}
+
+
+.panel.dialog .header a {
   display: block;
   float: right;
   font-weight: 600;
   /*background: #444;*/
-  color: #ccc;
-  border: 1px solid #ccc;
+  /*color: #ccc;*/
+  /*border: 1px solid #ccc;*/
   padding: 0px 4px;
   font-size: 12px;
-  text-transform: uppercase;
+  margin-left: 10px;
 }
 
-.panel.dialog.edit-subject-reference-panel-component .header a:hover {
+.panel.dialog .header .name {
+  float: left;
+}
+
+/*.panel.dialog .header a:hover {
   color: #444;
   border-color: #444;
 }
-
+*/
 
 /* Content Tools
 -----------------------------------------------------*/
@@ -663,6 +683,15 @@ a:hover {
   cursor: pointer;
 }
 
+.show-entity-reference-panel-component .entity {
+  cursor: auto;
+  border: none;
+}
+
+.show-entity-reference-panel-component .entity:hover, .show-entity-reference-panel-component .entity.active {
+  border: none;
+}
+
 
 .entity:hover {
   border-left: 2px solid rgba(11, 157, 217, 0.3);
@@ -766,6 +795,10 @@ a:hover {
 
 /* Custom scrollbar styles */
 .scrollbar-component.entities .highlight {
+  background-color: rgba(11, 157, 217, 1);
+}
+
+.scrollbar-component.showEntityReference .highlight {
   background-color: rgba(11, 157, 217, 1);
 }
 

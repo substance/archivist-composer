@@ -43,27 +43,6 @@ var EntitiesPanel = React.createClass({
     });
   },
 
-  // restoreEntitiesFromCache: function() {
-  //   // 1. check if cache is valid
-  //   if (window.cache && window.cache.entities) {
-  //     return window.cache.entities;
-  //   }
-  // },
-
-  // cacheInvalid: function() {
-  //   // Sneak into cache
-  //   if (window.cache.entities) {
-  //     var currentEntities = _.uniq(this.getReferencedEntityIds());
-  //     var cachedEntities = _.uniq(_.pluck(window.cache.entities, 'id'));
-
-  //     if (currentEntities.length !== cachedEntities.length) return true;
-  //     var overlappingEntities = _.intersection(currentEntities, cachedEntities);
-  //     // Cache condition met when there's a full overlap
-  //     if (overlappingEntities.length === currentEntities.length) return false;
-  //   }
-
-  //   return true;
-  // },
 
   // State relevant things
   // ------------
