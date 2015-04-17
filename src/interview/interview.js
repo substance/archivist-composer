@@ -17,16 +17,13 @@ var modules = [
   TimecodesModule
 ];
 
+var schema = new Document.Schema("substance-interview", "0.1.0");
+Substance.each(modules, function(ext) {
+  schema.addNodes(ext.nodes);
+});
+
 var Interview = function(data) {
-  var schema = new Document.Schema("substance-interview", "0.1.0");
-
-  // Initialize document modules
-  Substance.each(modules, function(ext) {
-    schema.addNodes(ext.nodes);
-  });
-
   Document.call(this, schema, data);
-
   // Call initializes of modules
   Substance.each(modules, function(ext) {
     if (ext.initialize) ext.initialize(this);
@@ -36,5 +33,7 @@ var Interview = function(data) {
 Interview.Prototype = function() {};
 
 Substance.inherit(Interview, Document);
+
+Interview.schema = schema;
 
 module.exports = Interview;

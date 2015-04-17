@@ -6,6 +6,7 @@ var $$ = React.createElement;
 var Writer = require("substance/writer");
 var Backend = require("./backend");
 var LocalBackend = require("./local_backend");
+var Interview = require("./interview");
 
 var NotificationService = require("./notification_service");
 
@@ -37,9 +38,9 @@ if (window.devMode) {
 var notifications = new NotificationService();
 
 var htmlImporter = new Substance.Document.HtmlImporter({
-  // configuration
+    schema: Interview.schema,
     trimWhitespaces: true,
-    REMOVE_INNER_WS: true
+    REMOVE_INNER_WS: true,
 });
 var htmlExporter = new Substance.Document.HtmlExporter({
   // configuration
