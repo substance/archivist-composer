@@ -9,6 +9,9 @@ var SubjectsModule = require("./modules/subjects");
 var EntitiesModule = require("./modules/entities");
 var TimecodesModule = require("./modules/timecodes");
 
+// We don't need an extension mechanism here.
+// TODO: import the nodes directly to setup the schema.
+// Put the initializers into the article's contructor.
 var modules = [
   SubstanceCore,
   BaseModule,
