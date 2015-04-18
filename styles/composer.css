@@ -704,10 +704,18 @@ a:hover {
   font-size: 12px;
 }
 
+.entity .edit {
+  color: #505050;
+  position: absolute;
+  bottom: 5px;
+  right: 15px;
+}
+
 
 .entity .description {
   font-size: 12px;
   padding-top: 10px;
+  margin-right: 20px;
 }
 
 .entity .synonyms {

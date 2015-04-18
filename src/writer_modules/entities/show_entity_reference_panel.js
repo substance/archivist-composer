@@ -55,7 +55,7 @@ var ShowEntityReferencePanel = React.createClass({
   },
 
   handleToggle: function(entityId) {
-    // do nothing...
+    // do nothing..
   },
 
   // Rendering
