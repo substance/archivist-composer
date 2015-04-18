@@ -20,6 +20,8 @@ var modules = [
   TimecodesModule
 ];
 
+
+
 var schema = new Document.Schema("substance-interview", "0.1.0");
 Substance.each(modules, function(ext) {
   schema.addNodes(ext.nodes);

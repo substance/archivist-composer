@@ -7,6 +7,9 @@ var EntityMixin = require("./entity_mixin");
 var Toponym = React.createClass({
   displayName: "Toponym",
   mixins: [EntityMixin],
+  handleEdit: function(e) {
+    e.stopPropagation();
+  },
   render: function() {
     var className = ["entity toponym"];
     if (this.props.active) className.push("active");
@@ -16,7 +19,10 @@ var Toponym = React.createClass({
       $$("div", {className: "name"}, this.props.name),
       $$("div", {className: "synonyms"}, "Also known as: "+ this.props.synonyms),
       $$("div", {className: "country"}, "Country: "+this.props.country),
-      $$("div", {className: "description"}, this.props.description)
+      $$("div", {className: "description"}, this.props.description),
+      $$("a", {className: "edit", target: "_blank", href: './toponyms/' + this.props.id, onClick: this.handleEdit},
+        $$("i", {className: "fa fa-pencil-square-o"})
+      )
     );
   }
 });
