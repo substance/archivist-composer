@@ -104,7 +104,7 @@ var TagEntityPanel = React.createClass({
 
   getInitialState: function() {
     return {
-      searchString: "",
+      searchString: this.props.searchString,
       entities: []
     };
   },

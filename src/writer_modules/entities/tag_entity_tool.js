@@ -33,7 +33,9 @@ var TagEntityTool = React.createClass({
 
   handleMouseDown: function(e) {
     e.preventDefault();
-    
+      
+    var searchString = window.getSelection().toString();
+
     if (!this.state.active) return;
 
     var writerCtrl = this.props.writerCtrl;
@@ -55,7 +57,8 @@ var TagEntityTool = React.createClass({
       writerCtrl.replaceState({
         contextId: "tagentity",
         path: sel.getPath(),
-        range: sel.getTextRange()
+        range: sel.getTextRange(),
+        searchString: searchString
       });
     }
   },

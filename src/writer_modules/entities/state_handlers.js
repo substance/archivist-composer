@@ -29,7 +29,8 @@ var stateHandlers = {
         writerCtrl: writerCtrl,
         path: state.path,
         range: state.range,
-        entityReferenceId: state.entityReferenceId
+        entityReferenceId: state.entityReferenceId,
+        searchString: state.searchString
       });
     }
   },
