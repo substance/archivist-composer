@@ -106,7 +106,7 @@ var app = {
       $$(Composer, {
         documentId: window.location.hash.slice(1)
       }),
-      document.body
+      document.getElementById('container')
     );
   }
 };
