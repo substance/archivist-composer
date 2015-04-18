@@ -20,9 +20,6 @@ var TagSubjectTool = React.createClass({
     var writerCtrl = this.props.writerCtrl;
     // Note: toggling of a subject reference is only possible when
     // the subject reference is selected and the
-    // TODO: Deleting the reference this way is IMO not a good experience
-    // as 1. data get 'lost' easily, 2. the interaction is not at all a convention
-    // (-> compare with links in word or gdocs).
     if (sel.isNull() || sel.isCollapsed() ) {
       return this.setState({
         active: false,
