@@ -611,6 +611,10 @@ a:hover {
   background-color: rgba(145, 187, 4, 0.2);
 }
 
+.container-annotation.remark.annotation-fragment {
+  background: rgba(255, 254, 99, 0.21);
+}
+
 /* Brackets for subject annotations
 -----------------------------------------------------*/
 

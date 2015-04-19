@@ -8,6 +8,7 @@ var BaseModule = require("./modules/base");
 var SubjectsModule = require("./modules/subjects");
 var EntitiesModule = require("./modules/entities");
 var TimecodesModule = require("./modules/timecodes");
+var RemarksModule = require("./modules/remarks");
 
 // We don't need an extension mechanism here.
 // TODO: import the nodes directly to setup the schema.
@@ -17,7 +18,8 @@ var modules = [
   BaseModule,
   SubjectsModule,
   EntitiesModule,
-  TimecodesModule
+  TimecodesModule,
+  RemarksModule
 ];
 
 var schema = new Document.Schema("substance-interview", "0.1.0");

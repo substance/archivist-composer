@@ -69,6 +69,16 @@ var sampleDoc = {
       "target": ["54bae4cda868bc6fab4bcd0e", "54bae99ca868bc3ec7fb5ad8"]
     },
 
+    "remark_1": {
+      "id": "remark_1",
+      "type": "remark",
+      "container": "content",
+      "startPath": ["text_1", "content"],
+      "startOffset": 20,
+      "endPath": ["text_2", "content"],
+      "endOffset": 10,
+      "content": "HI I AM A CONTAINER REMARK"
+    },
 
     "subject_reference_2": {
       "id": "subject_reference_2",
