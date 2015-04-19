@@ -63,7 +63,11 @@ var ShowEntityReferencePanel = React.createClass({
 
   getEntityElement: function(entity) {
     entity.handleToggle = this.handleToggle;
-
+    // HACK: we should not pollute entity objects at all
+    // fix this in the entities panel and see remarks panel
+    // for a better implementation
+    
+    entity.active = false;
     if (entity.type === "prison") {
       return $$(Prison, entity);
     } else if (entity.type === "toponym") {

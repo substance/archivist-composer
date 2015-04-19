@@ -687,11 +687,13 @@ a:hover {
 
 .show-entity-reference-panel-component .entity {
   cursor: auto;
-  border: none;
+  border-left: 2px solid transparent;
+  border-bottom: none;
 }
 
-.show-entity-reference-panel-component .entity:hover, .show-entity-reference-panel-component .entity.active {
-  border: none;
+.show-entity-reference-panel-component .entity:hover,
+.show-entity-reference-panel-component .entity.active {
+  /*border-left: 2px solid transparent;*/
 }
 
 
