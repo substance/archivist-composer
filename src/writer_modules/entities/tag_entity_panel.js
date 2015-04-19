@@ -113,7 +113,7 @@ var TagEntityPanel = React.createClass({
   // ------------
 
   componentDidMount: function() {
-    this.loadEntities("");
+    this.loadEntities(this.state.searchString);
   },
 
   handleSearchStringChange: function(e) {
