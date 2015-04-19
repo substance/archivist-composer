@@ -17,6 +17,7 @@ var sampleDoc = {
       "abstract": "Test",
       "created_at": "2015-03-04T10:56:18.229Z",
       "updated_at": "2015-03-04T10:56:47.425Z",
+      "abstract_en": "Enter english abstract here",
       "interview_subject_name": "Please enter interview subject name.",
       "interview_subject_bio": "Please enter interview subject bio.",
       "published_on": "2015-03-04T10:56:18.230Z"
@@ -67,6 +68,27 @@ var sampleDoc = {
       "target": ["54bae4cda868bc6fab4bcd0e", "54bae99ca868bc3ec7fb5ad8"]
     },
 
+    "remark_1": {
+      "id": "remark_1",
+      "type": "remark",
+      "container": "content",
+      "startPath": ["text_1", "content"],
+      "startOffset": 20,
+      "endPath": ["text_2", "content"],
+      "endOffset": 10,
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis scelerisque ligula. Proin tristique ligula id magna finibus rhoncus. Quisque dictum viverra sapien, vel elementum metus condimentum nec. Donec ac tellus nunc. Nullam fermentum pharetra justo, accumsan tristique quam tempus a. Quisque vitae luctus velit."
+    },
+
+    "remark_2": {
+      "id": "remark_2",
+      "type": "remark",
+      "container": "content",
+      "startPath": ["text_2", "content"],
+      "startOffset": 300,
+      "endPath": ["text_2", "content"],
+      "endOffset": 520,
+      "content": "Pellentesque eget magna porta, rutrum odio et, commodo lacus. Sed vitae vehicula ante. Quisque suscipit iaculis est, vitae aliquet lacus dictum ut."
+    },
 
     "subject_reference_2": {
       "id": "subject_reference_2",
