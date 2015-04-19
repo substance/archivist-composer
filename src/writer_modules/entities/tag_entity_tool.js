@@ -19,11 +19,9 @@ var TagEntityTool = React.createClass({
         selected: false
       });
     } else {
-      var range = sel.getTextRange();
-      var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1], "entity_reference");
+      var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), sel.getStartOffset(), sel.getEndOffset(), "entity_reference");
       var selected = false;
       var active = annotations.length === 0 && !sel.isCollapsed();
-
       this.setState({
         active: active,
         selected: selected
@@ -33,7 +31,7 @@ var TagEntityTool = React.createClass({
 
   handleMouseDown: function(e) {
     e.preventDefault();
-      
+
     var searchString = window.getSelection().toString();
 
     if (!this.state.active) return;
@@ -43,8 +41,7 @@ var TagEntityTool = React.createClass({
 
     if (sel.isNull() || !sel.isPropertySelection()) return;
 
-    var range = sel.getTextRange();
-    var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1], "entity_reference");
+    var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), sel.getStartOffset(), sel.getEndOffset(), "entity_reference");
 
     if (annotations.length > 0) {
       writerCtrl.deleteAnnotation(annotations[0].id);
@@ -57,7 +54,8 @@ var TagEntityTool = React.createClass({
       writerCtrl.replaceState({
         contextId: "tagentity",
         path: sel.getPath(),
-        range: sel.getTextRange(),
+        startOffset: sel.getStartOffset(),
+        endOffset: sel.getEndOffset(),
         searchString: searchString
       });
     }

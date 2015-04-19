@@ -52,10 +52,8 @@ var sampleDoc = {
         "content"
       ],
       "target": "54ef1331afda2d3c024e4817", // this is an external object
-      "range": [
-        24,
-        47
-      ]
+      "startOffset": 24,
+      "endOffset": 47
     },
 
     "subject_reference_1": {

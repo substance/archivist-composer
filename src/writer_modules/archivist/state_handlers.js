@@ -8,9 +8,7 @@ var stateHandlers = {
 
     if (sel.isNull() || !sel.isPropertySelection()) return;
 
-    var range = sel.getTextRange();
-    var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1], "reference");
-    
+    var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), sel.getStartOffset(), sel.getEndOffset(), "reference");
 
     // Switch to a neutral state if no annotation matches have been found
     if (annotations.length === 0 && writerCtrl.state.contextId !== "editSubjectReference") {

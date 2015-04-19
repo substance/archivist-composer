@@ -143,13 +143,15 @@ var TagEntityPanel = React.createClass({
 
     } else {
       var path = this.props.path;
-      var range = this.props.range;
+      var startOffset = this.props.startOffset;
+      var endOffset = this.props.endOffset;
 
       var annotation = writerCtrl.annotate({
         type: "entity_reference",
         target: entityId,
         path: path,
-        range: range
+        startOffset: startOffset,
+        endOffset: endOffset
       });
 
       // Switch state to highlight newly created reference

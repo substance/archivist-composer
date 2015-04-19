@@ -28,7 +28,8 @@ var stateHandlers = {
       return $$(TagEntityPanel, {
         writerCtrl: writerCtrl,
         path: state.path,
-        range: state.range,
+        startOffset: state.startOffset,
+        endOffset: state.endOffset,
         entityReferenceId: state.entityReferenceId,
         searchString: state.searchString
       });
@@ -46,8 +47,7 @@ var stateHandlers = {
 
   handleSelectionChange: function(writerCtrl, sel, annotations) {
     if (sel.isNull() || !sel.isPropertySelection() || !sel.isCollapsed()) return;
-    var range = sel.getTextRange();
-    var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1], "entity_reference");
+    var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), sel.getStartOffset(), sel.getEndOffset(), "entity_reference");
     var surface = writerCtrl.getSurface();
     if (surface.name !== "content") return false;
     if (annotations.length > 0) {
