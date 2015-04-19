@@ -753,6 +753,37 @@ a:hover {
   color: #A99C90;
 }
 
+
+
+/* Entities component
+-----------------------------------------------------*/
+
+.resource-container .remark {
+  position: relative;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  border-left: 2px solid transparent;
+}
+
+.resource-container .remark:hover {
+  border-left: 2px solid rgba(255, 254, 99, 0.5);
+}
+
+.resource-container .remark.active {
+  background: white;
+  border-left: 2px solid rgba(255, 254, 99, 1);
+}
+
+.resource-container .remark .remark-header {
+  padding-bottom: 20px;
+}
+
+.resource-container .remark .remark-title {
+  color: #777;
+  background: rgba(255, 254, 99, 0.21);
+}
+
+
 /* Edit Subject Reference Panel
 -----------------------------------------------------*/
 

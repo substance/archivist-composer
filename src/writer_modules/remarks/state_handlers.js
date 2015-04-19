@@ -1,8 +1,7 @@
-var EditRemarkPanel = require("./edit_remark_panel");
+var RemarksPanel = require("./remarks_panel");
 var $$ = React.createElement;
-var _ = require("substance/helpers");
 var Substance = require("substance");
-
+var _ = require("substance/helpers");
 
 var stateHandlers = {
 
@@ -17,10 +16,20 @@ var stateHandlers = {
     var s = writerCtrl.getState();
     var doc = writerCtrl.doc;
 
-    if (s.contextId === EditRemarkPanel.contextId) {
-      return $$(EditRemarkPanel, {
+    var remarks = _.map(doc.remarksIndex.get(), function(remark) {
+      return remark;
+    });
+
+    if (s.contextId === RemarksPanel.contextId) {
+      var activeRemark;
+      if (s.remarkId) {
+        activeRemark = doc.get(s.remarkId);
+      }
+
+      return $$(RemarksPanel, {
         writerCtrl: writerCtrl,
-        remark: doc.get(s.remarkId)
+        remarks: remarks,
+        activeRemark: activeRemark
       });
     }
   },
@@ -48,25 +57,12 @@ var stateHandlers = {
 
     if (activeRemark) {
       writerCtrl.replaceState({
-        contextId: EditRemarkPanel.contextId,
+        contextId: RemarksPanel.contextId,
         remarkId: activeRemark.id
       });
 
       return true;
     }
-
-    // var range = sel.getTextRange();
-    // var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1], "entity_reference");
-    // var surface = writerCtrl.getSurface();
-    // if (surface.name !== "content") return false;
-    // if (annotations.length > 0) {
-    //   var ref = annotations[0];
-    //   writerCtrl.replaceState({
-    //     contextId: ShowEntityReferencePanel.contextId,
-    //     entityReferenceId: ref.id
-    //   });
-    //   return true;
-    // }
   },
 
   // Determine highlighted nodes
@@ -106,6 +102,7 @@ var stateHandlers = {
     var doc = writerCtrl.doc;
     var remarks = Object.keys(doc.remarksIndex.get());
 
+    
     // TODO: only do this when in some remarks context
     return remarks;
 

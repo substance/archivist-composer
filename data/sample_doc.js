@@ -77,7 +77,18 @@ var sampleDoc = {
       "startOffset": 20,
       "endPath": ["text_2", "content"],
       "endOffset": 10,
-      "content": "HI I AM A CONTAINER REMARK"
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis scelerisque ligula. Proin tristique ligula id magna finibus rhoncus. Quisque dictum viverra sapien, vel elementum metus condimentum nec. Donec ac tellus nunc. Nullam fermentum pharetra justo, accumsan tristique quam tempus a. Quisque vitae luctus velit."
+    },
+
+    "remark_2": {
+      "id": "remark_2",
+      "type": "remark",
+      "container": "content",
+      "startPath": ["text_2", "content"],
+      "startOffset": 300,
+      "endPath": ["text_2", "content"],
+      "endOffset": 520,
+      "content": "Pellentesque eget magna porta, rutrum odio et, commodo lacus. Sed vitae vehicula ante. Quisque suscipit iaculis est, vitae aliquet lacus dictum ut."
     },
 
     "subject_reference_2": {
