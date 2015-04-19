@@ -15,12 +15,61 @@ var sampleDoc = {
       "creator": "",
       "title": "Test document",
       "abstract": "Test",
+      "abstract_en": "Enter english abstract here",
       "created_at": "2015-03-04T10:56:18.229Z",
       "updated_at": "2015-03-04T10:56:47.425Z",
-      "abstract_en": "Enter english abstract here",
+      "published_on": "2015-03-04T10:56:18.230Z",
       "interview_subject_name": "Please enter interview subject name.",
+      "project": "Internationales Sklaven-und Zwangsarbeiter Befragungsprojekt",
+      "project_location": "location_234234324234234234",
+      "interview_conductor": "Irina Ostrovskaya",
+      "interview_operator": "Eduard Kechedjiyan",
+      "interview_sound_operator": "Eduard Kechedjiyan",
+      "interview_record_type": "video",
+      "interview_place": "respondent's apartment",
+      "inverview_recorded_on": "2005-07-16",
+      "interview_persons_present": "Nikolay Bogoslavec, Irina Ostrovskaya, Eduard Kechedjiyan, Alexey Bogoslavec",
+      "interview_duration": "247",
       "interview_subject_bio": "Please enter interview subject bio.",
-      "published_on": "2015-03-04T10:56:18.230Z"
+      // "biography": {
+      //     "name": "Nikolay Bogoslavec",
+      //     "biography": "",
+      //     "category": ["Ost-Arbeiter","concentration camp prisoner"],
+      //     "prisons": [
+      //         {
+      //             "id": "",
+      //             "location": ""
+      //         },
+      //         {
+      //             "id": "",
+      //             "location": ""
+      //         }
+      //     ],
+      //     "forced_labor_type": "intracamp work; earthworks (construction of barracks); digging tunnels for military factories",
+      //     "movement": [
+      //         {
+      //             "id": "",
+      //             "location": "",
+      //             "density": ""
+      //         },
+      //         {
+      //             "id": "",
+      //             "location": "",
+      //             "density": ""
+      //         }
+      //     ],
+      //     "personal_archive": [
+      //         {
+      //             "file": "",
+      //             "description": ""
+      //         },
+      //         {
+      //             "file": "",
+      //             "description": ""
+      //         }
+      //     ]
+      // }
+
     },
     "content": {
       "type": "container",
