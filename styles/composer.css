@@ -615,6 +615,10 @@ a:hover {
   background: rgba(255, 254, 99, 0.21);
 }
 
+.container-annotation.remark.annotation-fragment.active {
+  background: rgba(255, 254, 99, 1);
+}
+
 /* Brackets for subject annotations
 -----------------------------------------------------*/
 
@@ -754,7 +758,6 @@ a:hover {
 }
 
 
-
 /* Entities component
 -----------------------------------------------------*/
 
@@ -776,11 +779,23 @@ a:hover {
 
 .resource-container .remark .remark-header {
   padding-bottom: 20px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.resource-container .remark .remark-header .delete-remark {
+  display: block;
+  float: right;
 }
 
 .resource-container .remark .remark-title {
   color: #777;
+  font-size: 12px;
   background: rgba(255, 254, 99, 0.21);
+}
+
+.resource-container .remark.active .remark-title {
+  background: rgba(255, 254, 99, 1); 
 }
 
 
@@ -825,6 +840,10 @@ a:hover {
 /* Custom scrollbar styles */
 .scrollbar-component.entities .highlight {
   background-color: rgba(11, 157, 217, 1);
+}
+
+.scrollbar-component.remarks .highlight {
+  background: rgba(255, 254, 99, 1);
 }
 
 .scrollbar-component.showEntityReference .highlight,

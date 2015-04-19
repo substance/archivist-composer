@@ -26,7 +26,7 @@ var RemarksPanel = React.createClass({
     };
   },
 
-  getInitialState: function() {
+  componentWillMount: function() {
     this.surface = new Surface(new Surface.FormEditor(this.props.writerCtrl.doc));
     return {};
   },
@@ -44,15 +44,12 @@ var RemarksPanel = React.createClass({
 
   handleToggle: function(remarkId) {
     var writerCtrl = this.props.writerCtrl;
-    // var activeRemark = this.props.activeRemark ? this.props.activeRemark.id : null;
 
     if (writerCtrl.state.remarkId === remarkId) {
-      console.log('untoggle');
       writerCtrl.replaceState({
         contextId: "remarks"
       });
     } else {
-      console.log('toggle');
       writerCtrl.replaceState({
         contextId: "remarks",
         remarkId: remarkId

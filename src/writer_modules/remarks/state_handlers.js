@@ -34,36 +34,36 @@ var stateHandlers = {
     }
   },
 
-  handleSelectionChange: function(writerCtrl, sel, annotations) {
-    if (sel.isNull()) return;
-    var surface = writerCtrl.getSurface();
-    if (surface.name !== "content") return false;
+  // handleSelectionChange: function(writerCtrl, sel, annotations) {
+  //   if (sel.isNull()) return;
+  //   var surface = writerCtrl.getSurface();
+  //   if (surface.name !== "content" || writerCtrl.state.contextId !== "remarks") return false;
 
-    var doc = writerCtrl.doc;
-    var contentContainer = surface.getContainer();
+  //   var doc = writerCtrl.doc;
+  //   var contentContainer = surface.getContainer();
 
-    var remarks = doc.remarksIndex.get();
-    var activeRemark = null;
+  //   var remarks = doc.remarksIndex.get();
+  //   var activeRemark = null;
 
-    // HACK: this should be done with a proper index
-    _.each(remarks, function(remark) {
-      var annoSel = Substance.Document.Selection.create(contentContainer,
-          remark.startPath, remark.startOffset, remark.endPath, remark.endOffset);
+  //   // HACK: this should be done with a proper index
+  //   _.each(remarks, function(remark) {
+  //     var annoSel = Substance.Document.Selection.create(contentContainer,
+  //         remark.startPath, remark.startOffset, remark.endPath, remark.endOffset);
 
-      if (annoSel.overlaps(sel)) {
-        activeRemark = remark;
-      }
-    });
+  //     if (annoSel.overlaps(sel)) {
+  //       activeRemark = remark;
+  //     }
+  //   });
 
-    if (activeRemark) {
-      writerCtrl.replaceState({
-        contextId: RemarksPanel.contextId,
-        remarkId: activeRemark.id
-      });
+  //   if (activeRemark) {
+  //     writerCtrl.replaceState({
+  //       contextId: RemarksPanel.contextId,
+  //       remarkId: activeRemark.id
+  //     });
 
-      return true;
-    }
-  },
+  //     return true;
+  //   }
+  // },
 
   // Determine highlighted nodes
   // -----------------
@@ -73,21 +73,15 @@ var stateHandlers = {
   // Based on writer state, determine which nodes should be highlighted in the content panel
   // @returns a list of nodes to be highlighted
 
-  // getHighlightedNodes: function(writerCtrl) {
-  //   var doc = writerCtrl.doc;
-  //   var state = writerCtrl.getState();
+  getHighlightedNodes: function(writerCtrl) {
+    var doc = writerCtrl.doc;
+    var state = writerCtrl.getState();
 
-  //   // When a subject has been clicked in the subjects panel
-  //   if (state.contextId === "subjects" && state.subjectId) {
-  //     var references = Object.keys(doc.subjectReferencesIndex.get(state.subjectId));
-  //     return references;
-  //   }
-
-  //   // When a subject reference has been clicked and an edit dialog came up
-  //   if (state.contextId === EditSubjectReferencePanel.contextId && state.subjectReferenceId) {
-  //     return [state.subjectReferenceId];
-  //   }
-  // },
+    // When a subject has been clicked in the subjects panel
+    if (state.contextId === "remarks" && state.remarkId) {
+      return [state.remarkId];
+    }
+  },
 
   // Determine active subject reference nodes
   // -----------------
@@ -99,22 +93,13 @@ var stateHandlers = {
 
   getActiveContainerAnnotations: function(writerCtrl) {
     var state = writerCtrl.getState();
-    var doc = writerCtrl.doc;
-    var remarks = Object.keys(doc.remarksIndex.get());
 
-    
-    // TODO: only do this when in some remarks context
-    return remarks;
-
-    // When a subject has been clicked in the subjects panel
-    // if (state.contextId === EditSubjectReferencePanel.contextId && state.subjectReferenceId) {
-    //   return [ state.subjectReferenceId ];
-    // }
-    // if (state.contextId === "subjects" && state.subjectId) {
-    //   var doc = writerCtrl.doc;
-    //   var references = Object.keys(doc.subjectReferencesIndex.get(state.subjectId));
-    //   return references;
-    // }
+    // Only highlight remarks when we are in remarks context
+    if (state.contextId === "remarks") {
+      var doc = writerCtrl.doc;
+      var remarks = Object.keys(doc.remarksIndex.get());      
+      return remarks;
+    }
   }
 };
 

@@ -12,13 +12,36 @@ var Remark = React.createClass({
     e.preventDefault();
   },
 
+  handleDelete: function(e) {
+    e.preventDefault();
+    var writerCtrl = this.props.writerCtrl;
+    var doc = this.props.writerCtrl.doc;
+    var tx = doc.startTransaction();
+
+    try {
+      tx.delete(this.props.remark.id);
+      tx.save();
+      writerCtrl.replaceState({
+        contextId: "remarks"
+      });
+    } finally {
+      tx.cleanup();
+    }
+  },
+
   render: function() {
     var className = ["remark", this.props.type];
     if (this.props.active) className.push("active");
 
     return $$("div", {contentEditable: false, className: className.join(" ")},
-      $$('div', {className: 'remark-header'},
-        $$('a', {href: "#", className: 'remark-title', onClick: this.handleToggle}, "TODO: display annotated text")  
+      $$('div', {className: 'remark-header', onClick: this.handleToggle},
+        $$('a', {href: "#", className: 'remark-title'}, "TODO: display annotated text"),
+        $$('a', {
+          href: "#",
+          className: 'delete-remark',
+          dangerouslySetInnerHTML: {__html: '<i class="fa fa-remove"></i>'},
+          onClick: this.handleDelete
+        })
       ),
       
       $$(TextProperty, {

@@ -12,20 +12,20 @@ var stateHandlers = {
     var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1], "reference");
     
     // Switch to a neutral state if no annotation matches have been found
-    // if (annotations.length === 0 && writerCtrl.state.contextId !== "editSubjectReference") {
-    //   var prevContextId = writerCtrl.state.contextId;
-    //   var nextContextId = "entities";
+    if (annotations.length === 0 && writerCtrl.state.contextId !== "editSubjectReference" && writerCtrl.state.contextId !== "remarks") {
+      var prevContextId = writerCtrl.state.contextId;
+      var nextContextId = "entities";
 
-    //   if (prevContextId === "editSubjectReference" || prevContextId === "subjects") {
-    //     nextContextId = "subjects";
-    //   }
+      if (prevContextId === "editSubjectReference" || prevContextId === "subjects") {
+        nextContextId = "subjects";
+      }
 
-    //   writerCtrl.replaceState({
-    //     contextId: nextContextId
-    //   });
-    //   console.log('handled');
-    //   return true;
-    // }
+      writerCtrl.replaceState({
+        contextId: nextContextId
+      });
+      console.log('handled');
+      return true;
+    }
   }
 };
 

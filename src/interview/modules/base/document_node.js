@@ -7,6 +7,7 @@ var DocumentNode = Substance.Document.Node.extend({
     "creator": "string",
     "title": "string", // TODO: remove
     "abstract": "string",
+    "abstract_en": "string",
     "interview_subject_name": "string",
     "interview_subject_bio": "string"
   }
