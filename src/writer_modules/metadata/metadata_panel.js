@@ -1,7 +1,7 @@
 var Substance = require("substance");
 var $$ = React.createElement;
 var Surface = Substance.Surface;
-
+var _ = require("substance/helpers");
 var TextProperty = require("substance/writer").TextProperty;
 
 // Metadat Panel
@@ -50,15 +50,52 @@ var MetadataPanel = React.createClass({
   render: function() {
     var props = this.props;
 
-    return $$("div", {className: "panel metadata-panel-component", contentEditable: true, 'data-id': "metadata"},
+    // // Project related
+    //     "project_name": "string",
+    //     "project_location": "string", // points to an entity id
+    //     "conductor": "string",
+    //     "operator": "string",
+    //     "sound_operator": "string",
+    //     "record_type": "string", // "video" or "audio"
+    //     "interview_location": "string",
+    //     "inverview_date": "string",
+    //     "persons_present": "string",
+    //     "interview_duration": "number",
+
+    // // Just a little helper so we don't always have to writer contentEditable: fales
+    // function la(attrs) {
+    //   var defaultAttrs = {className: label, contentEditable: true};
+    //   return _.extend(defaultAttrs, attrs);
+    // }
+
+    function label(name) {
+      return $$('div', {className: 'label', contentEditable: false}, name);
+    }
+
+    function button(name, type) {
+      return $$('a', {className: 'button', href: '#', contentEditable: false}, name);
+    }
+
+    return $$("div", {className: "panel metadata-panel-component", contentEditable: true, "data-id": "metadata"},
       $$('div', {className: 'panel-content'},
+        $$('div', {className: 'project'},
+          // Project name
+          label("Project Name"),
+          this.createTextProperty('project_name'),
+
+          // Project location
+          label("Location"),
+          button("Set location"),
+
+          // Where the interview took place
+          label("Place"),
+          this.createTextProperty('interview_location')
+        ),
         $$('div', {className: 'biography'},
-          $$('div', {className: 'label', contentEditable: false}, "Interview Subject Name"),
-          this.createTextProperty("interview_subject_name"),
-          $$('div', {className: 'label', contentEditable: false}, "Biography"),
-          this.createTextProperty("interview_subject_bio"),
-          $$('div', {className: 'label', contentEditable: false}, "Abstract English"),
-          this.createTextProperty("abstract_en")
+          label("Biography"),
+          this.createTextProperty("subject_bio")
+          // $$('div', {className: 'label'}, "Abstract English"),
+          // this.createTextProperty("abstract_en")
         )
       )
     );
