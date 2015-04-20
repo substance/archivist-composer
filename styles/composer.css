@@ -834,6 +834,13 @@ a:hover {
   right: 20px;
 }
 
+.search-result-state {
+  padding: 4px 22px;
+  font-style: italic;
+  background: #fff;
+  font-size: 13px;
+}
+
 /* Custom scrollbar styles */
 .scrollbar-component.entities .highlight {
   background-color: rgba(11, 157, 217, 1);

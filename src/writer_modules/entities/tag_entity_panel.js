@@ -87,13 +87,14 @@ var TagEntityPanel = React.createClass({
     if (searchString) {
       backend.searchEntities(searchString, function(err, entities) {
         self.setState({
-          entities: entities
+          state: entities.state,
+          entities: entities.results
         });
       });
     } else {
       backend.getSuggestedEntities(function(err, entities) {
         self.setState({
-          entities: entities
+          entities: entities.results
         });
       });
     }
@@ -170,6 +171,7 @@ var TagEntityPanel = React.createClass({
     var self = this;
     var entities = this.state.entities;
     var entityNodes;
+    var stateMessage = this.state.state;
 
     if (entities.length > 0) {
       entityNodes = entities.map(function(entity) {
@@ -199,7 +201,7 @@ var TagEntityPanel = React.createClass({
             placeholder: "Type to search for entities",//,
             value: this.state.searchString,
             onChange: this.handleSearchStringChange
-          }) // ,
+          }) //,
           // $$('select', {className: "entity-type"},
           //   $$('option', {value: ""}, "All"),
           //   $$('option', {value: "prison"}, "Prison"),
@@ -207,6 +209,11 @@ var TagEntityPanel = React.createClass({
           //   $$('option', {value: "person"}, "Person"),
           //   $$('option', {value: "definition"}, "Definition")
           // )
+        ),
+        $$('div', {
+            className: "search-result-state"
+          },
+          $$('span', { className: "state" }, stateMessage)
         ),
         $$('div', {className: "entities"},
           entityNodes
