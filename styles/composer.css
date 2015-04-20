@@ -907,7 +907,8 @@ a:hover {
 -----------------------------------------------------*/
 
 .metadata-panel-component .panel-content {
-  padding: 20px;
+  padding: 0px 0px;
+
 }
 
 .metadata-panel-component .label {
@@ -920,8 +921,29 @@ a:hover {
   display: block;
   background: white;
   padding: 3px;
+  font-size: 14px;
   border: 1px solid #eee;
 }
+
+.metadata-panel-component .section h3 {
+  font-weight: 600;
+  padding-bottom: 10px;
+}
+
+.metadata-panel-component .section {
+  position: relative;
+  padding: 20px 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.metadata-panel-component .prisons .prison {
+  margin-right: 10px;
+}
+
+.metadata-panel-component .prisons .prison .name {
+  padding-right: 5px;
+}
+
 
 /* Subject component
 -----------------------------------------------------*/

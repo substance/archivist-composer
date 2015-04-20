@@ -19,7 +19,7 @@ var sampleDoc = {
       "abstract_en": "Enter english abstract here",
       "created_at": "2015-03-04T10:56:18.229Z",
       "updated_at": "2015-03-04T10:56:47.425Z",
-      "published_on": "2015-03-04T10:56:18.230Z",
+      "published_on": "2015-03-04",
 
       // Project related
       "project_name": "Internationales Sklaven-und Zwangsarbeiter Befragungsprojekt",
@@ -29,7 +29,7 @@ var sampleDoc = {
       "sound_operator": "Eduard Kechedjiyan",
       "record_type": "video",
       "interview_location": "respondent's apartment",
-      "inverview_date": "2005-07-16",
+      "interview_date": "2005-07-16",
       "persons_present": "Nikolay Bogoslavec, Irina Ostrovskaya, Eduard Kechedjiyan, Alexey Bogoslavec",
       "interview_duration": "247",
 
@@ -38,16 +38,7 @@ var sampleDoc = {
       "subject_bio": "Please enter interview subject bio.",
       
       "subject_category": ["Ost-Arbeiter","concentration camp prisoner"],
-      "subject_prisons": [
-          {
-              "id": "",
-              "location": ""
-          },
-          {
-              "id": "",
-              "location": ""
-          }
-      ],
+      "subject_prisons": ["54ef1331afda2d3c024e4817", "54ef1331afda2d3c024e4818"],
       "subject_forced_labor_type": "intracamp work; earthworks (construction of barracks); digging tunnels for military factories",
       "subject_movement": [
           {

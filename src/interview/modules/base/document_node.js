@@ -21,7 +21,7 @@ var DocumentNode = Substance.Document.Node.extend({
     "sound_operator": "string",
     "record_type": "string", // "video" or "audio"
     "interview_location": "string",
-    "inverview_date": "string",
+    "interview_date": "string",
     "persons_present": "string",
     "interview_duration": "number",
 
