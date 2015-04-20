@@ -11,7 +11,7 @@ var stateHandlers = {
     var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), sel.getStartOffset(), sel.getEndOffset(), "reference");
 
     // Switch to a neutral state if no annotation matches have been found
-    if (annotations.length === 0 && writerCtrl.state.contextId !== "editSubjectReference" && writerCtrl.state.contextId !== "remarks") {
+    if (annotations.length === 0 && writerCtrl.state.contextId !== "editSubjectReference") {
       var prevContextId = writerCtrl.state.contextId;
       var nextContextId = "entities";
 

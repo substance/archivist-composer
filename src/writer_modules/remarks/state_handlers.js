@@ -34,36 +34,28 @@ var stateHandlers = {
     }
   },
 
-  // handleSelectionChange: function(writerCtrl, sel, annotations) {
-  //   if (sel.isNull()) return;
-  //   var surface = writerCtrl.getSurface();
-  //   if (surface.name !== "content" || writerCtrl.state.contextId !== "remarks") return false;
+  handleSelectionChange: function(writerCtrl, sel, annotations) {
+    if (sel.isNull()) return;
+    var surface = writerCtrl.getSurface();
+    if (surface.name !== "content") return false;
 
-  //   var doc = writerCtrl.doc;
-  //   var contentContainer = surface.getContainer();
+    var doc = writerCtrl.doc;
+    var contentContainer = surface.getContainer();
 
-  //   var remarks = doc.remarksIndex.get();
-  //   var activeRemark = null;
+    var annos = doc.getContainerAnnotationsForSelection(sel, contentContainer, {
+      type: "remark"
+    });
 
-  //   // HACK: this should be done with a proper index
-  //   _.each(remarks, function(remark) {
-  //     var annoSel = Substance.Document.Selection.create(contentContainer,
-  //         remark.startPath, remark.startOffset, remark.endPath, remark.endOffset);
+    var activeRemark = annos[0];
+    if (activeRemark) {
+      writerCtrl.replaceState({
+        contextId: RemarksPanel.contextId,
+        remarkId: activeRemark.id
+      });
 
-  //     if (annoSel.overlaps(sel)) {
-  //       activeRemark = remark;
-  //     }
-  //   });
-
-  //   if (activeRemark) {
-  //     writerCtrl.replaceState({
-  //       contextId: RemarksPanel.contextId,
-  //       remarkId: activeRemark.id
-  //     });
-
-  //     return true;
-  //   }
-  // },
+      return true;
+    }
+  },
 
   // Determine highlighted nodes
   // -----------------
@@ -95,11 +87,11 @@ var stateHandlers = {
     var state = writerCtrl.getState();
 
     // Only highlight remarks when we are in remarks context
-    if (state.contextId === "remarks") {
-      var doc = writerCtrl.doc;
-      var remarks = Object.keys(doc.remarksIndex.get());      
-      return remarks;
-    }
+    // if (state.contextId === "remarks") {
+    var doc = writerCtrl.doc;
+    var remarks = Object.keys(doc.remarksIndex.get());      
+    return remarks;
+    // }
   }
 };
 
