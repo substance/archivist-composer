@@ -405,6 +405,10 @@ a:hover {
   float: right;
 }
 
+.content-tools-component .tools a.remark-tool-component {
+  float: right;
+}
+
 .content-tools-component .tools a.active {
   opacity: 1.0;
 }
@@ -592,7 +596,6 @@ a:hover {
   position: relative;
 }
 
-
 .container-annotation.active.annotation-fragment {
   background-color: rgba(145, 187, 4, 0.2);
 }
@@ -639,7 +642,6 @@ a:hover {
 .container-node.content .subject-references .subject-reference.selected {
   border-width: 3px;
 }
-
 
 
 /* Selection style sheets
