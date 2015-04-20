@@ -105,12 +105,19 @@ Backend.Prototype = function() {
     });
   };
 
-  this.searchEntities = function(searchStr, cb) {
-    $.getJSON("/api/search?query="+encodeURIComponent(searchStr), function(entities) {
+  this.searchEntities = function(searchStr, type, cb) {
+    var queryUrl;
+
+    if(arguments.length == 2) {
+      cb = type;
+      queryUrl = "/api/search?query="+encodeURIComponent(searchStr);
+    } else {
+      queryUrl = "/api/search?query="+encodeURIComponent(searchStr)+"&type="+encodeURIComponent(type);
+    }
+    $.getJSON(queryUrl, function(entities) {
       cb(null, entities);
     });
   };
-
 
   this.fetchSubjects = function(cb) {
     $.getJSON("/api/metadata", function(subjectDB) {
