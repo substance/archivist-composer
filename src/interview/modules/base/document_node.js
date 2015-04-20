@@ -26,14 +26,17 @@ var DocumentNode = Substance.Document.Node.extend({
     "interview_duration": "number",
 
     // Subject related
-    // "subject_name": "Please enter interview subject name.",
-    "subject_bio": "string",
-    
-    "subject_category": ["array", "string"],
-    "subject_prisons": ["array", "string"],
-    "subject_forced_labor_type": "string",
-    "subject_movement": ["array", "object"],
-    "personal_archive": ["array", "object"]
+    "interviewee_bio": "string",
+    "interviewee_category": "string",
+    "interviewee_forced_labor_type": "string",
+    "interviewee_prisons": ["array", "string"],
+    "interviewee_waypoints": ["array", "waypoint"]
+  },
+
+  getWaypoints: function() {
+    return this.interviewee_waypoints.map(function(waypointId) {
+      return this.getDocument().get(waypointId);
+    }.bind(this));
   }
 });
 

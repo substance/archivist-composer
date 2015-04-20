@@ -33,36 +33,26 @@ var sampleDoc = {
       "persons_present": "Nikolay Bogoslavec, Irina Ostrovskaya, Eduard Kechedjiyan, Alexey Bogoslavec",
       "interview_duration": "247",
 
-      // Subject related
-      // "subject_name": "Please enter interview subject name.",
-      "subject_bio": "Please enter interview subject bio.",
-      
-      "subject_category": ["Ost-Arbeiter","concentration camp prisoner"],
-      "subject_prisons": ["54ef1331afda2d3c024e4817", "54ef1331afda2d3c024e4818"],
-      "subject_forced_labor_type": "intracamp work; earthworks (construction of barracks); digging tunnels for military factories",
-      "subject_movement": [
-          {
-              "id": "",
-              "location": "",
-              "density": ""
-          },
-          {
-              "id": "",
-              "location": "",
-              "density": ""
-          }
-      ],
-      "personal_archive": [
-          {
-              "file": "",
-              "description": ""
-          },
-          {
-              "file": "",
-              "description": ""
-          }
-      ]
+      // Interview subject related
+      "interviewee_bio": "Please enter interview subject bio.",
+      "interviewee_category": "Ost-Arbeiter, concentration camp prisoner",
+      "interviewee_prisons": ["54ef1331afda2d3c024e4817", "54ef1331afda2d3c024e4818"],
+      "interviewee_forced_labor_type": "intracamp work, earthworks (construction of barracks), digging tunnels for military factories",
+      "interviewee_waypoints": ["waypoint_1", "waypoint_2"]
     },
+    "waypoint_1": {
+      "id": "waypoint_1",
+      "type": "waypoint",
+      "entityId": "54ef1331afda2d3c024e4817",
+      "density": 4
+    },
+    "waypoint_2": {
+      "id": "waypoint_2",
+      "type": "waypoint",
+      "entityId": "54ef1331afda2d3c024e4817",
+      "density": 2
+    },
+
     "content": {
       "type": "container",
       "id": "content",

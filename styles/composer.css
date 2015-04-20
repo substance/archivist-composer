@@ -936,6 +936,7 @@ a:hover {
   border-bottom: 1px solid #ddd;
 }
 
+/* prisons list */
 .metadata-panel-component .prisons .prison {
   margin-right: 10px;
 }
@@ -944,6 +945,18 @@ a:hover {
   padding-right: 5px;
 }
 
+/* waypoints list */
+.metadata-panel-component .waypoints .waypoint {
+  margin-right: 10px;
+}
+
+.metadata-panel-component .waypoints .waypoint .name {
+  padding-right: 5px;
+}
+
+.metadata-panel-component .waypoints .waypoint .density {
+  width: 30px;
+}
 
 /* Subject component
 -----------------------------------------------------*/
