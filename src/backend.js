@@ -115,7 +115,7 @@ Backend.Prototype = function() {
       queryUrl = "/api/search?query="+encodeURIComponent(searchStr)+"&type="+encodeURIComponent(type);
     }
     $.getJSON(queryUrl, function(entities) {
-      cb(null, entities[1]);
+      cb(null, entities);
     });
   };
 
