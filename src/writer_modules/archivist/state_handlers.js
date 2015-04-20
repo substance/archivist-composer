@@ -6,7 +6,7 @@ var stateHandlers = {
     var surface = writerCtrl.getSurface();
     if (surface.name !== "content") return;
 
-    if (sel.isNull() || !sel.isPropertySelection()) return;
+    if (sel.isNull() || !sel.isCollapsed()) return;
 
     var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), sel.getStartOffset(), sel.getEndOffset(), "reference");
 

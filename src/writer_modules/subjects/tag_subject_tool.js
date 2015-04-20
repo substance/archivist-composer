@@ -58,7 +58,7 @@ var TagSubjectTool = React.createClass({
         if (annoSel.includesWithOneBoundary(sel)) {
           newState.mode = 'truncate';
           newState.selected = true;
-        } else if (annoSel.includes(sel)) {
+        } else if (annoSel.contains(sel)) {
           newState.mode = 'delete';
           newState.selected = false; // true;
           newState.active = false;

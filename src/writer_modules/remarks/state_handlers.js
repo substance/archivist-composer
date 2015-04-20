@@ -35,7 +35,8 @@ var stateHandlers = {
   },
 
   handleSelectionChange: function(writerCtrl, sel, annotations) {
-    if (sel.isNull()) return;
+    if (sel.isNull() || !sel.isCollapsed()) return;
+    
     var surface = writerCtrl.getSurface();
     if (surface.name !== "content") return false;
 

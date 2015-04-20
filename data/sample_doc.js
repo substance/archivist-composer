@@ -125,7 +125,7 @@ var sampleDoc = {
       "startPath": ["text_1", "content"],
       "startOffset": 20,
       "endPath": ["text_2", "content"],
-      "endOffset": 10,
+      "endOffset": 298,
       "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis scelerisque ligula. Proin tristique ligula id magna finibus rhoncus. Quisque dictum viverra sapien, vel elementum metus condimentum nec. Donec ac tellus nunc. Nullam fermentum pharetra justo, accumsan tristique quam tempus a. Quisque vitae luctus velit."
     },
 
