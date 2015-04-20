@@ -592,31 +592,17 @@ a:hover {
   position: relative;
 }
 
-.container-annotation.active .anchor-caret {
-  display: block;
-  position: absolute;
-  bottom: -6px;
-  left: -7px;
-  cursor: pointer;
-
-  /* This creates a rectangle shape*/
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 8px solid rgba(145, 187, 4, 1);
-}
 
 .container-annotation.active.annotation-fragment {
   background-color: rgba(145, 187, 4, 0.2);
 }
 
 .container-annotation.remark.annotation-fragment {
-  background: rgba(255, 254, 99, 0.21);
+  background: rgba(255, 254, 99, 0.3);
 }
 
 .container-annotation.remark.annotation-fragment.active {
-  background: rgba(255, 254, 99, 1);
+  background: rgba(255, 254, 99, 0.8);
 }
 
 /* Brackets for subject annotations
