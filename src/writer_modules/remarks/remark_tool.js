@@ -28,6 +28,8 @@ var RemarkTool = React.createClass({
 
   handleSelectionChange: function(sel) {
     var writerCtrl = this.props.writerCtrl;
+    var doc = writerCtrl.doc;
+
     // Note: toggling of a subject reference is only possible when
     // the subject reference is selected and the
     if (sel.isNull() || sel.isCollapsed() ) {
@@ -50,16 +52,8 @@ var RemarkTool = React.createClass({
         containerId: container.id
       };
 
-      // Extract range and matching annos of current selection
-      // var range = sel.getTextRange();
-      // var annos = writerCtrl.doc.annotationIndex.get(sel.getPath(), range[0], range[1], this.annotationType);
-      // var anno = writerCtrl.doc.get(writerCtrl.state.subjectReferenceId);
-
-      var annos = [];
-
-      var annoSels = annos.map(function(anno) {
-        var range = range;
-        return Substance.Document.Selection.create(anno.path, anno.range[0], anno.range[1]);
+      var annos = doc.getContainerAnnotationsForSelection(sel, contentContainer, {
+        type: "remark"
       });
 
       if (this.canCreate(annoSels, sel)) {
