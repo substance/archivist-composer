@@ -33,8 +33,8 @@ var Remark = React.createClass({
     var className = ["remark", this.props.type];
     if (this.props.active) className.push("active");
 
-    return $$("div", {contentEditable: false, className: className.join(" ")},
-      $$('div', {className: 'remark-header', onClick: this.handleToggle},
+    return $$("div", {className: className.join(" ")},
+      $$('div', {contentEditable: false, className: 'remark-header', onClick: this.handleToggle},
         $$('a', {href: "#", className: 'remark-title'}, "TODO: display annotated text"),
         $$('a', {
           href: "#",

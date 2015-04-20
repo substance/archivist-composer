@@ -66,7 +66,7 @@ var MetadataPanel = React.createClass({
     var refId = this.props.subjectReferenceId;
     // if (info.updateSubjectReference) return;
 
-    if (change.isAffected(["document", "prisons"])) {
+    if (change.isAffected(["document", "interviewee_prisons"])) {
       // this.forceUpdate();
       console.log('DOC IS affected');
       this.loadMetadata();

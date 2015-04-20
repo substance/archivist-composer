@@ -12,6 +12,14 @@ var RemarkToolMixin = _.extend({}, AnnotationToolMixin, {
       container: "content",
       content: ""
     }
+  },
+  disabledModes: ["remove"],
+  afterCreate: function(anno) {
+    console.log('after create', anno);
+    this.props.writerCtrl.replaceState({
+      contextId: "remarks",
+      remarkId: anno.id
+    });
   }
 });
 
