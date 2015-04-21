@@ -94,7 +94,7 @@ Backend.Prototype = function() {
     console.log('Fetching entities', entityIds);
 
     $.getJSON("/api/entities?entityIds="+entityIds.join(','), function(entities) {
-      cb(null, entities);
+      cb(null, entities.results);
     });
   };
 
@@ -120,7 +120,7 @@ Backend.Prototype = function() {
   };
 
   this.fetchSubjects = function(cb) {
-    $.getJSON("/api/metadata", function(subjectDB) {
+    $.getJSON("/api/subjects", function(subjectDB) {
       // Store in cache
       this.cache.subjectDB = subjectDB;
       cb(null, subjectDB.subjects);
