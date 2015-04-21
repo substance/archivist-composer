@@ -434,8 +434,9 @@ a:hover {
   position: relative;
 }
 
-.content-panel-component .title {
-  padding: 20px 0px;
+.content-panel-component .interview-title {
+  padding: 40px 40px;
+  padding-bottom: 0px;
   font-size: 22px;
   font-weight: 600;
 }
