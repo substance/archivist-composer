@@ -56,7 +56,8 @@ var MetadataPanel = React.createClass({
 
     if (change.isAffected(["document", "interviewee_prisons"]) ||
         change.isAffected(["document", "interviewee_waypoints"]) ||
-        change.isAffected(["document", "project_location"])) {
+        change.isAffected(["document", "project_location"]) ||
+        change.isAffected(["document", "record_type"])) {
       this.loadMetadata();
     }
   },
