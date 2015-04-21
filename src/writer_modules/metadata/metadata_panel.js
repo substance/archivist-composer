@@ -15,7 +15,8 @@ function button(name, type) {
   return $$('a', {className: 'button', href: '#', contentEditable: false}, name);
 }
 
-// Metadat Panel
+
+// Metadata Panel
 // ------------------
 
 var MetadataPanel = React.createClass({
@@ -138,6 +139,14 @@ var MetadataPanel = React.createClass({
     });
   },
 
+  handleAddPrison: function(e) {
+    e.preventDefault();
+    // console.log('nah nah');
+    this.props.writerCtrl.replaceState({
+      contextId: "selectPrison"
+    });
+  },
+
   handleRemovePrison: function(e) {
     var prisonId = e.currentTarget.dataset.id;
     console.log('remove the prison', prisonId);
@@ -173,7 +182,7 @@ var MetadataPanel = React.createClass({
     return $$('div', {className: 'prisons-wrapper', contentEditable: false},
       label("Prisons"),
       $$('div', {className: 'prisons'}, prisonEls),
-      $$('a', {href: '#', className: 'add-prison'}, "Add prison")
+      $$('a', {href: '#', className: 'add-prison', onClick: this.handleAddPrison}, "Add prison")
     );
   },
 
@@ -239,10 +248,7 @@ var MetadataPanel = React.createClass({
           this.renderTextProperty("interviewee_forced_labor_type"),
 
           this.renderPrisons(),
-
           this.renderWaypoints()
-
-          
         ),
 
         $$('div', {className: 'project section'},

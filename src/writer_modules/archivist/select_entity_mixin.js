@@ -52,8 +52,7 @@ var EntityView = React.createClass({
 // Entities Panel extension
 // ----------------
 
-var TagEntityPanel = React.createClass({
-  displayName: "Tag Entity",
+var SelectEntityMixin = {
 
   contextTypes: {
     backend: React.PropTypes.object.isRequired
@@ -123,46 +122,6 @@ var TagEntityPanel = React.createClass({
     this.loadEntities(searchString);
   },
 
-  // Called with entityId when an entity has been clicked
-  handleSelection: function(entityId) {
-    var writerCtrl = this.props.writerCtrl;
-    var entityReferenceId = this.props.entityReferenceId;
-
-    if (entityReferenceId) {
-      var tx = writerCtrl.doc.startTransaction();
-      try {
-        tx.set([entityReferenceId, "target"], entityId);
-        tx.save({});
-      } finally {
-        tx.cleanup();
-      }
-
-      writerCtrl.replaceState({
-        contextId: "showEntityReference",
-        entityReferenceId: entityReferenceId
-      });
-
-    } else {
-      var path = this.props.path;
-      var startOffset = this.props.startOffset;
-      var endOffset = this.props.endOffset;
-
-      var annotation = writerCtrl.annotate({
-        type: "entity_reference",
-        target: entityId,
-        path: path,
-        startOffset: startOffset,
-        endOffset: endOffset
-      });
-
-      // Switch state to highlight newly created reference
-      writerCtrl.replaceState({
-        contextId: "showEntityReference",
-        entityReferenceId: annotation.id
-      });
-    }
-
-  },
 
   // Rendering
   // -------------------
@@ -221,15 +180,6 @@ var TagEntityPanel = React.createClass({
       )
     );
   }
-});
+};
 
-// Panel configuration
-// ----------------
-
-TagEntityPanel.contextId = "tagentity";
-TagEntityPanel.icon = "fa-bullseye";
-
-// No context switch toggle is shown
-TagEntityPanel.isDialog = true;
-
-module.exports = TagEntityPanel;
+module.exports = SelectEntityMixin;
