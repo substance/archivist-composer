@@ -48,19 +48,15 @@ var MetadataPanel = React.createClass({
     doc.connect(this, {
       'document:changed': this.handleDocumentChange
     });
-
     this.loadMetadata();
   },
 
   handleDocumentChange: function(change, info) {
     var refId = this.props.subjectReferenceId;
-    // if (info.updateSubjectReference) return;
 
     if (change.isAffected(["document", "interviewee_prisons"]) ||
         change.isAffected(["document", "interviewee_waypoints"]) ||
         change.isAffected(["document", "project_location"])) {
-      // this.forceUpdate();
-      console.log('DOC IS affected');
       this.loadMetadata();
     }
   },
