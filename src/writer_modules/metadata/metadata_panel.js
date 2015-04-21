@@ -15,7 +15,6 @@ function button(name, type) {
   return $$('a', {className: 'button', href: '#', contentEditable: false}, name);
 }
 
-
 // Metadata Panel
 // ------------------
 
@@ -141,9 +140,15 @@ var MetadataPanel = React.createClass({
 
   handleAddPrison: function(e) {
     e.preventDefault();
-    // console.log('nah nah');
     this.props.writerCtrl.replaceState({
       contextId: "selectPrison"
+    });
+  },
+
+  handleAddWaypoint: function(e) {
+    e.preventDefault();
+    this.props.writerCtrl.replaceState({
+      contextId: "selectWaypoint"
     });
   },
 

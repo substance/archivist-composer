@@ -1,5 +1,5 @@
 var MetadataPanel = require("./metadata_panel");
-var SelectPrisonPanel = require("./select_prison_panel");
+var SelectLocationPanel = require("./select_location_panel");
 
 var $$ = React.createElement;
 
@@ -17,8 +17,8 @@ var stateHandlers = {
       return $$(MetadataPanel, {
         writerCtrl: writerCtrl
       });
-    } else if (state.contextId === "selectPrison") {
-      return $$(SelectPrisonPanel, {
+    } else if (["selectPrison", "selectWaypoint", "selectProjectLocation"], state.contextId) {
+      return $$(SelectLocationPanel, {
         writerCtrl: writerCtrl
       });
     }
