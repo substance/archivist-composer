@@ -56,7 +56,9 @@ var MetadataPanel = React.createClass({
     var refId = this.props.subjectReferenceId;
     // if (info.updateSubjectReference) return;
 
-    if (change.isAffected(["document", "interviewee_prisons"])) {
+    if (change.isAffected(["document", "interviewee_prisons"]) ||
+        change.isAffected(["document", "interviewee_waypoints"]) ||
+        change.isAffected(["document", "project_location"])) {
       // this.forceUpdate();
       console.log('DOC IS affected');
       this.loadMetadata();
@@ -95,9 +97,11 @@ var MetadataPanel = React.createClass({
     var projectLocationId = doc.get('document').project_location;
     if (projectLocationId) {
       backend.getEntities([projectLocationId], function(err, locations) {
-        if (err || locations.length === 0) return cb(err || "entity '"+projectLocationId+"' not found");
+        if (err) return cb(err);
         cb(null, locations[0]);
       });
+    } else {
+      cb(null, null);
     }
   },
 
@@ -163,6 +167,38 @@ var MetadataPanel = React.createClass({
     });
   },
 
+  handleRemoveProjectLocation: function(e) {
+    e.preventDefault();
+    var doc = this.props.writerCtrl.doc;
+
+    var tx = this.props.writerCtrl.doc.startTransaction();
+    try {
+      tx.set(["document", "project_location"], null);
+      tx.save({});
+    } finally {
+      tx.cleanup();
+    }
+  },
+
+  handleRemoveWaypoint: function(e) {
+    var waypointId = e.currentTarget.dataset.id;
+    e.preventDefault();
+    var doc = this.props.writerCtrl.doc;
+
+    var tx = this.props.writerCtrl.doc.startTransaction();
+    try {
+      tx.delete(waypointId);
+
+      var waypointIds = doc.get('document').interviewee_waypoints;
+      waypointIds = _.without(waypointIds, waypointId);
+
+      tx.set(["document", "interviewee_waypoints"], waypointIds);
+      tx.save({});
+    } finally {
+      tx.cleanup();
+    }
+  },
+
   handleRemovePrison: function(e) {
     var prisonId = e.currentTarget.dataset.id;
 
@@ -193,10 +229,14 @@ var MetadataPanel = React.createClass({
         dangerouslySetInnerHTML: {__html: '<i class="fa fa-remove"></i>'},
       }));
     } else {
-      elems.push($$('a', {href: '#', className: 'set-project-location', onClick: this.handleSetProjectLocation}, "Set projectLocation"));
+      elems.push($$('a', {
+        href: '#',
+        className: 'set-project-location',
+        onClick: this.handleSetProjectLocation,
+      }, "Set projectLocation"));
     }
 
-    return $$('div', {className: 'project-location-wrapper'}, elems);
+    return $$('div', {contentEditable: false, className: 'project-location-wrapper'}, elems);
   },
 
   renderPrisons: function() {
@@ -253,7 +293,6 @@ var MetadataPanel = React.createClass({
     if (!this.state) {
       return $$('div', {contentEditable: true, "data-id": "metadata"}, 'Loading');
     }
-
 
     return $$("div", {className: "panel metadata-panel-component", contentEditable: true, "data-id": "metadata"},
       $$('div', {className: 'panel-content'},
