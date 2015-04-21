@@ -13,7 +13,7 @@ var RemarkToolMixin = _.extend({}, AnnotationToolMixin, {
       content: ""
     }
   },
-  disabledModes: ["remove"],
+  disabledModes: ["remove", "fusion"],
   afterCreate: function(anno) {
     console.log('after create', anno);
     this.props.writerCtrl.replaceState({
