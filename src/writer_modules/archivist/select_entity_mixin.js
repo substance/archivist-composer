@@ -93,6 +93,7 @@ var SelectEntityMixin = {
     } else {
       backend.getSuggestedEntities(function(err, entities) {
         self.setState({
+          state: entities.state,
           entities: entities.results
         });
       });
@@ -160,14 +161,15 @@ var SelectEntityMixin = {
             placeholder: "Type to search for entities",//,
             value: this.state.searchString,
             onChange: this.handleSearchStringChange
-          }) //,
-          // $$('select', {className: "entity-type"},
-          //   $$('option', {value: ""}, "All"),
-          //   $$('option', {value: "prison"}, "Prison"),
-          //   $$('option', {value: "toponym"}, "Toponym"),
-          //   $$('option', {value: "person"}, "Person"),
-          //   $$('option', {value: "definition"}, "Definition")
-          // )
+          }),
+          $$('select', {className: "entity-type"},
+            $$('option', {value: ""}, "All"),
+            //$$('option', {value: "prison"}, "Prison"),
+            //$$('option', {value: "toponym"}, "Toponym"),
+            $$('option', {value: "location"}, "Location"),
+            $$('option', {value: "person"}, "Person"),
+            $$('option', {value: "definition"}, "Definition")
+          )
         ),
         $$('div', {
             className: "search-result-state"

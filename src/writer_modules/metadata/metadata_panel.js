@@ -201,12 +201,12 @@ var MetadataPanel = React.createClass({
 
   renderPrisons: function() {
     var prisonEls = this.state.prisons.map(function(prison) {
-      return $$('span', {className: 'prison'},
+      return $$('span', {className: 'entity-tag prison'},
         $$('span', {className: 'name'}, prison.name),
         $$('a', {
           href: "#",
           "data-id": prison.id,
-          className: 'remove-prison',
+          className: 'remove-tag remove-prison',
           onClick: this.handleRemovePrison,
           dangerouslySetInnerHTML: {__html: '<i class="fa fa-remove"></i>'},
         })
@@ -215,8 +215,8 @@ var MetadataPanel = React.createClass({
 
     return $$('div', {className: 'prisons-wrapper', contentEditable: false},
       label("Prisons"),
-      $$('div', {className: 'prisons'}, prisonEls),
-      $$('a', {href: '#', className: 'add-prison', onClick: this.handleAddPrison}, "Add prison")
+      $$('div', {className: 'entity-tags prisons'}, prisonEls),
+      $$('a', {href: '#', className: 'add-entity add-prison', onClick: this.handleAddPrison}, "Add prison")
     );
   },
 
@@ -227,13 +227,13 @@ var MetadataPanel = React.createClass({
     var waypointEls = waypoints.map(function(waypoint) {
       waypointLocation = this.state.waypointLocations[waypoint.entityId];
 
-      return $$('span', {className: 'waypoint'},
+      return $$('span', {className: 'entity-tag waypoint'},
         $$('span', {className: 'name'}, waypointLocation.name),
         $$('input', {"data-waypoint-id": waypoint.id, className: 'density', min: 1, max: 5, type: 'number', defaultValue: waypoint.density, onChange: this.handleWaypointDensityChange}),
         $$('a', {
           href: "#",
           "data-id": waypoint.id,
-          className: 'remove-waypoint',
+          className: 'remove-tag remove-waypoint',
           onClick: this.handleRemoveWaypoint,
           dangerouslySetInnerHTML: {__html: '<i class="fa fa-remove"></i>'},
         })
@@ -242,8 +242,8 @@ var MetadataPanel = React.createClass({
 
     return $$('div', {className: 'waypoints-wrapper', contentEditable: false},
       label("Waypoints"),
-      $$('div', {className: 'waypoints'}, waypointEls),
-      $$('a', {href: '#', className: 'add-waypoint', onClick: this.handleAddWaypoint}, "Add waypoint")
+      $$('div', {className: 'entity-tags waypoints'}, waypointEls),
+      $$('a', {href: '#', className: 'add-entity add-waypoint', onClick: this.handleAddWaypoint}, "Add waypoint")
     );
   },
 
