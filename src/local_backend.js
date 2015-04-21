@@ -72,7 +72,7 @@ LocalBackend.Prototype = function() {
     cb(null, SUGGESTED_ENTITIES);
   };
 
-  this.searchEntities = function(searchStr, cb) {
+  this.searchEntities = function(searchStr, type, cb) {
     cb(null, SEARCH_RESULT);
   };
 
