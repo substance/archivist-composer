@@ -11,11 +11,8 @@ function label(name) {
   return $$('div', {className: 'label', contentEditable: false}, name);
 }
 
-function button(name, type) {
-  return $$('a', {className: 'button', href: '#', contentEditable: false}, name);
-}
 
-// Metadat Panel
+// Metadata Panel
 // ------------------
 
 var MetadataPanel = React.createClass({
@@ -40,13 +37,6 @@ var MetadataPanel = React.createClass({
 
   getInitialState: function() {
     this.surface = new Surface(new Surface.FormEditor(this.props.writerCtrl.doc));
-    // var doc = this.props.writerCtrl.doc;
-    // var waypointDensities = {};
-    // var waypoints = doc.get("document").getWaypoints();
-    // _.each(waypoints, function(waypoint) {
-    //   waypointDensities[waypoint.id] = waypoint.density;
-    // });
-
     return null;
   },
 
@@ -66,7 +56,9 @@ var MetadataPanel = React.createClass({
     var refId = this.props.subjectReferenceId;
     // if (info.updateSubjectReference) return;
 
-    if (change.isAffected(["document", "interviewee_prisons"])) {
+    if (change.isAffected(["document", "interviewee_prisons"]) ||
+        change.isAffected(["document", "interviewee_waypoints"]) ||
+        change.isAffected(["document", "project_location"])) {
       // this.forceUpdate();
       console.log('DOC IS affected');
       this.loadMetadata();
@@ -74,8 +66,6 @@ var MetadataPanel = React.createClass({
   },
 
   handleWaypointDensityChange: function(e) {
-    console.log('handleWaypointDensityChange', e);
-
     var waypointId = e.currentTarget.dataset.waypointId;
     var newDensityValue = e.currentTarget.value;
 
@@ -100,6 +90,21 @@ var MetadataPanel = React.createClass({
     backend.getEntities(prisonIds, cb);
   },
 
+  loadProjectLocation: function(cb) {
+    var backend = this.context.backend;
+    var doc = this.props.writerCtrl.doc;
+
+    var projectLocationId = doc.get('document').project_location;
+    if (projectLocationId) {
+      backend.getEntities([projectLocationId], function(err, locations) {
+        if (err) return cb(err);
+        cb(null, locations[0]);
+      });
+    } else {
+      cb(null, null);
+    }
+  },
+
   loadWaypointLocations: function(cb) {
     var backend = this.context.backend;
     var doc = this.props.writerCtrl.doc;
@@ -122,9 +127,12 @@ var MetadataPanel = React.createClass({
 
     this.loadPrisons(function(err, prisons) {
       self.loadWaypointLocations(function(err, waypointLocations) {
-        self.setState({
-          prisons: prisons,
-          waypointLocations: waypointLocations
+        self.loadProjectLocation(function(err, projectLocation) {
+          self.setState({
+            prisons: prisons,
+            waypointLocations: waypointLocations,
+            projectLocation: projectLocation
+          });
         });
       });
     });
@@ -138,9 +146,61 @@ var MetadataPanel = React.createClass({
     });
   },
 
+  handleAddPrison: function(e) {
+    e.preventDefault();
+    this.props.writerCtrl.replaceState({
+      contextId: "selectPrison"
+    });
+  },
+
+  handleAddWaypoint: function(e) {
+    e.preventDefault();
+    this.props.writerCtrl.replaceState({
+      contextId: "selectWaypoint"
+    });
+  },
+
+  handleSetProjectLocation: function(e) {
+    e.preventDefault();
+    this.props.writerCtrl.replaceState({
+      contextId: "selectProjectLocation"
+    });
+  },
+
+  handleRemoveProjectLocation: function(e) {
+    e.preventDefault();
+    var doc = this.props.writerCtrl.doc;
+
+    var tx = this.props.writerCtrl.doc.startTransaction();
+    try {
+      tx.set(["document", "project_location"], null);
+      tx.save({});
+    } finally {
+      tx.cleanup();
+    }
+  },
+
+  handleRemoveWaypoint: function(e) {
+    var waypointId = e.currentTarget.dataset.id;
+    e.preventDefault();
+    var doc = this.props.writerCtrl.doc;
+
+    var tx = this.props.writerCtrl.doc.startTransaction();
+    try {
+      tx.delete(waypointId);
+
+      var waypointIds = doc.get('document').interviewee_waypoints;
+      waypointIds = _.without(waypointIds, waypointId);
+
+      tx.set(["document", "interviewee_waypoints"], waypointIds);
+      tx.save({});
+    } finally {
+      tx.cleanup();
+    }
+  },
+
   handleRemovePrison: function(e) {
     var prisonId = e.currentTarget.dataset.id;
-    console.log('remove the prison', prisonId);
 
     e.preventDefault();
     var doc = this.props.writerCtrl.doc;
@@ -156,14 +216,37 @@ var MetadataPanel = React.createClass({
     }
   },
 
+  renderProjectLocation: function() {
+    var elems = [label("Project Location")];
+    
+    if (this.state.projectLocation) {
+      elems.push($$('span', {className: 'project-location'}, this.state.projectLocation.name));
+      elems.push($$('a', {
+        href: "#",
+        "data-id": this.state.projectLocation.id,
+        className: 'remove-project-location',
+        onClick: this.handleRemoveProjectLocation,
+        dangerouslySetInnerHTML: {__html: '<i class="fa fa-remove"></i>'},
+      }));
+    } else {
+      elems.push($$('a', {
+        href: '#',
+        className: 'set-project-location',
+        onClick: this.handleSetProjectLocation,
+      }, "Set projectLocation"));
+    }
+
+    return $$('div', {contentEditable: false, className: 'project-location-wrapper'}, elems);
+  },
+
   renderPrisons: function() {
     var prisonEls = this.state.prisons.map(function(prison) {
-      return $$('span', {className: 'prison'},
+      return $$('span', {className: 'entity-tag prison'},
         $$('span', {className: 'name'}, prison.name),
         $$('a', {
           href: "#",
           "data-id": prison.id,
-          className: 'remove-prison',
+          className: 'remove-tag remove-prison',
           onClick: this.handleRemovePrison,
           dangerouslySetInnerHTML: {__html: '<i class="fa fa-remove"></i>'},
         })
@@ -172,8 +255,8 @@ var MetadataPanel = React.createClass({
 
     return $$('div', {className: 'prisons-wrapper', contentEditable: false},
       label("Prisons"),
-      $$('div', {className: 'prisons'}, prisonEls),
-      $$('a', {href: '#', className: 'add-prison'}, "Add prison")
+      $$('div', {className: 'entity-tags prisons'}, prisonEls),
+      $$('a', {href: '#', className: 'add-entity add-prison', onClick: this.handleAddPrison}, "Add prison")
     );
   },
 
@@ -184,13 +267,13 @@ var MetadataPanel = React.createClass({
     var waypointEls = waypoints.map(function(waypoint) {
       waypointLocation = this.state.waypointLocations[waypoint.entityId];
 
-      return $$('span', {className: 'waypoint'},
+      return $$('span', {className: 'entity-tag waypoint'},
         $$('span', {className: 'name'}, waypointLocation.name),
         $$('input', {"data-waypoint-id": waypoint.id, className: 'density', min: 1, max: 5, type: 'number', defaultValue: waypoint.density, onChange: this.handleWaypointDensityChange}),
         $$('a', {
           href: "#",
           "data-id": waypoint.id,
-          className: 'remove-waypoint',
+          className: 'remove-tag remove-waypoint',
           onClick: this.handleRemoveWaypoint,
           dangerouslySetInnerHTML: {__html: '<i class="fa fa-remove"></i>'},
         })
@@ -199,8 +282,8 @@ var MetadataPanel = React.createClass({
 
     return $$('div', {className: 'waypoints-wrapper', contentEditable: false},
       label("Waypoints"),
-      $$('div', {className: 'waypoints'}, waypointEls),
-      $$('a', {href: '#', className: 'add-waypoint', onClick: this.handleAddWaypoint}, "Add waypoint")
+      $$('div', {className: 'entity-tags waypoints'}, waypointEls),
+      $$('a', {href: '#', className: 'add-entity add-waypoint', onClick: this.handleAddWaypoint}, "Add waypoint")
     );
   },
 
@@ -239,10 +322,7 @@ var MetadataPanel = React.createClass({
           this.renderTextProperty("interviewee_forced_labor_type"),
 
           this.renderPrisons(),
-
           this.renderWaypoints()
-
-          
         ),
 
         $$('div', {className: 'project section'},
@@ -252,8 +332,7 @@ var MetadataPanel = React.createClass({
           this.renderTextProperty('project_name'),
 
           // Project location
-          label("Location"),
-          button("Set location"),
+          this.renderProjectLocation(),
 
           // Where the interview took place
           label("Place"),

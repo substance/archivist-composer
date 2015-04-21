@@ -15,7 +15,6 @@ var RemarkToolMixin = _.extend({}, AnnotationToolMixin, {
   },
   disabledModes: ["remove", "fusion"],
   afterCreate: function(anno) {
-    console.log('after create', anno);
     this.props.writerCtrl.replaceState({
       contextId: "remarks",
       remarkId: anno.id

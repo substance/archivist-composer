@@ -835,10 +835,20 @@ a:hover {
 }
 
 .search-result-state {
-  padding: 4px 22px;
+  padding: 4px 14px 4px 22px;
   font-style: italic;
   background: #fff;
   font-size: 13px;
+}
+
+.search-result-state .add-entity {
+  float: right;
+  font-size: 15px;
+}
+
+.search-result-state .add-entity a {
+  padding: 0px 2px;
+  color: #777;
 }
 
 /* Custom scrollbar styles */
@@ -927,7 +937,7 @@ a:hover {
   margin: 10px 0;
   display: block;
   background: white;
-  padding: 3px;
+  padding: 3px 5px;
   font-size: 14px;
   border: 1px solid #eee;
 }
@@ -944,12 +954,36 @@ a:hover {
 }
 
 /* prisons list */
-.metadata-panel-component .prisons .prison {
-  margin-right: 10px;
+
+.metadata-panel-component .entity-tags {
+  margin-top: 10px;
+  margin-bottom: 2px;
 }
 
-.metadata-panel-component .prisons .prison .name {
+.metadata-panel-component .entity-tags .entity-tag {
+  margin-right: 10px;
+  color: #555555;
+  background: #efefef;
+  border-radius: 4px;
+  cursor: default;
+  margin-top: 5px;
+  padding: 2px 6px;
+}
+
+.metadata-panel-component .entity-tags .entity-tag .name {
   padding-right: 5px;
+  font-size: 14px;
+}
+
+.metadata-panel-component a.remove-tag {
+  color: #777;
+  font-size: 12px;
+}
+
+.metadata-panel-component .add-entity {
+  font-size: 14px;
+  margin-bottom: 10px;
+  display: block;
 }
 
 /* waypoints list */
@@ -963,6 +997,10 @@ a:hover {
 
 .metadata-panel-component .waypoints .waypoint .density {
   width: 30px;
+  font-size: 10px;
+  margin: 0px 7px 0px 2px;
+  position: relative;
+  top: -2px;
 }
 
 /* Subject component
