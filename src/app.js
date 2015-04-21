@@ -38,10 +38,18 @@ if (window.devMode) {
 var notifications = new NotificationService();
 
 var htmlImporter = new Substance.Document.HtmlImporter({
-    schema: Interview.schema,
-    trimWhitespaces: true,
-    REMOVE_INNER_WS: true,
+  schema: Interview.schema,
+  trimWhitespaces: true,
+  REMOVE_INNER_WS: true,
 });
+// default handling for elemens with are not in the model
+htmlImporter.defaultConverter = function(el, converter) {
+  return {
+    type: 'text',
+    content: el.textContent
+  };
+};
+
 var htmlExporter = new Substance.Document.HtmlExporter({
   // configuration
 });
