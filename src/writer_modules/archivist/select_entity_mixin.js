@@ -171,10 +171,23 @@ var SelectEntityMixin = {
             $$('option', {value: "definition"}, "Definition")
           )
         ),
-        $$('div', {
-            className: "search-result-state"
-          },
-          $$('span', { className: "state" }, stateMessage)
+        $$('div', {className: "search-result-state"},
+          $$('span', { className: "state" }, stateMessage),
+          $$('span', { className: "add-entity" },
+            $$('span', { className: "label" }, "Add new: "),
+            $$('a', { href: "/prisons/add", target: "_blank" },
+              $$('i', { className: "fa fa-th" }, "")
+            ),
+            $$('a', { href: "/toponyms/add", target: "_blank" },
+              $$('i', { className: "fa fa-globe" }, "")
+            ),
+            $$('a', { href: "/definitions/add", target: "_blank" },
+              $$('i', { className: "fa fa-bookmark" }, "")
+            ),
+            $$('a', { href: "/persons/add", target: "_blank" },
+              $$('i', { className: "fa fa-users" }, "")
+            )
+          )
         ),
         $$('div', {className: "entities"},
           entityNodes
