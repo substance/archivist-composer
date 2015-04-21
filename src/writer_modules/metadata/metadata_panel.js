@@ -142,6 +142,35 @@ var MetadataPanel = React.createClass({
     });
   },
 
+  renderInterviewType: function() {
+    var selected = doc.get('document').record_type;
+
+    var getSelectAttributes = function(name) {
+      var result = {
+        value: name
+      }
+      if (selected == name) result.selected = true;
+      return result;
+    };
+
+    return $$('select', {contentEditable: false, onChange: this.handleInterviewTypeState},
+      $$('option', getSelectAttributes('video'), "Video"),
+      $$('option', getSelectAttributes('audio'), "Audio")
+    );
+  },
+
+  handleInterviewTypeState: function(e) {
+    var value = e.currentTarget.value;
+
+    var tx = this.props.writerCtrl.doc.startTransaction();
+    try {
+      tx.set(["document", "record_type"], value);
+      tx.save({});
+    } finally {
+      tx.cleanup();
+    }
+  },
+
   handleAddPrison: function(e) {
     e.preventDefault();
     this.props.writerCtrl.replaceState({
@@ -216,20 +245,23 @@ var MetadataPanel = React.createClass({
     var elems = [label("Project Location")];
     
     if (this.state.projectLocation) {
-      elems.push($$('span', {className: 'project-location'}, this.state.projectLocation.name));
-      elems.push($$('a', {
-        href: "#",
-        "data-id": this.state.projectLocation.id,
-        className: 'remove-project-location',
-        onClick: this.handleRemoveProjectLocation,
-        dangerouslySetInnerHTML: {__html: '<i class="fa fa-remove"></i>'},
-      }));
+      var projectLocation = $$('span', {className: 'entity-tag', contentEditable: false},
+        $$('span', {className: 'project-location name'}, this.state.projectLocation.name),
+        $$('a', {
+          href: "#",
+          "data-id": this.state.projectLocation.id,
+          className: 'remove-tag remove-project-location',
+          onClick: this.handleRemoveProjectLocation,
+          dangerouslySetInnerHTML: {__html: '<i class="fa fa-remove"></i>'},
+        })
+      );
+      elems.push(projectLocation);
     } else {
       elems.push($$('a', {
         href: '#',
-        className: 'set-project-location',
+        className: 'add-entity set-project-location',
         onClick: this.handleSetProjectLocation,
-      }, "Set projectLocation"));
+      }, "Set project Location"));
     }
 
     return $$('div', {contentEditable: false, className: 'project-location-wrapper'}, elems);
@@ -340,10 +372,7 @@ var MetadataPanel = React.createClass({
 
           // Video or audio
           label("Interview Type"),
-          $$('select', {contentEditable: false},
-            $$('option', {value: "video"}, "Video"),
-            $$('option', {value: "audio"}, "Audio")
-          ),
+          this.renderInterviewType(),
 
           // Where the interview took place
           label("Duration (in minutes)"),

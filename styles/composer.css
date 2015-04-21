@@ -960,7 +960,7 @@ a:hover {
   margin-bottom: 2px;
 }
 
-.metadata-panel-component .entity-tags .entity-tag {
+.metadata-panel-component .entity-tag {
   margin-right: 10px;
   color: #555555;
   background: #efefef;
@@ -970,7 +970,7 @@ a:hover {
   padding: 2px 6px;
 }
 
-.metadata-panel-component .entity-tags .entity-tag .name {
+.metadata-panel-component .entity-tag .name {
   padding-right: 5px;
   font-size: 14px;
 }
@@ -1001,6 +1001,16 @@ a:hover {
   margin: 0px 7px 0px 2px;
   position: relative;
   top: -2px;
+}
+
+/* project location */
+
+.project-location-wrapper {
+  padding-bottom: 10px;
+}
+
+.project-location-wrapper .add-entity {
+  margin-bottom: 0px;
 }
 
 /* Subject component
