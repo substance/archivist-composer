@@ -23,7 +23,7 @@ var sampleDoc = {
 
       // Project related
       "project_name": "Internationales Sklaven-und Zwangsarbeiter Befragungsprojekt",
-      "project_location": "location_234234324234234234",
+      "project_location": "54ef1331afda2d3c024e4817",
       "conductor": "Irina Ostrovskaya",
       "operator": "Eduard Kechedjiyan",
       "sound_operator": "Eduard Kechedjiyan",
