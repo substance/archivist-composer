@@ -439,6 +439,7 @@ a:hover {
   padding-bottom: 0px;
   font-size: 22px;
   font-weight: 600;
+  line-height: 30px;
 }
 
 .content-panel-component .container-node.content .nodes {
