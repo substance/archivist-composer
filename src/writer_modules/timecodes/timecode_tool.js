@@ -1,7 +1,7 @@
-var BasicToolMixin = require("substance/writer").BasicToolMixin;
+var AnnotationToolMixin = require("substance/writer").AnnotationToolMixin;
 
 var TimecodeTool = React.createClass({
-  mixins: [BasicToolMixin],
+  mixins: [AnnotationToolMixin],
   displayName: "TimecodeTool",
   annotationType: "timecode",
   toolIcon: "fa-clock-o"

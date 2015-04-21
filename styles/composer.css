@@ -405,6 +405,10 @@ a:hover {
   float: right;
 }
 
+.content-tools-component .tools a.remark-tool-component {
+  float: right;
+}
+
 .content-tools-component .tools a.active {
   opacity: 1.0;
 }
@@ -430,8 +434,9 @@ a:hover {
   position: relative;
 }
 
-.content-panel-component .title {
-  padding: 20px 0px;
+.content-panel-component .interview-title {
+  padding: 40px 40px;
+  padding-bottom: 0px;
   font-size: 22px;
   font-weight: 600;
 }
@@ -592,23 +597,16 @@ a:hover {
   position: relative;
 }
 
-.container-annotation.active .anchor-caret {
-  display: block;
-  position: absolute;
-  bottom: -6px;
-  left: -7px;
-  cursor: pointer;
-
-  /* This creates a rectangle shape*/
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 8px solid rgba(145, 187, 4, 1);
-}
-
 .container-annotation.active.annotation-fragment {
   background-color: rgba(145, 187, 4, 0.2);
+}
+
+.container-annotation.remark.annotation-fragment {
+  background: rgba(255, 254, 99, 0.3);
+}
+
+.container-annotation.remark.annotation-fragment.active {
+  background: rgba(255, 254, 99, 0.8);
 }
 
 /* Brackets for subject annotations
@@ -647,7 +645,6 @@ a:hover {
 }
 
 
-
 /* Selection style sheets
 -----------------------------------------------------*/
 
@@ -679,11 +676,13 @@ a:hover {
 
 .show-entity-reference-panel-component .entity {
   cursor: auto;
-  border: none;
+  border-left: 2px solid transparent;
+  border-bottom: none;
 }
 
-.show-entity-reference-panel-component .entity:hover, .show-entity-reference-panel-component .entity.active {
-  border: none;
+.show-entity-reference-panel-component .entity:hover,
+.show-entity-reference-panel-component .entity.active {
+  /*border-left: 2px solid transparent;*/
 }
 
 
@@ -756,6 +755,48 @@ a:hover {
   color: #A99C90;
 }
 
+
+/* Entities component
+-----------------------------------------------------*/
+
+.resource-container .remark {
+  position: relative;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  border-left: 2px solid transparent;
+}
+
+.resource-container .remark:hover {
+  border-left: 2px solid rgba(255, 254, 99, 0.5);
+}
+
+.resource-container .remark.active {
+  background: white;
+  border-left: 2px solid rgba(255, 254, 99, 1);
+}
+
+.resource-container .remark .remark-header {
+  padding-bottom: 20px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.resource-container .remark .remark-header .delete-remark {
+  display: block;
+  float: right;
+}
+
+.resource-container .remark .remark-title {
+  color: #777;
+  font-size: 12px;
+  background: rgba(255, 254, 99, 0.21);
+}
+
+.resource-container .remark.active .remark-title {
+  background: rgba(255, 254, 99, 1); 
+}
+
+
 /* Edit Subject Reference Panel
 -----------------------------------------------------*/
 
@@ -794,9 +835,30 @@ a:hover {
   right: 20px;
 }
 
+.search-result-state {
+  padding: 4px 14px 4px 22px;
+  font-style: italic;
+  background: #fff;
+  font-size: 13px;
+}
+
+.search-result-state .add-entity {
+  float: right;
+  font-size: 15px;
+}
+
+.search-result-state .add-entity a {
+  padding: 0px 2px;
+  color: #777;
+}
+
 /* Custom scrollbar styles */
 .scrollbar-component.entities .highlight {
   background-color: rgba(11, 157, 217, 1);
+}
+
+.scrollbar-component.remarks .highlight {
+  background: rgba(255, 254, 99, 1);
 }
 
 .scrollbar-component.showEntityReference .highlight,
@@ -863,7 +925,8 @@ a:hover {
 -----------------------------------------------------*/
 
 .metadata-panel-component .panel-content {
-  padding: 20px;
+  padding: 0px 0px;
+
 }
 
 .metadata-panel-component .label {
@@ -875,8 +938,80 @@ a:hover {
   margin: 10px 0;
   display: block;
   background: white;
-  padding: 3px;
+  padding: 3px 5px;
+  font-size: 14px;
   border: 1px solid #eee;
+}
+
+.metadata-panel-component .section h3 {
+  font-weight: 600;
+  padding-bottom: 10px;
+}
+
+.metadata-panel-component .section {
+  position: relative;
+  padding: 20px 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* prisons list */
+
+.metadata-panel-component .entity-tags {
+  margin-top: 10px;
+  margin-bottom: 2px;
+}
+
+.metadata-panel-component .entity-tag {
+  margin-right: 10px;
+  color: #555555;
+  background: #efefef;
+  border-radius: 4px;
+  cursor: default;
+  margin-top: 5px;
+  padding: 2px 6px;
+}
+
+.metadata-panel-component .entity-tag .name {
+  padding-right: 5px;
+  font-size: 14px;
+}
+
+.metadata-panel-component a.remove-tag {
+  color: #777;
+  font-size: 12px;
+}
+
+.metadata-panel-component .add-entity {
+  font-size: 14px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* waypoints list */
+.metadata-panel-component .waypoints .waypoint {
+  margin-right: 10px;
+}
+
+.metadata-panel-component .waypoints .waypoint .name {
+  padding-right: 5px;
+}
+
+.metadata-panel-component .waypoints .waypoint .density {
+  width: 30px;
+  font-size: 10px;
+  margin: 0px 7px 0px 2px;
+  position: relative;
+  top: -2px;
+}
+
+/* project location */
+
+.project-location-wrapper {
+  padding-bottom: 10px;
+}
+
+.project-location-wrapper .add-entity {
+  margin-bottom: 0px;
 }
 
 /* Subject component
