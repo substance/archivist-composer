@@ -794,7 +794,7 @@ a:hover {
 }
 
 .resource-container .remark.active .remark-title {
-  background: rgba(255, 254, 99, 1); 
+  background: rgba(255, 254, 99, 1);
 }
 
 
@@ -1036,10 +1036,22 @@ a:hover {
 }
 
 .clipboard {
-  visibility: hidden;
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  height: 0px;
-  width: 0px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  display: block;
+  font-size: 1;
+  z-index: -1;
+  color: transparent;
+  background: transparent;
+  overflow: hidden;
+  border: none;
+  padding: 0;
+  resize: none;
+  outline: none;
+  -webkit-user-select: text;
+  user-select: text;
+  /* Because for user-select:none, Safari won't allow input*/
 }
