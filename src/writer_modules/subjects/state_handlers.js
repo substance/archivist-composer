@@ -29,6 +29,15 @@ var stateHandlers = {
     }
   },
 
+  handleSelectionChange: function(writerCtrl, sel, annotations) {
+    var state = writerCtrl.getState();
+
+    // Just prevent other modules from handling this
+    if (state.contextId === EditSubjectReferencePanel.contextId) {
+      return true;
+    }
+  },
+
   // Determine highlighted nodes
   // -----------------
   //
