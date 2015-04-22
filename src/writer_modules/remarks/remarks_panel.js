@@ -32,7 +32,9 @@ var RemarksPanel = React.createClass({
   },
 
   componentDidMount: function() {
-    this.props.writerCtrl.registerSurface(this.surface, "remarks");
+    this.props.writerCtrl.registerSurface(this.surface, "remarks", {
+      enabledTools: ["strong", "emphasis"]
+    });
     this.surface.attach(this.getDOMNode());
   },
 
