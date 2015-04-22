@@ -217,13 +217,30 @@ var ContentEditor = React.createClass({
     var surface = this.surface;
     var doc = this.props.doc;
     doc.disconnect(this);
+
     this.props.writerCtrl.unregisterSurface(surface);
     surface.detach();
   },
 
   onDocumentChange: function(change) {
+    var writerCtrl = this.props.writerCtrl;
     // console.log('##### ContainerComponent.onDocumentChange', change);
-    if (change.isAffected([this.props.node.id, 'nodes'])) {
+
+    var deletedSubjectRefs = _.filter(change.deleted, function(node) {
+      return node.type === "subject_reference";
+    });
+
+    // HACK: implicitly switch the state when a subject reference is deleted and currently open
+    // This implicitly also updates the brackets accordingly
+    var subjectRef = deletedSubjectRefs[0];
+    if (subjectRef && writerCtrl.state.subjectReferenceId === subjectRef.id) {
+      writerCtrl.replaceState({
+        contextId: 'subjects'
+      });
+      return;
+    }
+
+    if (change.isAffected([this.props.node.id, 'nodes']) /* || deletedSubjectRefs.length > 0 */) {
       var self = this;
       // console.log('##### calling forceUpdate after document change');
       this.forceUpdate(function() {
