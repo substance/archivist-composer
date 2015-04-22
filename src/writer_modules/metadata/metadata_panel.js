@@ -78,6 +78,7 @@ var MetadataPanel = React.createClass({
   },
 
   componentWillUnmount: function() {
+    this.props.writerCtrl.doc.disconnect(this);
     this.props.writerCtrl.unregisterSurface(this.surface);
     this.surface.detach();
   },

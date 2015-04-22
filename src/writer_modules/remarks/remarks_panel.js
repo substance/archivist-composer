@@ -1,7 +1,7 @@
 var $$ = React.createElement;
 var Substance = require("substance");
 var Surface = Substance.Surface;
-
+var _ = require("substance/helpers");
 
 
 // Sub component
@@ -27,7 +27,27 @@ var RemarksPanel = React.createClass({
   },
 
   componentWillMount: function() {
-    this.surface = new Surface(new Surface.FormEditor(this.props.writerCtrl.doc));
+    var writerCtrl = this.props.writerCtrl;
+    var surface = new Surface(new Surface.FormEditor(this.props.writerCtrl.doc));
+
+    surface.connect(this, {
+      'selection:changed': function(sel) {
+        if (!sel.getPath) return; // pobably a null selection
+        var remarkId = sel.getPath()[0];
+        writerCtrl.replaceState({
+          contextId: "remarks",
+          remarkId: remarkId
+        });
+
+        // setTimeout(function() {
+        //   console.log('setting sel again', sel.toString());
+        //   surface.setSelection(sel);
+        // }, 0);
+      }
+    });
+
+    this.surface = surface;
+
     return {};
   },
 
@@ -44,20 +64,6 @@ var RemarksPanel = React.createClass({
   },
 
 
-  handleToggle: function(remarkId) {
-    var writerCtrl = this.props.writerCtrl;
-
-    if (writerCtrl.state.remarkId === remarkId) {
-      writerCtrl.replaceState({
-        contextId: "remarks"
-      });
-    } else {
-      writerCtrl.replaceState({
-        contextId: "remarks",
-        remarkId: remarkId
-      });
-    }
-  },
 
   // Rendering
   // -------------------
@@ -71,7 +77,6 @@ var RemarksPanel = React.createClass({
       return $$(Remark, {
         remark: remark,
         key: remark.id,
-        handleToggle: self.handleToggle,
         active: remark === props.activeRemark,
         writerCtrl: props.writerCtrl
       });
