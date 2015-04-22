@@ -92,8 +92,19 @@ var sampleDoc = {
       "id": "subject_reference_1",
       "type": "subject_reference",
       "container": "content",
-      "startPath": ["text_2", "content"],
+      "startPath": ["text_1", "content"],
       "startOffset": 100,
+      "endPath": ["text_2", "content"],
+      "endOffset": 200,
+      "target": ["54bae99ca868bc3ec7fb5ad8"]
+    },
+
+    "subject_reference_2": {
+      "id": "subject_reference_2",
+      "type": "subject_reference",
+      "container": "content",
+      "startPath": ["text_2", "content"],
+      "startOffset": 10,
       "endPath": ["text_4", "content"],
       "endOffset": 40,
       "target": ["54bae4cda868bc6fab4bcd0e", "54bae99ca868bc3ec7fb5ad8"]
@@ -119,17 +130,6 @@ var sampleDoc = {
       "endPath": ["text_2", "content"],
       "endOffset": 520,
       "content": "Pellentesque eget magna porta, rutrum odio et, commodo lacus. Sed vitae vehicula ante. Quisque suscipit iaculis est, vitae aliquet lacus dictum ut."
-    },
-
-    "subject_reference_2": {
-      "id": "subject_reference_2",
-      "type": "subject_reference",
-      "container": "content",
-      "startPath": ["text_1", "content"],
-      "startOffset": 100,
-      "endPath": ["text_2", "content"],
-      "endOffset": 40,
-      "target": ["54bae99ca868bc3ec7fb5ad8"]
     },
 
     "text_3": {
