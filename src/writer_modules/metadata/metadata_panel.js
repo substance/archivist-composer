@@ -11,7 +11,6 @@ function label(name) {
   return $$('div', {className: 'label', contentEditable: false}, name);
 }
 
-
 // Metadata Panel
 // ------------------
 
@@ -41,7 +40,10 @@ var MetadataPanel = React.createClass({
   },
 
   componentDidMount: function() {
-    this.props.writerCtrl.registerSurface(this.surface, "metadata");
+    this.props.writerCtrl.registerSurface(this.surface, "metadata", {
+      enabledTools: ["strong", "emphasis"]
+    });
+
     this.surface.attach(this.getDOMNode());
 
     var doc = this.props.writerCtrl.doc;
@@ -146,17 +148,9 @@ var MetadataPanel = React.createClass({
   renderInterviewType: function() {
     var selected = doc.get('document').record_type;
 
-    var getSelectAttributes = function(name) {
-      var result = {
-        value: name
-      }
-      if (selected == name) result.selected = true;
-      return result;
-    };
-
-    return $$('select', {contentEditable: false, onChange: this.handleInterviewTypeState},
-      $$('option', getSelectAttributes('video'), "Video"),
-      $$('option', getSelectAttributes('audio'), "Audio")
+    return $$('select', {contentEditable: false, onChange: this.handleInterviewTypeState, defaultValue: selected},
+      $$('option', 'video', "Video"),
+      $$('option', 'audio', "Audio")
     );
   },
 

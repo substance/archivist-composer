@@ -22,7 +22,6 @@ var stateHandlers = {
       writerCtrl.replaceState({
         contextId: nextContextId
       });
-      console.log('handled');
       return true;
     }
   }

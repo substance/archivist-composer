@@ -80,11 +80,10 @@ var SelectEntityMixin = {
 
   loadEntities: function(searchString) {
     var self = this;
-
     var backend = this.context.backend;
 
     if (searchString) {
-      backend.searchEntities(searchString, type, function(err, entities) {
+      backend.searchEntities(searchString, this.props.entityType, function(err, entities) {
         self.setState({
           state: entities.state,
           entities: entities.results
