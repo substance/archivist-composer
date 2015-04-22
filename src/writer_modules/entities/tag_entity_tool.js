@@ -1,56 +1,22 @@
-var $$ = React.createElement;
+'use strict';
 
-var TagEntityTool = React.createClass({
-  displayName: "TagEntityTool",
+var Substance = require('substance');
+var _ = require('substance/helpers');
+// var $$ = React.createElement;
 
-  componentDidMount: function() {
+var AnnotationToolMixin = require("substance/writer").AnnotationToolMixin;
+
+var TagEntityToolMixin = _.extend({}, AnnotationToolMixin, {
+  // Instead of creating a new annotation immediately we want to
+  // open the select entity panel
+  performAction: function() {
+    var sel = this.state.sel;
     var writerCtrl = this.props.writerCtrl;
-    writerCtrl.connect(this, {
-      'selection:changed': this.handleSelectionChange
-    });
-  },
 
-  handleSelectionChange: function(sel) {
-    var writerCtrl = this.props.writerCtrl;
-
-    if (sel.isNull() || !sel.isPropertySelection()) {
-      this.setState({
-        active: false,
-        selected: false
-      });
-    } else {
-      var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), sel.getStartOffset(), sel.getEndOffset(), "entity_reference");
-      var selected = false;
-      var active = annotations.length === 0 && !sel.isCollapsed();
-      this.setState({
-        active: active,
-        selected: selected
-      });
-    }
-  },
-
-  handleMouseDown: function(e) {
-    e.preventDefault();
-
+    // TODO: implement sel.getText() so we can get this from the document directly;
     var searchString = window.getSelection().toString();
 
-    if (!this.state.active) return;
-
-    var writerCtrl = this.props.writerCtrl;
-    var sel = writerCtrl.getSelection();
-
-    if (sel.isNull() || !sel.isPropertySelection()) return;
-
-    var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), sel.getStartOffset(), sel.getEndOffset(), "entity_reference");
-
-    if (annotations.length > 0) {
-      writerCtrl.deleteAnnotation(annotations[0].id);
-      writerCtrl.replaceState({
-        contextId: "entities"
-      });
-    } else {
-      // Do nothing if selection is collapsed
-      if (sel.isCollapsed()) return;
+    if (this.state.mode === "create") {
       writerCtrl.replaceState({
         contextId: "tagentity",
         path: sel.getPath(),
@@ -58,34 +24,20 @@ var TagEntityTool = React.createClass({
         endOffset: sel.getEndOffset(),
         searchString: searchString
       });
+    } else {
+      AnnotationToolMixin.performAction.call(this);
     }
   },
 
-  handleClick: function(e) {
-    e.preventDefault(e);
-  },
+  disabledModes: ["remove", "fusion"],
+});
 
-  getInitialState: function() {
-    return {
-      active: false,
-      selected: false
-    };
-  },
-
-  render: function() {
-    var classNames = ['tag-entity-tool-component', 'tool'];
-    if (this.state.active) classNames.push("active");
-    if (this.state.selected) classNames.push("selected");
-
-    return $$("a", {
-      className: classNames.join(' '),
-      href: "#",
-      title: 'Tag Entity',
-      onMouseDown: this.handleMouseDown,
-      onClick: this.handleClick,
-      dangerouslySetInnerHTML: {__html: '<i class="fa fa-bullseye"></i>'}
-    });
-  }
+var TagEntityTool = React.createClass({
+  mixins: [TagEntityToolMixin],
+  displayName: "TagEntityTool",
+  annotationType: "entity_reference",
+  toolIcon: "fa-bullseye",
 });
 
 module.exports = TagEntityTool;
+
