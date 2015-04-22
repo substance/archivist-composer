@@ -236,6 +236,10 @@ var ContentEditor = React.createClass({
       return node.type === "subject_reference";
     });
 
+    var createdSubjectRefs = _.filter(change.created, function(node) {
+      return node.type === "subject_reference";
+    });
+
     // HACK: implicitly switch the state when a subject reference is deleted and currently open
     // This implicitly also updates the brackets accordingly
     var subjectRef = deletedSubjectRefs[0];
@@ -246,7 +250,7 @@ var ContentEditor = React.createClass({
       return;
     }
 
-    if (change.isAffected([this.props.node.id, 'nodes']) /* || deletedSubjectRefs.length > 0 */) {
+    if (change.isAffected([this.props.node.id, 'nodes']) || createdSubjectRefs.length > 0 ) {
       var self = this;
       // console.log('##### calling forceUpdate after document change');
       this.forceUpdate(function() {
