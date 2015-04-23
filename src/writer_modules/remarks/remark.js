@@ -82,6 +82,11 @@ var Remark = React.createClass({
       sourceText = remark.getText();
     }
 
+    // Shorten sourceText
+    if (sourceText.length > 130) {
+      sourceText = sourceText.slice(0,130) + " ...";
+    }
+    
     return $$("div", {className: className.join(" ")},
       $$('div', {contentEditable: false, className: 'remark-header', onClick: this.handleToggle},
         $$('a', {href: "#", className: 'remark-title'}, sourceText),
