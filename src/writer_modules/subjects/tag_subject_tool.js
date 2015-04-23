@@ -17,7 +17,9 @@ var SubjectReferenceToolMixin = _.extend({}, AnnotationToolMixin, {
   // When there's no existing annotation overlapping, we create a new one.
   canCreate: function(annos, sel) {
     var writerCtrl = this.props.writerCtrl;
-    return (writerCtrl.state.contextId !== "editSubjectReference" && !sel.isCollapsed()); 
+    var canCreate = writerCtrl.state.contextId !== "editSubjectReference" && !sel.isCollapsed();
+    console.log('canCreate', canCreate);
+    return canCreate; 
   },
 
   getActiveAnno: function(annos) {
@@ -37,8 +39,8 @@ var SubjectReferenceToolMixin = _.extend({}, AnnotationToolMixin, {
     if (!activeAnno) return false;
 
     var annoSel = activeAnno.getSelection();
-
-    return sel.overlaps(annoSel) && !sel.isCollapsed();
+    var canExpand = sel.overlaps(annoSel) && !sel.isCollapsed() && !sel.isInsideOf(annoSel);
+    return canExpand;
   },
 
   canFusion: function() {
@@ -58,6 +60,7 @@ var SubjectReferenceToolMixin = _.extend({}, AnnotationToolMixin, {
     if (!activeAnno) return false;
     var annoSel = activeAnno.getSelection();
     var canTruncate = (sel.isLeftAlignedWith(annoSel) || sel.isRightAlignedWith(annoSel)) && !sel.equals(annoSel);
+    console.log('canTruncate', canTruncate);
     return canTruncate;
   },
 
