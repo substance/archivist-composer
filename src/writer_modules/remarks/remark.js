@@ -36,9 +36,15 @@ var Remark = React.createClass({
   },
 
   handleDocumentChange: function(change, info) {
-    // TODO: is there a way to check if a doc update actually affects the remark annotation?
-    // This is currently done way to often
-    if (change.isAffected([this.props.remark.id, "content"])) {
+    var doc = this.props.writerCtrl.doc;
+    var remark = doc.get(this.props.remark.id);
+    if (!remark) return;
+
+    // The following only reacts on changes to the remarks start and end
+    // path, but not to changes to text in spanned nodes.
+    // TODO: we need an event proxy here that better tells you that the covered
+    // range has been affected (~ContainerAnnotation event proxy)
+    if (change.isAffected(remark.startPath) || change.isAffected(remark.endPath)) {
       this.forceUpdate();
     }
   },
@@ -65,8 +71,16 @@ var Remark = React.createClass({
     if (this.props.active) className.push("active");
 
     var doc = this.props.writerCtrl.doc;
-    var remarkSel = this.props.remark.getSelection();
-    var sourceText = doc.getTextForSelection(remarkSel);
+    // NOTE: having the remark as instance here is dangerous, as
+    // it might have been removed from the document already.
+    // TODO: don't store node instances in props
+    var remark = doc.get(this.props.remark.id);
+    var sourceText;
+    if (!remark) {
+      sourceText = "N/A";
+    } else {
+      sourceText = remark.getText();
+    }
 
     return $$("div", {className: className.join(" ")},
       $$('div', {contentEditable: false, className: 'remark-header', onClick: this.handleToggle},
