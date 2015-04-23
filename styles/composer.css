@@ -790,17 +790,22 @@ a:hover {
   padding-bottom: 20px;
   cursor: pointer;
   overflow: hidden;
+  position: relative;
+  padding-right: 40px;
 }
 
 .resource-container .remark .remark-header .delete-remark {
   display: block;
-  float: right;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
 .resource-container .remark .remark-title {
   color: #777;
   font-size: 12px;
   background: rgba(255, 254, 99, 0.21);
+  /*margin-right: 140px;*/
 }
 
 .resource-container .remark.active .remark-title {

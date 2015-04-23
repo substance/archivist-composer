@@ -30,15 +30,28 @@ var RemarksPanelMixin = _.extend({}, PanelMixin, {
     var writerCtrl = this.props.writerCtrl;
     var surface = new Surface(new Surface.FormEditor(this.props.writerCtrl.doc));
 
+
     surface.connect(this, {
       'selection:changed': function(sel) {
+        var currentRemarkId;
+        if (this.props.activeRemark) {
+          currentRemarkId = this.props.activeRemark.id;
+        }
+        
         if (!sel.getPath) return; // probably a null selection
         var remarkId = sel.getPath()[0];
-        writerCtrl.replaceState({
-          contextId: "remarks",
-          remarkId: remarkId
-        });
-        surface.rerenderDomSelection();
+        console.log('yay', remarkId, currentRemarkId, sel.toString());
+        if (remarkId !== currentRemarkId) {
+          console.log('state switching');
+          writerCtrl.replaceState({
+            contextId: "remarks",
+            remarkId: remarkId,
+            noScroll: true
+          });
+          surface.rerenderDomSelection();          
+        } else {
+          console.log('already here');
+        }
       }
     });
 

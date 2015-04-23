@@ -8,12 +8,10 @@ var TitleEditor = require("./title_editor");
 
 var ENABLED_TOOLS = ["strong", "emphasis", "timecode", "remark", "entity_reference", "subject_reference"];
 
-
 // Container Node
 // ----------------
 //
 // Represents a flat collection of nodes
-
 
 // TODO: this is not Substance.Writer but should be in Archivist
 // Plan: make this implementation an abstract mixin
