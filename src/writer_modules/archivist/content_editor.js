@@ -45,6 +45,7 @@ var ContentEditor = React.createClass({
     editor.defaultTextType = 'text';
     var options = {
       logger: this.context.notifications
+      // scrollable: 
     };
     this.surface = new Surface(editor, options);
 
@@ -113,7 +114,7 @@ var ContentEditor = React.createClass({
     // Top level structure
     // ---------
 
-    return $$('div', {className: 'content-wrapper'},
+    return $$('div', {className: 'panel-content-inner'},
       $$(TitleEditor, {writerCtrl: this.props.writerCtrl}),
       // The full fledged interview (ContainerEditor)
       $$("div", {ref: "interviewContent", className: "interview-content", contentEditable: true, "data-id": "content"},
@@ -127,7 +128,6 @@ var ContentEditor = React.createClass({
         )
       )
     );
-
   },
 
   updateBrackets: function() {

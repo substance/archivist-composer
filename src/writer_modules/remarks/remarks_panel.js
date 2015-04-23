@@ -4,6 +4,7 @@ var Surface = Substance.Surface;
 var _ = require("substance/helpers");
 
 
+
 // Sub component
 var Remark = require("./remark");
 
@@ -32,7 +33,7 @@ var RemarksPanel = React.createClass({
 
     surface.connect(this, {
       'selection:changed': function(sel) {
-        if (!sel.getPath) return; // pobably a null selection
+        if (!sel.getPath) return; // probably a null selection
         var remarkId = sel.getPath()[0];
         writerCtrl.replaceState({
           contextId: "remarks",
@@ -58,8 +59,6 @@ var RemarksPanel = React.createClass({
     this.props.writerCtrl.unregisterSurface(this.surface);
     this.surface.detach();
   },
-
-
 
   // Rendering
   // -------------------

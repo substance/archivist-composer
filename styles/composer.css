@@ -431,6 +431,10 @@ a:hover {
 -----------------------------------------------------*/
 
 .content-panel-component .container-node.content {
+  /*position: relative;*/
+}
+
+.content-panel-component .panel-content-inner {
   position: relative;
 }
 
@@ -445,7 +449,7 @@ a:hover {
 .content-panel-component .container-node.content .nodes {
   padding: 40px;
   padding-right: 60px;
-  position: relative;
+  /*position: relative;*/
 }
 
 .content-panel-component .container-node.content .nodes > .content-node.text {
@@ -479,6 +483,7 @@ a:hover {
 .content-panel-component .panel-content::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0);
 }
+
 
 
 /* Scrollbar component
