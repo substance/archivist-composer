@@ -39,6 +39,12 @@ var sampleDoc = {
       "interviewee_prisons": ["54ef1331afda2d3c024e4817", "54ef1331afda2d3c024e4818"],
       "interviewee_forced_labor_type": "intracamp work, earthworks (construction of barracks), digging tunnels for military factories",
       "interviewee_waypoints": ["waypoint_1", "waypoint_2"]
+
+      // Misc
+      "media_id": "",
+      "transcripted": false,
+      "verified": false,
+      "finished": false
     },
     "waypoint_1": {
       "id": "waypoint_1",
