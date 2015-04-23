@@ -38,11 +38,7 @@ var RemarksPanel = React.createClass({
           contextId: "remarks",
           remarkId: remarkId
         });
-
-        // setTimeout(function() {
-        //   console.log('setting sel again', sel.toString());
-        //   surface.setSelection(sel);
-        // }, 0);
+        surface.rerenderDomSelection();
       }
     });
 
