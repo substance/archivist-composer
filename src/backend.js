@@ -98,7 +98,7 @@ Backend.Prototype = function() {
     });
   };
 
-
+  // Outdated
   this.getSuggestedEntities = function(cb) {
     $.getJSON("/api/search", function(entities) {
       cb(null, entities);
@@ -108,11 +108,10 @@ Backend.Prototype = function() {
   this.searchEntities = function(searchStr, type, cb) {
     var queryUrl;
 
-    if(arguments.length == 2) {
-      cb = type;
-      queryUrl = "/api/search?query="+encodeURIComponent(searchStr);
-    } else {
+    if(type) {
       queryUrl = "/api/search?query="+encodeURIComponent(searchStr)+"&type="+encodeURIComponent(type);
+    } else {
+      queryUrl = "/api/search?query="+encodeURIComponent(searchStr);
     }
     $.getJSON(queryUrl, function(entities) {
       cb(null, entities);

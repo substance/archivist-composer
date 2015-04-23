@@ -738,6 +738,11 @@ a:hover {
   color: rgba(11, 157, 217, 1);
 }
 
+.entity.toponym,
+.entity.prison {
+  min-height: 80px;
+}
+
 /* Toponym Entity */
 
 .entity.toponym .type {
@@ -832,15 +837,24 @@ a:hover {
 
 .search select {
   position: absolute;
-  top: 9px;
-  right: 20px;
+  top: 12px;
+  right: 40px;
 }
+
+.search .refresh {
+  position: absolute;
+  top: 9px;
+  right: 15px;
+  font-size: 18px;
+  cursor: pointer;
+} 
 
 .search-result-state {
   padding: 4px 14px 4px 22px;
   font-style: italic;
   background: #fff;
   font-size: 13px;
+  min-height: 32px;
 }
 
 .search-result-state .add-entity {

@@ -78,25 +78,17 @@ var SelectEntityMixin = {
   // Data loading methods
   // ------------
 
-  loadEntities: function(searchString) {
+  loadEntities: function(searchString, type) {
     var self = this;
+    var type = type || false;
     var backend = this.context.backend;
 
-    if (searchString) {
-      backend.searchEntities(searchString, this.props.entityType, function(err, entities) {
-        self.setState({
-          state: entities.state,
-          entities: entities.results
-        });
+    backend.searchEntities(searchString, type, function(err, entities) {
+      self.setState({
+        state: entities.state,
+        entities: entities.results
       });
-    } else {
-      backend.getSuggestedEntities(function(err, entities) {
-        self.setState({
-          state: entities.state,
-          entities: entities.results
-        });
-      });
-    }
+    });
   },
 
   // State relevant things
@@ -118,10 +110,22 @@ var SelectEntityMixin = {
 
   handleSearchStringChange: function(e) {
     var searchString = e.target.value;
+    var searchType = this.state.type || false;
     this.setState({searchString: searchString});
-    this.loadEntities(searchString);
+    this.loadEntities(searchString, searchType);
   },
 
+  handleEntityFilterChange: function(e) {
+    var searchType = e.currentTarget.value;
+    this.setState({type: searchType});
+    this.loadEntities(this.state.searchString, searchType);
+  },
+
+  handleRefreshClick: function() {
+    var type = this.state.type || false;
+    var searchString = this.state.searchString || '';
+    this.loadEntities(searchString, type);
+  },
 
   // Rendering
   // -------------------
@@ -161,13 +165,22 @@ var SelectEntityMixin = {
             value: this.state.searchString,
             onChange: this.handleSearchStringChange
           }),
-          $$('select', {className: "entity-type"},
+          $$('select', {
+              className: "entity-type",
+              onChange: this.handleEntityFilterChange
+            },
             $$('option', {value: ""}, "All"),
             //$$('option', {value: "prison"}, "Prison"),
             //$$('option', {value: "toponym"}, "Toponym"),
             $$('option', {value: "location"}, "Location"),
             $$('option', {value: "person"}, "Person"),
             $$('option', {value: "definition"}, "Definition")
+          ),
+          $$('span', { 
+              className: "refresh",
+              onClick: this.handleRefreshClick
+            },
+            $$('i', { className: "fa fa-refresh" }, "")
           )
         ),
         $$('div', {className: "search-result-state"},
