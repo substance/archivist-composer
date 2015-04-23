@@ -6,6 +6,7 @@ var $$ = React.createElement;
 var AnnotationToolMixin = require("substance/writer").AnnotationToolMixin;
 
 var SubjectReferenceToolMixin = _.extend({}, AnnotationToolMixin, {
+  
   getAnnotationData: function() {
     return {
       container: "content",
@@ -55,12 +56,8 @@ var SubjectReferenceToolMixin = _.extend({}, AnnotationToolMixin, {
 
     var activeAnno = this.getActiveAnno(annos);
     if (!activeAnno) return false;
-
-    console.log('canTruncate#activeAnno', activeAnno);
     var annoSel = activeAnno.getSelection();
-
     var canTruncate = (sel.isLeftAlignedWith(annoSel) || sel.isRightAlignedWith(annoSel)) && !sel.equals(annoSel);
-    console.log('canTruncate', canTruncate);
     return canTruncate;
   },
 
@@ -116,6 +113,7 @@ var SubjectReferenceToolMixin = _.extend({}, AnnotationToolMixin, {
 var SubjectReferenceTool = React.createClass({
   mixins: [SubjectReferenceToolMixin],
   displayName: "SubjectReferenceTool",
+  title: "Tag Subject",
   annotationType: "subject_reference",
   toolIcon: "fa-tag",
 });

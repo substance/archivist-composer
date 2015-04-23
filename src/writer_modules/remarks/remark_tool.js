@@ -25,6 +25,7 @@ var RemarkToolMixin = _.extend({}, AnnotationToolMixin, {
 var RemarkTool = React.createClass({
   mixins: [RemarkToolMixin],
   displayName: "RemarkTool",
+  title: "Remark",
   annotationType: "remark",
   toolIcon: "fa-comment",
 });

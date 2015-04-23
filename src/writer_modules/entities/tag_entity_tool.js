@@ -34,6 +34,7 @@ var TagEntityToolMixin = _.extend({}, AnnotationToolMixin, {
 var TagEntityTool = React.createClass({
   mixins: [TagEntityToolMixin],
   displayName: "TagEntityTool",
+  title: "Tag Entity",
   annotationType: "entity_reference",
   toolIcon: "fa-bullseye",
 });
