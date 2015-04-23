@@ -18,7 +18,7 @@ var SubjectReferenceToolMixin = _.extend({}, AnnotationToolMixin, {
   canCreate: function(annos, sel) {
     var writerCtrl = this.props.writerCtrl;
     var canCreate = writerCtrl.state.contextId !== "editSubjectReference" && !sel.isCollapsed();
-    console.log('canCreate', canCreate);
+    // console.log('canCreate', canCreate);
     return canCreate; 
   },
 
@@ -60,7 +60,7 @@ var SubjectReferenceToolMixin = _.extend({}, AnnotationToolMixin, {
     if (!activeAnno) return false;
     var annoSel = activeAnno.getSelection();
     var canTruncate = (sel.isLeftAlignedWith(annoSel) || sel.isRightAlignedWith(annoSel)) && !sel.equals(annoSel);
-    console.log('canTruncate', canTruncate);
+    // console.log('canTruncate', canTruncate);
     return canTruncate;
   },
 

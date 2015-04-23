@@ -123,7 +123,7 @@ var MetadataPanel = React.createClass({
 
   loadMetadata: function() {
     var self = this;
-    console.log('loading/reloading external metadata and rerender');
+    // console.log('loading/reloading external metadata and rerender');
 
     this.loadPrisons(function(err, prisons) {
       self.loadWaypointLocations(function(err, waypointLocations) {

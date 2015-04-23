@@ -688,7 +688,7 @@ a:hover {
 
 .show-entity-reference-panel-component .entity:hover,
 .show-entity-reference-panel-component .entity.active {
-  /*border-left: 2px solid transparent;*/
+  border-left: 2px solid transparent;
 }
 
 

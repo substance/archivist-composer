@@ -3,7 +3,7 @@ var Substance = require("substance");
 var Surface = Substance.Surface;
 var _ = require("substance/helpers");
 
-
+var PanelMixin = require("substance/writer").PanelMixin;
 
 // Sub component
 var Remark = require("./remark");
@@ -11,8 +11,7 @@ var Remark = require("./remark");
 // Subjects Panel extension
 // ----------------
 
-var RemarksPanel = React.createClass({
-  displayName: "Remarks",
+var RemarksPanelMixin = _.extend({}, PanelMixin, {
 
   // State relevant things
   // ------------
@@ -49,10 +48,23 @@ var RemarksPanel = React.createClass({
   },
 
   componentDidMount: function() {
-    this.props.writerCtrl.registerSurface(this.surface, "remarks", {
+    var writerCtrl = this.props.writerCtrl;
+    writerCtrl.registerSurface(this.surface, "remarks", {
       enabledTools: ["strong", "emphasis"]
     });
     this.surface.attach(this.getDOMNode());
+    this.updateScroll();
+  },
+
+  componentDidUpdate: function() {
+    this.updateScroll();
+  },
+
+  updateScroll: function() {
+    var writerCtrl = this.props.writerCtrl;
+    if (this.props.activeRemark && !writerCtrl.state.noScroll) {
+      this.scrollToNode(this.props.activeRemark.id);
+    }
   },
 
   componentWillUnmount: function() {
@@ -78,13 +90,19 @@ var RemarksPanel = React.createClass({
     });
 
     return $$("div", {className: "panel remarks-panel-component", contentEditable: true, 'data-id': "remarks"},
-      $$('div', {className: 'panel-content'},
-        $$('div', {className: 'remarks'},
+      $$('div', {className: 'panel-content', ref: "panelContent"},
+        $$('div', {className: 'panel-content-inner remarks'},
           remarkNodes
         )
       )
     );
   }
+});
+
+
+var RemarksPanel = React.createClass({
+  mixins: [RemarksPanelMixin],
+  displayName: "Remarks",
 });
 
 // Panel Configuration

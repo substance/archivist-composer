@@ -20,7 +20,8 @@ var Remark = React.createClass({
     } else {
       writerCtrl.replaceState({
         contextId: "remarks",
-        remarkId: remarkId
+        remarkId: remarkId,
+        noScroll: true
       });
     }
   },
@@ -87,7 +88,7 @@ var Remark = React.createClass({
       sourceText = sourceText.slice(0,130) + " ...";
     }
     
-    return $$("div", {className: className.join(" ")},
+    return $$("div", {className: className.join(" "), "data-id": remark.id},
       $$('div', {contentEditable: false, className: 'remark-header', onClick: this.handleToggle},
         $$('a', {href: "#", className: 'remark-title'}, sourceText),
         $$('a', {

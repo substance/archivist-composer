@@ -1,18 +1,17 @@
 var $$ = React.createElement;
 var Substance = require("substance");
 var SubjectsModel = require("./subjects_model");
+var PanelMixin = require("substance/writer").PanelMixin;
+var _ = require("substance/helpers");
 
 // Sub component
 var Subject = require("./subject");
 
 // Subjects Panel extension
 // ----------------
-//
-// TODO: make stateful something like this: http://blog.mgechev.com/2015/03/05/persistent-state-reactjs/
+// 
 
-var SubjectsPanel = React.createClass({
-  displayName: "Subjects",
-
+var SubjectsPanelMixin = _.extend({}, PanelMixin, {
   contextTypes: {
     backend: React.PropTypes.object.isRequired
   },
@@ -23,8 +22,6 @@ var SubjectsPanel = React.createClass({
   loadSubjects: function() {
     var writerCtrl = this.props.writerCtrl;
     var backend = this.context.backend;
-
-    console.log('loading subjects...');
     
     backend.getSubjects(function(err, subjects) {
       this.setState({
@@ -37,12 +34,6 @@ var SubjectsPanel = React.createClass({
   // ------------
 
   getInitialState: function() {
-    // var writerCtrl = this.props.writerCtrl;
-    // var subjects = new SubjectsModel(writerCtrl.doc, SUBJECTS);
-
-    // return {
-    //   subjects: subjects
-    // };
     return {
       subjects: null
     }
@@ -67,7 +58,8 @@ var SubjectsPanel = React.createClass({
     } else {
       writerCtrl.replaceState({
         contextId: "subjects",
-        subjectId: subjectId
+        subjectId: subjectId,
+        noScroll: true
       });
     }
   },
@@ -107,6 +99,11 @@ var SubjectsPanel = React.createClass({
 
 // Panel Configuration
 // -----------------
+
+var SubjectsPanel = React.createClass({
+  mixins: [SubjectsPanelMixin],
+  displayName: "Subjects",
+});
 
 SubjectsPanel.contextId = "subjects";
 SubjectsPanel.icon = "fa-tag";
