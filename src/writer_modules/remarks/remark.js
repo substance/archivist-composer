@@ -12,7 +12,7 @@ var Remark = React.createClass({
     var remarkId = this.props.remark.id;
 
     e.preventDefault();
-    
+
     if (writerCtrl.state.remarkId === remarkId) {
       writerCtrl.replaceState({
         contextId: "remarks"
@@ -38,8 +38,8 @@ var Remark = React.createClass({
   handleDocumentChange: function(change, info) {
     // TODO: is there a way to check if a doc update actually affects the remark annotation?
     // This is currently done way to often
-    if (!change.isAffected([this.props.remark.id, "content"])) {
-      this.forceUpdate();  
+    if (change.isAffected([this.props.remark.id, "content"])) {
+      this.forceUpdate();
     }
   },
 
@@ -78,7 +78,7 @@ var Remark = React.createClass({
           onClick: this.handleDelete
         })
       ),
-      
+
       $$(TextProperty, {
         tagName: "div",
         doc: this.props.writerCtrl.doc,
