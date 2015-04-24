@@ -98,10 +98,10 @@ var sampleDoc = {
       "id": "subject_reference_1",
       "type": "subject_reference",
       "container": "content",
-      "startPath": ["text_1", "content"],
-      "startOffset": 100,
-      "endPath": ["text_2", "content"],
-      "endOffset": 200,
+      "startPath": ["text_2", "content"],
+      "startOffset": 10,
+      "endPath": ["text_4", "content"],
+      "endOffset": 40,
       "target": ["54bae99ca868bc3ec7fb5ad8"]
     },
 
@@ -109,10 +109,10 @@ var sampleDoc = {
       "id": "subject_reference_2",
       "type": "subject_reference",
       "container": "content",
-      "startPath": ["text_2", "content"],
-      "startOffset": 10,
-      "endPath": ["text_4", "content"],
-      "endOffset": 40,
+      "startPath": ["text_1", "content"],
+      "startOffset": 100,
+      "endPath": ["text_2", "content"],
+      "endOffset": 200,
       "target": ["54bae4cda868bc6fab4bcd0e", "54bae99ca868bc3ec7fb5ad8"]
     },
 

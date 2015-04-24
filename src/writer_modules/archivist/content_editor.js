@@ -132,6 +132,8 @@ var ContentEditor = React.createClass({
     var doc = this.props.doc;
     var subjectReferences = doc.getIndex('type').get('subject_reference');
 
+    var brackets = [];
+
     _.each(subjectReferences, function(subjRef) {
       var anchors = $(this.getDOMNode()).find('.nodes .anchor[data-id='+subjRef.id+']');
 
@@ -153,13 +155,42 @@ var ContentEditor = React.createClass({
       var endTop = $(endAnchorEl).position().top + $(endAnchorEl).height();
       var height = endTop - startTop;
 
-      var subjectRefEl = $(this.getDOMNode()).find('.subject-references .subject-reference[data-id='+subjRef.id+']');
-
-      subjectRefEl.css({
+      brackets.push({
+        id: subjRef.id,
         top: startTop,
-        height: height
+        height: height,
       });
     }, this);
+
+
+    brackets = _.sortBy(brackets, 'top');
+    var prevBracket = null;
+    var level = 0;
+    for (var i = 0; i < brackets.length; i++) {
+      var bracket = brackets[i];
+
+      if (prevBracket) {
+        var prevBottom = prevBracket.top + prevBracket.height;
+        // When there is an overlap, increase the bracket level
+        if (bracket.top < prevBottom) {
+          level = (level + 1) % 3;
+        } else {
+          // No overlap go back to level 0
+          level = 0;
+        }
+      }
+
+      var subjectRefEl = $(this.getDOMNode()).find('.subject-references .subject-reference[data-id='+bracket.id+']');
+
+      subjectRefEl.css({
+        top: bracket.top,
+        height: bracket.height
+      });
+
+      subjectRefEl.removeClass('level-0 level-1 level-2');
+      subjectRefEl.addClass('level-'+level);
+      prevBracket = bracket;
+    };
   },
 
 
@@ -215,6 +246,8 @@ var ContentEditor = React.createClass({
         self.surface.rerenderDomSelection();
       });
     }
+
+    self.updateBrackets();
   },
 
   componentWillUnmount: function() {

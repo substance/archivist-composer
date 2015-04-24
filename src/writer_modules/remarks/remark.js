@@ -1,5 +1,6 @@
 var $$ = React.createElement;
 var TextProperty = require("substance/writer").TextProperty;
+var Substance = require("substance");
 
 // Remark
 // ----------------
@@ -12,6 +13,13 @@ var Remark = React.createClass({
     var remarkId = this.props.remark.id;
 
     e.preventDefault();
+    e.stopPropagation();
+
+    var surface = writerCtrl.getSurface();
+    if (surface) {
+      surface.setSelection(Substance.Document.Selection.nullSelection);  
+    }
+    
 
     if (writerCtrl.state.remarkId === remarkId) {
       writerCtrl.replaceState({
@@ -89,7 +97,7 @@ var Remark = React.createClass({
     }
     
     return $$("div", {className: className.join(" "), "data-id": remark.id},
-      $$('div', {contentEditable: false, className: 'remark-header', onClick: this.handleToggle},
+      $$('div', {contentEditable: false, className: 'remark-header', onMouseDown: this.handleToggle},
         $$('a', {href: "#", className: 'remark-title'}, sourceText),
         $$('a', {
           href: "#",

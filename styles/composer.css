@@ -448,6 +448,7 @@ a:hover {
 
 .content-panel-component .container-node.content .nodes {
   padding: 40px;
+
   padding-right: 60px;
   /*position: relative;*/
 }
@@ -631,11 +632,23 @@ a:hover {
   border-top: 1px solid rgba(145, 187, 4, 1);
   border-right: 1px solid rgba(145, 187, 4, 1);
 
-  width: 15px;
+  width: 6px;
   position: absolute;
   top: 30px;
+  right: 15px;
   height: 100px;
   cursor: pointer;
+}
+
+.container-node.content .subject-references .subject-reference.level-0 {
+}
+
+.container-node.content .subject-references .subject-reference.level-1 {
+  right: 30px;
+}
+
+.container-node.content .subject-references .subject-reference.level-2 {
+  right: 45px;
 }
 
 .container-node.content .subject-references .subject-reference:hover {
