@@ -59,7 +59,10 @@ var MetadataPanel = React.createClass({
     if (change.isAffected(["document", "interviewee_prisons"]) ||
         change.isAffected(["document", "interviewee_waypoints"]) ||
         change.isAffected(["document", "project_location"]) ||
-        change.isAffected(["document", "record_type"])) {
+        change.isAffected(["document", "record_type"]) ||
+        change.isAffected(["document", "transcripted"]) ||
+        change.isAffected(["document", "verified"]) ||
+        change.isAffected(["document", "finished"])) {
       this.loadMetadata();
     }
   },
@@ -146,6 +149,18 @@ var MetadataPanel = React.createClass({
     });
   },
 
+  renderChecboxProperty: function(property) {
+    var checked = doc.get('document')[property];
+
+    return $$('input', {
+      contentEditable: false,
+      name: property,
+      onChange: this.handleCheckboxChange,
+      checked: checked,
+      type: 'checkbox'
+    });
+  },
+
   renderInterviewType: function() {
     var selected = doc.get('document').record_type;
 
@@ -153,6 +168,19 @@ var MetadataPanel = React.createClass({
       $$('option', 'video', "Video"),
       $$('option', 'audio', "Audio")
     );
+  },
+
+  handleCheckboxChange: function(e) {
+    var property = e.currentTarget.name;
+    var checked = e.currentTarget.checked;
+
+    var tx = this.props.writerCtrl.doc.startTransaction();
+    try {
+      tx.set(["document", property], checked);
+      tx.save({});
+    } finally {
+      tx.cleanup();
+    }
   },
 
   handleInterviewTypeState: function(e) {
@@ -370,6 +398,10 @@ var MetadataPanel = React.createClass({
           label("Interview Type"),
           this.renderInterviewType(),
 
+          // Source of media
+          label("Media identifier"),
+          this.renderTextProperty('media_id'),
+
           // Where the interview took place
           label("Duration (in minutes)"),
           this.renderTextProperty('interview_duration'),
@@ -392,7 +424,21 @@ var MetadataPanel = React.createClass({
 
           label("Date of publication"),
           this.renderTextProperty('published_on')
+
           // $$('div', {className: "This interview was created on XX and published on YY. Last update was made"})
+        ),
+        $$('div', {className: 'status section', contentEditable: false},
+          $$('h3', {contentEditable: false}, "Workflow"),
+
+
+          this.renderChecboxProperty('transcripted'),
+          label("Transcription ready"),
+
+          this.renderChecboxProperty('verified'),
+          label("Interview verified"),
+
+          this.renderChecboxProperty('finished'),
+          label("Ready for publish")
         )
       )
     );

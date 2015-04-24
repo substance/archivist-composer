@@ -979,6 +979,15 @@ a:hover {
   border-bottom: 1px solid #ddd;
 }
 
+.metadata-panel-component select {
+  margin-bottom: 10px;
+}
+
+.metadata-panel-component input[type="checkbox"] {
+  float: left;
+  margin: 6px 8px 0px 0px;
+}
+
 /* prisons list */
 
 .metadata-panel-component .entity-tags {
