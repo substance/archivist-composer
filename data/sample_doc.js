@@ -64,10 +64,10 @@ var sampleDoc = {
       "id": "content",
       "nodes": [
         "text_1",
-        "table_1",
         "text_2",
         "text_3",
         "text_4",
+        "table_1",
         "text_5"
       ]
     },

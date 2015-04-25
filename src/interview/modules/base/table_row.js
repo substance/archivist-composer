@@ -3,7 +3,7 @@ var Substance = require('substance');
 var TableRow = Substance.Document.Node.extend({
   name: "table_row",
   properties: {
-    "cells": ["array", "string"]
+    "cells": ["array", "id"]
   },
   getCells: function() {
     var doc = this.getDocument();
@@ -12,5 +12,7 @@ var TableRow = Substance.Document.Node.extend({
     }, this);
   }
 });
+
+TableRow.static.components = ['cells']
 
 module.exports = TableRow;

@@ -11,4 +11,6 @@ var TableCell = Substance.Document.Node.extend({
   }
 });
 
+TableCell.static.components = ['content']
+
 module.exports = TableCell;
