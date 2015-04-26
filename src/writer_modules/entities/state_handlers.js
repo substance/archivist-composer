@@ -75,7 +75,7 @@ var stateHandlers = {
     // Let the extension handle which nodes should be highlighted
     if (state.contextId === "entities" && state.entityId) {
       // Use reference handler
-      var references = Object.keys(doc.references.get(state.entityId));
+      var references = Object.keys(doc.entityReferencesIndex.get(state.entityId));
       return references;
     } else if (state.entityReferenceId) {
       return [state.entityReferenceId];
