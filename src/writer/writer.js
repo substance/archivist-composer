@@ -5,7 +5,6 @@ var Substance = require("substance");
 var ContentTools = require("./content_tools");
 var ContentPanel = require("./content_panel");
 var WriterController = require("./writer_controller");
-
 var StatusBar = require("./status_bar");
 
 // The Substance Writer Component
@@ -25,12 +24,14 @@ var Writer = React.createClass({
     // used by text properties to render 'active' annotations
     // For active container annotations annotation fragments are inserted
     // which can be used to highlight the associated range
+    app: React.PropTypes.object,
     getHighlightedNodes: React.PropTypes.func,
     getHighlightsForTextProperty: React.PropTypes.func
   },
 
   getChildContext: function() {
     return {
+      app: this.writerCtrl,
       getHighlightedNodes: this.getHighlightedNodes,
       getHighlightsForTextProperty: this.getHighlightsForTextProperty,
     };

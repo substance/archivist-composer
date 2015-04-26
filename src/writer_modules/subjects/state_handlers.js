@@ -12,25 +12,22 @@ var stateHandlers = {
   //
   // Returns a new panel element if a particular state is matched
 
-  handleContextPanelCreation: function(writerCtrl) {
-    var s = writerCtrl.getState();
+  handleContextPanelCreation: function(app) {
+    var s = app.getState();
 
     if (s.contextId === SubjectsPanel.contextId) {
       return $$(SubjectsPanel, {
-        writerCtrl: writerCtrl,
-        // documentId: writer.props.doc.get('document').guid,
         subjectId: s.subjectId
       });
     } else if (s.contextId === EditSubjectReferencePanel.contextId && s.subjectReferenceId) {
       return $$(EditSubjectReferencePanel, {
-        writerCtrl: writerCtrl,
         subjectReferenceId: s.subjectReferenceId
       });
     }
   },
 
-  handleSelectionChange: function(writerCtrl, sel, annotations) {
-    var state = writerCtrl.getState();
+  handleSelectionChange: function(app, sel, annotations) {
+    var state = app.getState();
 
     // Just prevent other modules from handling this
     if (state.contextId === EditSubjectReferencePanel.contextId) {
@@ -43,12 +40,12 @@ var stateHandlers = {
   //
   // => inspects state
   //
-  // Based on writer state, determine which nodes should be highlighted in the content panel
+  // Based on app state, determine which nodes should be highlighted in the content panel
   // @returns a list of nodes to be highlighted
 
-  getHighlightedNodes: function(writerCtrl) {
-    var doc = writerCtrl.doc;
-    var state = writerCtrl.getState();
+  getHighlightedNodes: function(app) {
+    var doc = app.doc;
+    var state = app.getState();
 
     // When a subject has been clicked in the subjects panel
     if (state.contextId === "subjects" && state.subjectId) {
@@ -70,15 +67,15 @@ var stateHandlers = {
   // Based on writer state, determine which container nodes should be highlighted in the content panel
   // @returns a list of nodes to be highlighted
 
-  getActiveContainerAnnotations: function(writerCtrl) {
-    var state = writerCtrl.getState();
+  getActiveContainerAnnotations: function(app) {
+    var state = app.getState();
 
     // When a subject has been clicked in the subjects panel
     if (state.contextId === EditSubjectReferencePanel.contextId && state.subjectReferenceId) {
       return [ state.subjectReferenceId ];
     }
     if (state.contextId === "subjects" && state.subjectId) {
-      var doc = writerCtrl.doc;
+      var doc = app.doc;
       var references = Object.keys(doc.subjectReferencesIndex.get(state.subjectId));
       return references;
     }

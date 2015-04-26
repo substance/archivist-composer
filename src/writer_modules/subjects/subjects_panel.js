@@ -13,6 +13,7 @@ var Subject = require("./subject");
 
 var SubjectsPanelMixin = _.extend({}, PanelMixin, {
   contextTypes: {
+    app: React.PropTypes.object.isRequired,
     backend: React.PropTypes.object.isRequired
   },
 
@@ -20,12 +21,12 @@ var SubjectsPanelMixin = _.extend({}, PanelMixin, {
   // ------------
 
   loadSubjects: function() {
-    var writerCtrl = this.props.writerCtrl;
+    var app = this.context.app;
     var backend = this.context.backend;
     
     backend.getSubjects(function(err, subjects) {
       this.setState({
-        subjects: new SubjectsModel(writerCtrl.doc, subjects)
+        subjects: new SubjectsModel(app.doc, subjects)
       });
     }.bind(this));
   },
@@ -49,14 +50,14 @@ var SubjectsPanelMixin = _.extend({}, PanelMixin, {
   },
 
   handleToggle: function(subjectId) {
-    var writerCtrl = this.props.writerCtrl;
+    var app = this.context.app;
 
-    if (writerCtrl.state.subjectId === subjectId) {
-      writerCtrl.replaceState({
+    if (app.state.subjectId === subjectId) {
+      app.replaceState({
         contextId: "subjects"
       });
     } else {
-      writerCtrl.replaceState({
+      app.replaceState({
         contextId: "subjects",
         subjectId: subjectId,
         noScroll: true

@@ -16,24 +16,24 @@ var SubjectReferenceToolMixin = _.extend({}, AnnotationToolMixin, {
 
   // When there's no existing annotation overlapping, we create a new one.
   canCreate: function(annos, sel) {
-    var writerCtrl = this.props.writerCtrl;
-    var canCreate = writerCtrl.state.contextId !== "editSubjectReference" && !sel.isCollapsed();
+    var app = this.context.app;
+    var canCreate = app.state.contextId !== "editSubjectReference" && !sel.isCollapsed();
     // console.log('canCreate', canCreate);
     return canCreate; 
   },
 
   getActiveAnno: function(annos) {
-    var writerCtrl = this.props.writerCtrl;
+    var app = this.context.app;
     return _.filter(annos, function(a) {
-      return a.id === writerCtrl.state.subjectReferenceId;
+      return a.id === app.state.subjectReferenceId;
     })[0];
   },
 
   // When there's some overlap with only a single annotation we do an expand
   canExpand: function(annos, sel) {
-    var writerCtrl = this.props.writerCtrl;
+    var app = this.context.app
     if (annos.length === 0) return false;
-    if (writerCtrl.state.contextId !== "editSubjectReference") return false; 
+    if (app.state.contextId !== "editSubjectReference") return false; 
 
     var activeAnno = this.getActiveAnno(annos);
     if (!activeAnno) return false;
@@ -52,9 +52,9 @@ var SubjectReferenceToolMixin = _.extend({}, AnnotationToolMixin, {
   },
 
   canTruncate: function(annos, sel) {
-    var writerCtrl = this.props.writerCtrl;
+    var app = this.context.app;
     if (annos.length === 0) return false;
-    if (writerCtrl.state.contextId !== "editSubjectReference") return false;
+    if (app.state.contextId !== "editSubjectReference") return false;
 
     var activeAnno = this.getActiveAnno(annos);
     if (!activeAnno) return false;
@@ -106,7 +106,8 @@ var SubjectReferenceToolMixin = _.extend({}, AnnotationToolMixin, {
 
   disabledModes: ["remove", "fusion"],
   afterCreate: function(anno) {
-    this.props.writerCtrl.replaceState({
+    var app = this.context.app;
+    app.replaceState({
       contextId: "editSubjectReference",
       subjectReferenceId: anno.id
     });
@@ -115,6 +116,9 @@ var SubjectReferenceToolMixin = _.extend({}, AnnotationToolMixin, {
 
 var SubjectReferenceTool = React.createClass({
   mixins: [SubjectReferenceToolMixin],
+  contextTypes: {
+    app: React.PropTypes.object.isRequired
+  },
   displayName: "SubjectReferenceTool",
   title: "Tag Subject",
   annotationType: "subject_reference",

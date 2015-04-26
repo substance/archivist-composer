@@ -11,13 +11,14 @@ var EditSubjectReferencePanel = React.createClass({
   displayName: "Tag subjects",
 
   contextTypes: {
-    backend: React.PropTypes.object.isRequired
+    backend: React.PropTypes.object.isRequired,
+    app: React.PropTypes.object.isRequired
   },
 
   handleCancel: function(e) {
     e.preventDefault();
     // Go to regular entities panel
-    this.props.writerCtrl.replaceState({
+    this.context.app.replaceState({
       contextId: "subjects"
     });
   },
@@ -26,12 +27,12 @@ var EditSubjectReferencePanel = React.createClass({
   // ------------
 
   loadSubjects: function() {
-    var writerCtrl = this.props.writerCtrl;
+    var app = this.context.app;
     var backend = this.context.backend;
 
     backend.getSubjects(function(err, subjects) {
       this.setState({
-        subjects: new SubjectsModel(writerCtrl.doc, subjects)
+        subjects: new SubjectsModel(app.doc, subjects)
       });
     }.bind(this));
   },
@@ -49,7 +50,8 @@ var EditSubjectReferencePanel = React.createClass({
   // ------------
 
   componentDidMount: function() {
-    var doc = this.props.writerCtrl.doc;
+    var app = this.context.app;
+    var doc = app.doc;
     doc.connect(this, {
       'document:changed': this.handleDocumentChange
     });
@@ -68,14 +70,14 @@ var EditSubjectReferencePanel = React.createClass({
   },
 
   handleDeleteReference: function(e) {
-    var writerCtrl = this.props.writerCtrl;
-    var doc = this.props.writerCtrl.doc;
+    var app = this.context.app;
+    var doc = app.doc;
     var tx = doc.startTransaction();
 
     try {
       tx.delete(this.props.subjectReferenceId);
       tx.save();
-      writerCtrl.replaceState({
+      app.replaceState({
         contextId: "subjects"
       });
     } finally {
@@ -84,15 +86,17 @@ var EditSubjectReferencePanel = React.createClass({
   },
 
   componentWillUnmount: function() {
-    this.props.writerCtrl.doc.disconnect(this);
+    var doc = this.context.app.doc;
+    doc.disconnect(this);
   },
 
   // Write changes in selection to document model
   // ------------
 
   updateSubjectReference: function(selectedNodes) {
+    var app = this.context.app;
     var subjectIds = Object.keys(selectedNodes);
-    var tx = this.props.writerCtrl.doc.startTransaction();
+    var tx = app.doc.startTransaction();
     try {
       tx.set([this.props.subjectReferenceId, "target"], subjectIds);
       tx.save({}, {updateSubjectReference: true});
@@ -106,7 +110,8 @@ var EditSubjectReferencePanel = React.createClass({
 
   render: function() {
     var treeEl;
-    var doc = this.props.writerCtrl.doc;
+    var app = this.context.app;
+    var doc = app.doc;
 
     if (this.state.subjects) {
       treeEl = $$(Tree, {
