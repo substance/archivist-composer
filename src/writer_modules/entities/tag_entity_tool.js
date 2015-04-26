@@ -3,7 +3,7 @@
 var Substance = require('substance');
 var _ = require('substance/helpers');
 
-var AnnotationToolMixin = require("substance/writer").AnnotationToolMixin;
+var AnnotationToolMixin = require("../../writer").AnnotationToolMixin;
 
 var TagEntityToolMixin = _.extend({}, AnnotationToolMixin, {
   // Instead of creating a new annotation immediately we want to

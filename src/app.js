@@ -1,28 +1,50 @@
 'use strict';
 
+// Writer Application
+// ---------------
+// 
+// Main entry point of the writer application. In this file all configurations
+// are made.
+
 var Substance = require('substance');
 var $$ = React.createElement;
 
-var Writer = require("substance/writer");
-var Backend = require("./backend");
-var LocalBackend = require("./local_backend");
+// Core Writer Stuff lives in the writer module
+// ---------------
+// 
+
+var Writer = require("./writer");
+
+// Article
+// ---------------
+// 
+// This can be replaced with your custom article implementation
+
 var Interview = require("./interview");
 
-var NotificationService = require("./notification_service");
 
-// Writer Configuration
+// Writer Modules (configuration)
 var writerModules = require("./writer_modules");
 
-// Prepare local cache
-window.cache = {};
+// Component Factory
+// ---------------
+// 
+// Extract a component factory from writerModules and expose it via 'context'
+// all registered extensions should 
 
-// extract a component factory from writerModules and expose it via 'context'
 var componentFactory = new Substance.Factory();
 Substance.each(writerModules, function(module) {
   Substance.each(module.components, function(ComponentClass, name) {
     componentFactory.add(name, ComponentClass);
   });
 });
+
+// Specify a backend
+// ---------------
+// 
+
+var Backend = require("./backend");
+var LocalBackend = require("./local_backend");
 
 // window.devMode = true;
 
@@ -34,14 +56,25 @@ if (window.devMode) {
   backend = new Backend();
 }
 
-// Create notification service
+// Specify a Notification service
+// ---------------
+// 
+// This is used for user notifications, displayed in the status bar
+
+var NotificationService = require("./notification_service");
 var notifications = new NotificationService();
+
+
+// HTML Importer Configuration
+// ---------------
+// 
 
 var htmlImporter = new Substance.Document.HtmlImporter({
   schema: Interview.schema,
   trimWhitespaces: true,
   REMOVE_INNER_WS: true,
 });
+
 // default handling for elemens with are not in the model
 htmlImporter.defaultConverter = function(el, converter) {
   return {
@@ -49,6 +82,11 @@ htmlImporter.defaultConverter = function(el, converter) {
     content: el.textContent
   };
 };
+
+// Specify a Notification service
+// ---------------
+// 
+// Adjust to your needs
 
 var htmlExporter = new Substance.Document.HtmlExporter({
   // configuration
@@ -62,8 +100,13 @@ var globalContext = {
   htmlExporter: htmlExporter
 };
 
-var Composer = React.createClass({
-  displayName: "Composer",
+// Top Level Application
+// ---------------
+// 
+// Adjust for your own needs
+
+var WriterApp = React.createClass({
+  displayName: "WriterApp",
 
   childContextTypes: {
     componentFactory: React.PropTypes.object,
@@ -78,7 +121,6 @@ var Composer = React.createClass({
   },
 
   componentDidMount: function() {
-
     backend.getDocument(this.props.documentId || "example_document", function(err, doc) {
       this.setState({
         doc: doc
@@ -105,13 +147,13 @@ var Composer = React.createClass({
       return $$('div', null, 'Loading document...');
     }
   }
-
 });
+
 
 var app = {
   start: function() {
     React.render(
-      $$(Composer, {
+      $$(WriterApp, {
         documentId: window.location.hash.slice(1)
       }),
       document.getElementById('container')

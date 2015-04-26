@@ -2,9 +2,8 @@ var Substance = require('substance');
 var $$ = React.createElement;
 var Surface = Substance.Surface;
 var _ = require("substance/helpers");
-var TextProperty = require("substance/writer").TextProperty;
+var TextProperty = require("../../writer").TextProperty;
 var TitleEditor = require("./title_editor");
-
 
 var ENABLED_TOOLS = ["strong", "emphasis", "timecode", "remark", "entity_reference", "subject_reference"];
 

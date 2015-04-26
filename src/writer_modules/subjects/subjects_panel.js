@@ -1,7 +1,7 @@
 var $$ = React.createElement;
 var Substance = require("substance");
 var SubjectsModel = require("./subjects_model");
-var PanelMixin = require("substance/writer").PanelMixin;
+var PanelMixin = require("../../writer").PanelMixin;
 var _ = require("substance/helpers");
 
 // Sub component

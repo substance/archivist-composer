@@ -1,4 +1,4 @@
-var AnnotationToolMixin = require("substance/writer").AnnotationToolMixin;
+var AnnotationToolMixin = require("../../writer").AnnotationToolMixin;
 
 var TimecodeTool = React.createClass({
   mixins: [AnnotationToolMixin],

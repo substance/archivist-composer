@@ -1,5 +1,5 @@
 var $$ = React.createElement;
-var TextProperty = require("substance/writer").TextProperty;
+var TextProperty = require("../../writer").TextProperty;
 var Substance = require("substance");
 
 // Remark
@@ -68,7 +68,8 @@ var Remark = React.createClass({
       tx.delete(this.props.remark.id);
       tx.save();
       writerCtrl.replaceState({
-        contextId: "remarks"
+        contextId: "remarks",
+        remarkId: null
       });
     } finally {
       tx.cleanup();

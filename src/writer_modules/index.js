@@ -1,4 +1,5 @@
-var CoreModule = require("substance/writer").CoreModule;
+// TODO: modularize better
+var CoreModule = require("../writer").CoreModule;
 
 var ArchivistModule = require("./archivist");
 var SubjectsModule = require("./subjects");

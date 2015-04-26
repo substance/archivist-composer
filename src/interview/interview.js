@@ -16,7 +16,7 @@ var SubjectReference = require("./nodes/subject_reference");
 var EntityReference = require("./nodes/entity_reference");
 var Waypoint = require("./nodes/waypoint");
 
-var schema = new Document.Schema("substance-interview", "0.1.0");
+var schema = new Document.Schema("substance-interview", "1.0.0");
 schema.addNodes([
   DocumentNode,
   TextNode,

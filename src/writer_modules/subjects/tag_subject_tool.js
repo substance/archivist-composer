@@ -3,7 +3,7 @@
 var Substance = require('substance');
 var _ = require('substance/helpers');
 var $$ = React.createElement;
-var AnnotationToolMixin = require("substance/writer").AnnotationToolMixin;
+var AnnotationToolMixin = require("../../writer").AnnotationToolMixin;
 
 var SubjectReferenceToolMixin = _.extend({}, AnnotationToolMixin, {
   

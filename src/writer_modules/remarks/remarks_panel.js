@@ -3,7 +3,7 @@ var Substance = require("substance");
 var Surface = Substance.Surface;
 var _ = require("substance/helpers");
 
-var PanelMixin = require("substance/writer").PanelMixin;
+var PanelMixin = require("../../writer").PanelMixin;
 
 // Sub component
 var Remark = require("./remark");
