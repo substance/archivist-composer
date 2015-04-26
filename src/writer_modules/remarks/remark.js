@@ -8,25 +8,28 @@ var Substance = require("substance");
 var Remark = React.createClass({
   displayName: "Remark",
 
+  contextTypes: {
+    app: React.PropTypes.object.isRequired
+  },
+  
   handleToggle: function(e) {
-    var writerCtrl = this.props.writerCtrl;
+    var app = this.context.app;;
     var remarkId = this.props.remark.id;
 
     e.preventDefault();
     e.stopPropagation();
 
-    var surface = writerCtrl.getSurface();
+    var surface = app.getSurface();
     if (surface) {
       surface.setSelection(Substance.Document.Selection.nullSelection);  
     }
-    
 
-    if (writerCtrl.state.remarkId === remarkId) {
-      writerCtrl.replaceState({
+    if (app.state.remarkId === remarkId) {
+      app.replaceState({
         contextId: "remarks"
       });
     } else {
-      writerCtrl.replaceState({
+      app.replaceState({
         contextId: "remarks",
         remarkId: remarkId,
         noScroll: true
@@ -35,17 +38,20 @@ var Remark = React.createClass({
   },
 
   componentDidMount: function() {
-    this.props.writerCtrl.doc.connect(this, {
+    var app = this.context.app;
+    app.doc.connect(this, {
       'document:changed': this.handleDocumentChange
     });
   },
 
   componentWillUnmount: function() {
-    this.props.writerCtrl.doc.disconnect(this);
+    var app = this.context.app;
+    app.doc.disconnect(this);
   },
 
   handleDocumentChange: function(change, info) {
-    var doc = this.props.writerCtrl.doc;
+    var app = this.context.app;
+    var doc = app.doc;
     var remark = doc.get(this.props.remark.id);
     if (!remark) return;
 
@@ -60,14 +66,14 @@ var Remark = React.createClass({
 
   handleDelete: function(e) {
     e.preventDefault();
-    var writerCtrl = this.props.writerCtrl;
-    var doc = this.props.writerCtrl.doc;
+    var app = this.context.app;
+    var doc = app.doc;
     var tx = doc.startTransaction();
 
     try {
       tx.delete(this.props.remark.id);
       tx.save();
-      writerCtrl.replaceState({
+      app.replaceState({
         contextId: "remarks",
         remarkId: null
       });
@@ -79,8 +85,8 @@ var Remark = React.createClass({
   render: function() {
     var className = ["remark", this.props.type];
     if (this.props.active) className.push("active");
-
-    var doc = this.props.writerCtrl.doc;
+    var app = this.context.app;
+    var doc = app.doc;
     // NOTE: having the remark as instance here is dangerous, as
     // it might have been removed from the document already.
     // TODO: don't store node instances in props
@@ -110,9 +116,8 @@ var Remark = React.createClass({
 
       $$(TextProperty, {
         tagName: "div",
-        doc: this.props.writerCtrl.doc,
-        path: [this.props.remark.id, "content"],
-        writerCtrl: this.props.writerCtrl,
+        doc: app.doc,
+        path: [this.props.remark.id, "content"]
       })
     );
   }

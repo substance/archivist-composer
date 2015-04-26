@@ -16,6 +16,10 @@ var RemarksPanelMixin = _.extend({}, PanelMixin, {
   // State relevant things
   // ------------
 
+  contextTypes: {
+    app: React.PropTypes.object.isRequired
+  },
+
   childContextTypes: {
     surface: React.PropTypes.object
   },
@@ -27,9 +31,8 @@ var RemarksPanelMixin = _.extend({}, PanelMixin, {
   },
 
   componentWillMount: function() {
-    var writerCtrl = this.props.writerCtrl;
-    var surface = new Surface(new Surface.FormEditor(this.props.writerCtrl.doc));
-
+    var app = this.context.app;
+    var surface = new Surface(new Surface.FormEditor(app.doc));
 
     surface.connect(this, {
       'selection:changed': function(sel) {
@@ -40,10 +43,8 @@ var RemarksPanelMixin = _.extend({}, PanelMixin, {
         
         if (!sel.getPath) return; // probably a null selection
         var remarkId = sel.getPath()[0];
-        console.log('yay', remarkId, currentRemarkId, sel.toString());
         if (remarkId !== currentRemarkId) {
-          console.log('state switching');
-          writerCtrl.replaceState({
+          app.replaceState({
             contextId: "remarks",
             remarkId: remarkId,
             noScroll: true
@@ -61,8 +62,8 @@ var RemarksPanelMixin = _.extend({}, PanelMixin, {
   },
 
   componentDidMount: function() {
-    var writerCtrl = this.props.writerCtrl;
-    writerCtrl.registerSurface(this.surface, "remarks", {
+    var app = this.context.app;
+    app.registerSurface(this.surface, "remarks", {
       enabledTools: ["strong", "emphasis"]
     });
     this.surface.attach(this.getDOMNode());
@@ -74,14 +75,15 @@ var RemarksPanelMixin = _.extend({}, PanelMixin, {
   },
 
   updateScroll: function() {
-    var writerCtrl = this.props.writerCtrl;
-    if (this.props.activeRemark && !writerCtrl.state.noScroll) {
+    var app = this.context.app;
+    if (this.props.activeRemark && !app.state.noScroll) {
       this.scrollToNode(this.props.activeRemark.id);
     }
   },
 
   componentWillUnmount: function() {
-    this.props.writerCtrl.unregisterSurface(this.surface);
+    var app = this.context.app;
+    app.unregisterSurface(this.surface);
     this.surface.detach();
   },
 
@@ -98,7 +100,6 @@ var RemarksPanelMixin = _.extend({}, PanelMixin, {
         remark: remark,
         key: remark.id,
         active: remark === props.activeRemark,
-        writerCtrl: props.writerCtrl
       });
     });
 
