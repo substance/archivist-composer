@@ -10,13 +10,6 @@ var ExtensionManager = function(extensions, writer) {
 
 ExtensionManager.Prototype = function() {
 
-  // this.registerExtension = function(extension) {
-  //   if (this.extensions[extension.name]) {
-  //     throw new Error("Extension has already been registered");
-  //   }
-  //   this.extensions[extension.name] = extension;
-  // };
-
   // Get all available extensions
   this.getExtensions = function() {
     return this.extensions;
@@ -73,41 +66,17 @@ ExtensionManager.Prototype = function() {
     return activePanel || [];
   };
 
-  // Based on a certain writer state, determine what should be
-  // highlighted in the scrollbar.
-
+  // Based on a certain writer state, determine which nodes
+  // should be highlighted in the scrollbar and in the document
   this.getHighlightedNodes = function() {
     var highlightedNodes = this.handle("getHighlightedNodes");
     return highlightedNodes || [];
-
-    // var modules = this.getModules();
-    // var highlightedNodes = null;
-    // for (var i = 0; i < modules.length && !highlightedNodes; i++) {
-    //   var stateHandlers = modules[i].stateHandlers;
-    //   if (stateHandlers && stateHandlers.getHighlightedNodes) {
-    //     highlightedNodes = stateHandlers.getHighlightedNodes(this);
-    //   }
-    // }
-    // return highlightedNodes || [];
   };
 
-
   // Desired implementation
-  // this.extensionManager.getActiveContainerAnnotations()
-  // this.extensionManager.handle('getActiveContainerAnnotations')
   this.getActiveContainerAnnotations = function() {
-    var activeContainerAnnotations = [];
+    var activeContainerAnnotations = this.handle('getActiveContainerAnnotations');
     return activeContainerAnnotations || [];
-
-    // var modules = this.getModules();
-    // var activeContainerAnnotations = null;
-    // for (var i = 0; i < modules.length && !activeContainerAnnotations; i++) {
-    //   var stateHandlers = modules[i].stateHandlers;
-    //   if (stateHandlers && stateHandlers.getActiveContainerAnnotations) {
-    //     activeContainerAnnotations = stateHandlers.getActiveContainerAnnotations(this);
-    //   }
-    // }
-    // return activeContainerAnnotations || [];
   };
 
 };

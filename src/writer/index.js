@@ -10,26 +10,7 @@ var StrongTool = require("./tools/strong_tool");
 var EmphasisTool = require("./tools/emphasis_tool");
 var PanelMixin = require("./panel_mixin");
 var AnnotationToolMixin = require("./tools/annotation_tool_mixin");
-
 var TextProperty = require("./components/text_property");
-
-Writer.CoreModule = {
-  name: "core",
-  components: {
-    "text": TextComponent
-  },
-  panels: [
-    // TODO: TOCPanel
-  ],
-  stateHandlers: {},
-  tools: [
-    SaveTool,
-    UndoTool,
-    RedoTool,
-    StrongTool,
-    EmphasisTool
-  ]
-};
 
 Writer.AnnotationToolMixin = AnnotationToolMixin;
 Writer.PanelMixin = PanelMixin;
