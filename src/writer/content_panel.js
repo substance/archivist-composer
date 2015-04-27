@@ -7,7 +7,8 @@ var PanelMixin = require("./panel_mixin");
 var ContentPanelMixin = _.extend({}, PanelMixin, {
 
   contextTypes: {
-    app: React.PropTypes.object.isRequired
+    app: React.PropTypes.object.isRequired,
+    componentFactory: React.PropTypes.object.isRequired,
   },
 
   // Since component gets rendered multiple times we need to update
@@ -64,9 +65,10 @@ var ContentPanelMixin = _.extend({}, PanelMixin, {
 
   getContentEditor: function() {
     var app = this.context.app;
-    
     var doc = app.doc;
-    var ContainerClass = app.getNodeComponentClass("container");
+
+    var componentFactory = this.context.componentFactory;
+    var ContainerClass = componentFactory.get("container");
 
     return $$(ContainerClass, {
       doc: doc,

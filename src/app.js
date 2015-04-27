@@ -6,7 +6,8 @@
 // Main entry point of the writer application. In this file all configurations
 // are made.
 
-var Substance = require('substance');
+var Substance = require("substance");
+var _ = require("substance/helpers");
 var $$ = React.createElement;
 
 // Core Writer Stuff lives in the writer module
@@ -22,19 +23,25 @@ var Writer = require("./writer");
 
 var Interview = require("./interview");
 
-
 // Writer Modules (configuration)
-var writerModules = require("./writer_modules");
+var writerExtensions = require("./writer_extensions");
 
 // Component Factory
 // ---------------
 // 
-// Extract a component factory from writerModules and expose it via 'context'
+// Extract a component factory from core and writerExtensions and expose it via 'context'
 // all registered extensions should 
 
 var componentFactory = new Substance.Factory();
-Substance.each(writerModules, function(module) {
-  Substance.each(module.components, function(ComponentClass, name) {
+
+var coreComponents = require("./writer/components");
+
+_.each(coreComponents, function(ComponentClass, name) {
+  componentFactory.add(name, ComponentClass);
+});
+
+_.each(writerExtensions, function(extension) {
+  _.each(extension.components, function(ComponentClass, name) {
     componentFactory.add(name, ComponentClass);
   });
 });
@@ -138,7 +145,7 @@ var WriterApp = React.createClass({
     if (this.state.doc) {
       return $$(Writer, {
         config: {
-          modules: writerModules
+          extensions: writerExtensions
         },
         doc: this.state.doc,
         id: "writer"

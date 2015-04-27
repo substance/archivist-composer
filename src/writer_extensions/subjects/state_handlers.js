@@ -13,7 +13,7 @@ var stateHandlers = {
   // Returns a new panel element if a particular state is matched
 
   handleContextPanelCreation: function(app) {
-    var s = app.getState();
+    var s = app.state;
 
     if (s.contextId === SubjectsPanel.contextId) {
       return $$(SubjectsPanel, {
@@ -27,7 +27,7 @@ var stateHandlers = {
   },
 
   handleSelectionChange: function(app, sel, annotations) {
-    var state = app.getState();
+    var state = app.state;
 
     // Just prevent other modules from handling this
     if (state.contextId === EditSubjectReferencePanel.contextId) {
@@ -45,7 +45,7 @@ var stateHandlers = {
 
   getHighlightedNodes: function(app) {
     var doc = app.doc;
-    var state = app.getState();
+    var state = app.state;
 
     // When a subject has been clicked in the subjects panel
     if (state.contextId === "subjects" && state.subjectId) {
@@ -68,7 +68,7 @@ var stateHandlers = {
   // @returns a list of nodes to be highlighted
 
   getActiveContainerAnnotations: function(app) {
-    var state = app.getState();
+    var state = app.state;
 
     // When a subject has been clicked in the subjects panel
     if (state.contextId === EditSubjectReferencePanel.contextId && state.subjectReferenceId) {

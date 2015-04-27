@@ -8,7 +8,6 @@ var UndoTool = require("./tools/undo_tool");
 var RedoTool = require("./tools/redo_tool");
 var StrongTool = require("./tools/strong_tool");
 var EmphasisTool = require("./tools/emphasis_tool");
-
 var PanelMixin = require("./panel_mixin");
 var AnnotationToolMixin = require("./tools/annotation_tool_mixin");
 
