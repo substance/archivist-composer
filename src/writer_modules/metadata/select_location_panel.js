@@ -6,22 +6,22 @@ var SelectPrisonPanelMixin = _.extend({}, SelectEntityMixin, {
   
   // Called with entityId when an entity has been clicked
   handleSelection: function(entityId) {
-    var writerCtrl = this.props.writerCtrl;
+    var app = this.context.app;
     
-    if (writerCtrl.state.contextId === "selectPrison") {
+    if (app.state.contextId === "selectPrison") {
       var prisonIds = doc.get('document').interviewee_prisons;
       prisonIds.push(entityId);
-      var tx = writerCtrl.doc.startTransaction();
+      var tx = app.doc.startTransaction();
       try {
         tx.set(["document", "interviewee_prisons"], prisonIds);
         tx.save({});
       } finally {
         tx.cleanup();
       }
-    } else if (writerCtrl.state.contextId === "selectWaypoint") {
+    } else if (app.state.contextId === "selectWaypoint") {
       var waypointIds = doc.get('document').interviewee_waypoints;
 
-      var tx = writerCtrl.doc.startTransaction();
+      var tx = app.doc.startTransaction();
       try {
         // Create a new waypoint object
         var newWaypoint = tx.create({
@@ -38,8 +38,8 @@ var SelectPrisonPanelMixin = _.extend({}, SelectEntityMixin, {
       } finally {
         tx.cleanup();
       }
-    } else if (writerCtrl.state.contextId === "selectProjectLocation") {
-      var tx = writerCtrl.doc.startTransaction();
+    } else if (app.state.contextId === "selectProjectLocation") {
+      var tx = app.doc.startTransaction();
       try {
         tx.set(["document", "project_location"], entityId);
         tx.save({});
@@ -48,7 +48,7 @@ var SelectPrisonPanelMixin = _.extend({}, SelectEntityMixin, {
       }
     }
 
-    writerCtrl.replaceState({
+    app.replaceState({
       contextId: "metadata"
     });
   }

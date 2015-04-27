@@ -21,7 +21,8 @@ var MetadataPanel = React.createClass({
   // ------------
 
   contextTypes: {
-    backend: React.PropTypes.object.isRequired
+    backend: React.PropTypes.object.isRequired,
+    app: React.PropTypes.object.isRequired
   },
 
   childContextTypes: {
@@ -35,18 +36,20 @@ var MetadataPanel = React.createClass({
   },
 
   getInitialState: function() {
-    this.surface = new Surface(new Surface.FormEditor(this.props.writerCtrl.doc));
+    var app = this.context.app;
+    this.surface = new Surface(new Surface.FormEditor(app.doc));
     return null;
   },
 
   componentDidMount: function() {
-    this.props.writerCtrl.registerSurface(this.surface, "metadata", {
+    var app = this.context.app;
+    app.registerSurface(this.surface, "metadata", {
       enabledTools: ["strong", "emphasis"]
     });
 
     this.surface.attach(this.getDOMNode());
 
-    var doc = this.props.writerCtrl.doc;
+    var doc = app.doc;
     doc.connect(this, {
       'document:changed': this.handleDocumentChange
     });
@@ -68,10 +71,11 @@ var MetadataPanel = React.createClass({
   },
 
   handleWaypointDensityChange: function(e) {
+    var app = this.context.app;
     var waypointId = e.currentTarget.dataset.waypointId;
     var newDensityValue = e.currentTarget.value;
 
-    var tx = this.props.writerCtrl.doc.startTransaction();
+    var tx = app.doc.startTransaction();
     try {
       tx.set([waypointId, "density"], newDensityValue);
       tx.save({});
@@ -81,21 +85,24 @@ var MetadataPanel = React.createClass({
   },
 
   componentWillUnmount: function() {
-    this.props.writerCtrl.doc.disconnect(this);
-    this.props.writerCtrl.unregisterSurface(this.surface);
+    var app = this.context.app;
+    app.doc.disconnect(this);
+    app.unregisterSurface(this.surface);
     this.surface.detach();
   },
 
   loadPrisons: function(cb) {
+    var app = this.context.app;
     var backend = this.context.backend;
-    var doc = this.props.writerCtrl.doc;
+    var doc = app.doc;
     var prisonIds = doc.get('document').interviewee_prisons;
     backend.getEntities(prisonIds, cb);
   },
 
   loadProjectLocation: function(cb) {
     var backend = this.context.backend;
-    var doc = this.props.writerCtrl.doc;
+    var app = this.context.app;
+    var doc = app.doc;
 
     var projectLocationId = doc.get('document').project_location;
     if (projectLocationId) {
@@ -110,7 +117,8 @@ var MetadataPanel = React.createClass({
 
   loadWaypointLocations: function(cb) {
     var backend = this.context.backend;
-    var doc = this.props.writerCtrl.doc;
+    var app = this.context.app;
+    var doc = app.doc;
     var waypoints = doc.get('document').getWaypoints();
     var waypointLocationIds = _.pluck(waypoints, 'entityId');
 
@@ -142,15 +150,16 @@ var MetadataPanel = React.createClass({
   },
 
   renderTextProperty: function(property) {
+    var app = this.context.app;
     return $$(TextProperty, {
-      doc: this.props.writerCtrl.doc,
-      path: [ "document", property],
-      writerCtrl: this.props.writerCtrl,
+      doc: app.doc,
+      path: [ "document", property]
     });
   },
 
   renderChecboxProperty: function(property) {
-    var checked = doc.get('document')[property];
+    var app = this.context.app;
+    var checked = app.doc.get('document')[property];
 
     return $$('input', {
       contentEditable: false,
@@ -162,7 +171,8 @@ var MetadataPanel = React.createClass({
   },
 
   renderInterviewType: function() {
-    var selected = doc.get('document').record_type;
+    var app = this.context.app;
+    var selected = app.doc.get('document').record_type;
 
     return $$('select', {contentEditable: false, onChange: this.handleInterviewTypeState, defaultValue: selected},
       $$('option', 'video', "Video"),
@@ -171,10 +181,11 @@ var MetadataPanel = React.createClass({
   },
 
   handleCheckboxChange: function(e) {
+    var app = this.context.app;
     var property = e.currentTarget.name;
     var checked = e.currentTarget.checked;
 
-    var tx = this.props.writerCtrl.doc.startTransaction();
+    var tx = app.doc.startTransaction();
     try {
       tx.set(["document", property], checked);
       tx.save({});
@@ -184,9 +195,10 @@ var MetadataPanel = React.createClass({
   },
 
   handleInterviewTypeState: function(e) {
+    var app = this.context.app;
     var value = e.currentTarget.value;
 
-    var tx = this.props.writerCtrl.doc.startTransaction();
+    var tx = app.doc.startTransaction();
     try {
       tx.set(["document", "record_type"], value);
       tx.save({});
@@ -196,31 +208,35 @@ var MetadataPanel = React.createClass({
   },
 
   handleAddPrison: function(e) {
+    var app = this.context.app;
     e.preventDefault();
-    this.props.writerCtrl.replaceState({
+    app.replaceState({
       contextId: "selectPrison"
     });
   },
 
   handleAddWaypoint: function(e) {
+    var app = this.context.app;
     e.preventDefault();
-    this.props.writerCtrl.replaceState({
+    app.replaceState({
       contextId: "selectWaypoint"
     });
   },
 
   handleSetProjectLocation: function(e) {
+    var app = this.context.app;
     e.preventDefault();
-    this.props.writerCtrl.replaceState({
+    app.replaceState({
       contextId: "selectProjectLocation"
     });
   },
 
   handleRemoveProjectLocation: function(e) {
     e.preventDefault();
-    var doc = this.props.writerCtrl.doc;
+    var app = this.context.app;
+    var doc = app.doc;
 
-    var tx = this.props.writerCtrl.doc.startTransaction();
+    var tx = app.doc.startTransaction();
     try {
       tx.set(["document", "project_location"], null);
       tx.save({});
@@ -230,11 +246,12 @@ var MetadataPanel = React.createClass({
   },
 
   handleRemoveWaypoint: function(e) {
+    var app = this.context.app;
     var waypointId = e.currentTarget.dataset.id;
     e.preventDefault();
-    var doc = this.props.writerCtrl.doc;
+    var doc = app.doc;
 
-    var tx = this.props.writerCtrl.doc.startTransaction();
+    var tx = app.doc.startTransaction();
     try {
       tx.delete(waypointId);
 
@@ -249,14 +266,15 @@ var MetadataPanel = React.createClass({
   },
 
   handleRemovePrison: function(e) {
+    var app = this.context.app;
     var prisonId = e.currentTarget.dataset.id;
 
     e.preventDefault();
-    var doc = this.props.writerCtrl.doc;
+    var doc = app.doc;
     var prisonIds = doc.get('document').interviewee_prisons;
     prisonIds = _.without(prisonIds, prisonId);
 
-    var tx = this.props.writerCtrl.doc.startTransaction();
+    var tx = app.doc.startTransaction();
     try {
       tx.set(["document", "interviewee_prisons"], prisonIds);
       tx.save({});
@@ -313,7 +331,8 @@ var MetadataPanel = React.createClass({
   },
 
   renderWaypoints: function() {
-    var doc = this.props.writerCtrl.doc;
+    var app = this.context.app;
+    var doc = app.doc;
     var waypoints = doc.get("document").getWaypoints();
 
     var waypointEls = waypoints.map(function(waypoint) {

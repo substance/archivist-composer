@@ -10,17 +10,13 @@ var stateHandlers = {
   // 
   // Returns a new panel element if a particular state is matched
 
-  handleContextPanelCreation: function(writerCtrl) {
-    var state = writerCtrl.getState();
+  handleContextPanelCreation: function(app) {
+    var state = app.state;
 
     if (state.contextId === "metadata") {
-      return $$(MetadataPanel, {
-        writerCtrl: writerCtrl
-      });
+      return $$(MetadataPanel);
     } else if (["selectPrison", "selectWaypoint", "selectProjectLocation"], state.contextId) {
-      return $$(SelectLocationPanel, {
-        writerCtrl: writerCtrl
-      });
+      return $$(SelectLocationPanel);
     }
   }
 };

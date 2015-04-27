@@ -55,21 +55,23 @@ var EntityView = React.createClass({
 var SelectEntityMixin = {
 
   contextTypes: {
+    app: React.PropTypes.object.isRequired,
     backend: React.PropTypes.object.isRequired
   },
 
   handleCancel: function(e) {
+    var app = this.context.app;
     e.preventDefault();
     console.log('props', this.props);
     if (this.props.entityReferenceId) {
       // Go back to show entities panel
-      this.props.writerCtrl.replaceState({
+      app.replaceState({
         contextId: "showEntityReference",
         entityReferenceId: this.props.entityReferenceId
       });
     } else {
       // Go to regular entities panel
-      this.props.writerCtrl.replaceState({
+      app.replaceState({
         contextId: "entities"
       });
     }
