@@ -87,16 +87,7 @@ WriterController.Prototype = function() {
   };
 
   this._onSelectionChanged = function(sel) {
-    // var modules = this.getModules();
     this.extensionManager.handleSelectionChange(sel);
-
-    // var handled = false;
-    // for (var i = 0; i < modules.length && !handled; i++) {
-    //   var stateHandlers = modules[i].stateHandlers;
-    //   if (stateHandlers && stateHandlers.handleSelectionChange) {
-    //     handled = stateHandlers.handleSelectionChange(this, sel);
-    //   }
-    // }
 
     // Notify all registered tools about the selection change (if enabled)
     this.toolManager.updateTools(sel);
