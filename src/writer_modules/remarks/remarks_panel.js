@@ -2,7 +2,6 @@ var $$ = React.createElement;
 var Substance = require("substance");
 var Surface = Substance.Surface;
 var _ = require("substance/helpers");
-
 var PanelMixin = require("../../writer").PanelMixin;
 
 // Sub component
@@ -50,8 +49,6 @@ var RemarksPanelMixin = _.extend({}, PanelMixin, {
             noScroll: true
           });
           surface.rerenderDomSelection();          
-        } else {
-          console.log('already here');
         }
       }
     });

@@ -9,14 +9,14 @@ var TagEntityToolMixin = _.extend({}, AnnotationToolMixin, {
   // Instead of creating a new annotation immediately we want to
   // open the select entity panel
   performAction: function() {
+    var app = this.context.app;
     var sel = this.state.sel;
-    var writerCtrl = this.props.writerCtrl;
 
     // TODO: implement sel.getText() so we can get this from the document directly;
     var searchString = window.getSelection().toString();
 
     if (this.state.mode === "create") {
-      writerCtrl.replaceState({
+      app.replaceState({
         contextId: "tagentity",
         path: sel.getPath(),
         startOffset: sel.getStartOffset(),

@@ -4,11 +4,17 @@ var $$ = React.createElement;
 // ----------------
 
 var ContentTools = React.createClass({
+
+  contextTypes: {
+    app: React.PropTypes.object.isRequired
+  },
+
   displayName: "ContentTools",
   render: function() {
-    var tools = this.props.writerCtrl.getTools();
+    var app = this.context.app;
+    var tools = app.getTools();
+    
     var props = {
-      writerCtrl: this.props.writerCtrl,
       doc: this.props.doc,
       switchContext: this.props.switchContext
     };

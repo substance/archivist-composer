@@ -6,6 +6,10 @@ var Substance = require("substance");
 
 var AnnotationToolMixin = Substance.extend({}, Substance.Surface.AnnotationTool.prototype, {
 
+  contextTypes: {
+    app: React.PropTypes.object.isRequired
+  },
+
   getInitialState: function() {
     return {
       active: false,
@@ -28,21 +32,25 @@ var AnnotationToolMixin = Substance.extend({}, Substance.Surface.AnnotationTool.
   },
 
   componentWillMount: function() {
-    var toolManager = this.props.writerCtrl.toolManager;
+    var app = this.context.app;
+    var toolManager = app.toolManager;
     toolManager.registerTool(this, this.annotationType);
   },
 
   componentWillUnmount: function() {
-    var toolManager = this.props.writerCtrl.toolManager;
+    var app = this.context.app;
+    var toolManager = app.toolManager;
     toolManager.unregisterTool(this);
   },
 
   getDocument: function() {
-    return this.props.writerCtrl.doc;
+    var app = this.context.app;
+    return app.doc;
   },
 
   getContainer: function() {
-    var surface = this.props.writerCtrl.getSurface();
+    var app = this.context.app;
+    var surface = app.getSurface();
     return surface.getContainer();
   },
 

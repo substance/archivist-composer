@@ -12,9 +12,9 @@ var stateHandlers = {
   //
   // Returns a new panel element if a particular state is matched
 
-  handleContextPanelCreation: function(writerCtrl) {
-    var s = writerCtrl.getState();
-    var doc = writerCtrl.doc;
+  handleContextPanelCreation: function(app) {
+    var s = app.state;
+    var doc = app.doc;
 
     var remarks = _.map(doc.remarksIndex.get(), function(remark) {
       return remark;
@@ -27,20 +27,19 @@ var stateHandlers = {
       }
 
       return $$(RemarksPanel, {
-        writerCtrl: writerCtrl,
         remarks: remarks,
         activeRemark: activeRemark
       });
     }
   },
 
-  handleSelectionChange: function(writerCtrl, sel, annotations) {
+  handleSelectionChange: function(app, sel, annotations) {
     if (sel.isNull() || !sel.isCollapsed()) return;
     
-    var surface = writerCtrl.getSurface();
+    var surface = app.getSurface();
     if (surface.name !== "content") return false;
 
-    var doc = writerCtrl.doc;
+    var doc = app.doc;
     var contentContainer = surface.getContainer();
 
     var annos = doc.getContainerAnnotationsForSelection(sel, contentContainer, {
@@ -49,7 +48,7 @@ var stateHandlers = {
 
     var activeRemark = annos[0];
     if (activeRemark) {
-      writerCtrl.replaceState({
+      app.replaceState({
         contextId: RemarksPanel.contextId,
         remarkId: activeRemark.id
       });
@@ -63,12 +62,12 @@ var stateHandlers = {
   //
   // => inspects state
   //
-  // Based on writer state, determine which nodes should be highlighted in the content panel
+  // Based on app state, determine which nodes should be highlighted in the content panel
   // @returns a list of nodes to be highlighted
 
-  getHighlightedNodes: function(writerCtrl) {
-    var doc = writerCtrl.doc;
-    var state = writerCtrl.getState();
+  getHighlightedNodes: function(app) {
+    var doc = app.doc;
+    var state = app.state;
 
     // When a subject has been clicked in the subjects panel
     if (state.contextId === "remarks" && state.remarkId) {
@@ -81,18 +80,14 @@ var stateHandlers = {
   //
   // => inspects state
   //
-  // Based on writer state, determine which container nodes should be highlighted in the content panel
+  // Based on app state, determine which container nodes should be highlighted in the content panel
   // @returns a list of nodes to be highlighted
 
-  getActiveContainerAnnotations: function(writerCtrl) {
-    var state = writerCtrl.getState();
-
-    // Only highlight remarks when we are in remarks context
-    // if (state.contextId === "remarks") {
-    var doc = writerCtrl.doc;
+  getActiveContainerAnnotations: function(app) {
+    var state = app.state;
+    var doc = app.doc;
     var remarks = Object.keys(doc.remarksIndex.get());      
     return remarks;
-    // }
   }
 };
 

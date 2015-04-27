@@ -7,11 +7,13 @@ var UndoTool = React.createClass({
   displayName: "SaveTool",
 
   contextTypes: {
+    app: React.PropTypes.object.isRequired,
     backend: React.PropTypes.object.isRequired
   },
 
   getDocument: function() {
-    return this.props.writerCtrl.doc;
+    var app = this.context.app;
+    return app.doc;
   },
 
   componentDidMount: function() {
@@ -27,7 +29,6 @@ var UndoTool = React.createClass({
 
   // Do we really need a backend?
   handleMouseDown: function(e) {
-
     e.preventDefault();
     e.stopPropagation();
 

@@ -13,11 +13,13 @@ var EntitiesPanel = React.createClass({
   displayName: "Entities",
 
   contextTypes: {
+    app: React.PropTypes.object.isRequired,
     backend: React.PropTypes.object.isRequired
   },
 
   getReferencedEntityIds: function() {
-    var doc = this.props.writerCtrl.doc;
+    var app = this.context.app;
+    var doc = app.doc;
     var entityReferences = doc.entityReferencesIndex.get();
     return _.map(entityReferences, function(entityRef, key) {
       return entityRef.target;
@@ -29,13 +31,10 @@ var EntitiesPanel = React.createClass({
 
   loadEntities: function() {
     var self = this;
-
     var backend = this.context.backend;
     var entityIds = self.getReferencedEntityIds();
 
     backend.getEntities(entityIds, function(err, entities) {
-      // window.cache.entities = entities;
-
       // Finished simulated loading of entities
       self.setState({
         entities: entities
@@ -65,14 +64,14 @@ var EntitiesPanel = React.createClass({
   },
 
   handleToggle: function(entityId) {
-    var writerCtrl = this.props.writerCtrl;
+    var app = this.context.app;
 
-    if (writerCtrl.state.entityId === entityId) {
-      writerCtrl.replaceState({
+    if (app.state.entityId === entityId) {
+      app.replaceState({
         contextId: "entities"
       });
     } else {
-      writerCtrl.replaceState({
+      app.replaceState({
         contextId: "entities",
         entityId: entityId
       });

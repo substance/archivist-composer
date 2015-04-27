@@ -2,7 +2,6 @@
 
 var Writer = require("./writer");
 
-var ContainerComponent = require("./components/container_component");
 var TextComponent = require("./components/text_component");
 var SaveTool = require("./tools/save_tool");
 var UndoTool = require("./tools/undo_tool");
@@ -18,8 +17,7 @@ var TextProperty = require("./components/text_property");
 Writer.CoreModule = {
   name: "core",
   components: {
-    "container": ContainerComponent,
-    "text": TextComponent,
+    "text": TextComponent
   },
   panels: [
     // TODO: TOCPanel

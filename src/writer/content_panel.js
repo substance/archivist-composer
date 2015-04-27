@@ -6,19 +6,26 @@ var PanelMixin = require("./panel_mixin");
 
 var ContentPanelMixin = _.extend({}, PanelMixin, {
 
+  contextTypes: {
+    app: React.PropTypes.object.isRequired
+  },
+
   // Since component gets rendered multiple times we need to update
   // the scrollbar and reattach the scroll event
   componentDidMount: function() {
+    var app = this.context.app;
     this.updateScrollbar();
     $(window).on('resize', this.updateScrollbar);
 
-    var doc = this.props.writerCtrl.doc;
+    var doc = app.doc;
     doc.connect(this, {
       'document:changed': this.onDocumentChange
     });
   },
 
   componentWillUnmount: function() {
+    var app = this.context.app
+    var doc = app.doc;
     doc.disconnect(this);
     $(window).off('resize');
   },
@@ -56,12 +63,12 @@ var ContentPanelMixin = _.extend({}, PanelMixin, {
   // -----------------
 
   getContentEditor: function() {
-    var writerCtrl = this.props.writerCtrl;
-    var doc = writerCtrl.doc;
-    var ContainerClass = writerCtrl.getNodeComponentClass("container");
+    var app = this.context.app;
+    
+    var doc = app.doc;
+    var ContainerClass = app.getNodeComponentClass("container");
 
     return $$(ContainerClass, {
-      writerCtrl: writerCtrl,
       doc: doc,
       node: doc.get("content"),
       ref: "contentEditor"
@@ -69,13 +76,13 @@ var ContentPanelMixin = _.extend({}, PanelMixin, {
   },
 
   render: function() {
-    var writerCtrl = this.props.writerCtrl;
+    var app = this.context.app;
 
     return $$("div", {className: "panel content-panel-component"}, // usually absolutely positioned
       $$(Scrollbar, {
         id: "content-scrollbar",
-        contextId: writerCtrl.getState().contextId,
-        highlights: writerCtrl.getHighlightedNodes.bind(writerCtrl),
+        contextId: app.state.contextId,
+        highlights: app.getHighlightedNodes.bind(app),
         ref: "scrollbar"
       }),
 

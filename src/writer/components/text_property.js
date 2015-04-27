@@ -1,6 +1,5 @@
 var Substance = require('substance');
 var $$ = React.createElement;
-
 var TextProperty = Substance.Surface.TextProperty;
 
 // TextPropertyComponent
@@ -8,13 +7,12 @@ var TextProperty = Substance.Surface.TextProperty;
 //
 
 var TextPropertyComponent = React.createClass(Substance.extend({}, TextProperty.prototype, {
-
   displayName: "TextProperty",
 
   contextTypes: {
     surface: React.PropTypes.object.isRequired,
     getHighlightedNodes: React.PropTypes.func.isRequired,
-    getHighlightsForTextProperty: React.PropTypes.func.isRequired,
+    getHighlightsForTextProperty: React.PropTypes.func.isRequired
   },
 
   getInitialState: function() {
@@ -156,7 +154,7 @@ var TextPropertyComponent = React.createClass(Substance.extend({}, TextProperty.
 
   getElement: function() {
     return this.getDOMNode();
-  },
+  }
 
 }));
 

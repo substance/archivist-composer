@@ -5,11 +5,11 @@ var TagEntityPanelMixin = _.extend({}, SelectEntityMixin, {
   
   // Called with entityId when an entity has been clicked
   handleSelection: function(entityId) {
-    var writerCtrl = this.props.writerCtrl;
+    var app = this.context.app;
     var entityReferenceId = this.props.entityReferenceId;
 
     if (entityReferenceId) {
-      var tx = writerCtrl.doc.startTransaction();
+      var tx = app.doc.startTransaction();
       try {
         tx.set([entityReferenceId, "target"], entityId);
         tx.save({});
@@ -17,7 +17,7 @@ var TagEntityPanelMixin = _.extend({}, SelectEntityMixin, {
         tx.cleanup();
       }
 
-      writerCtrl.replaceState({
+      app.replaceState({
         contextId: "showEntityReference",
         entityReferenceId: entityReferenceId
       });
@@ -27,7 +27,7 @@ var TagEntityPanelMixin = _.extend({}, SelectEntityMixin, {
       var startOffset = this.props.startOffset;
       var endOffset = this.props.endOffset;
 
-      var annotation = writerCtrl.annotate({
+      var annotation = app.annotate({
         type: "entity_reference",
         target: entityId,
         path: path,
@@ -36,7 +36,7 @@ var TagEntityPanelMixin = _.extend({}, SelectEntityMixin, {
       });
 
       // Switch state to highlight newly created reference
-      writerCtrl.replaceState({
+      app.replaceState({
         contextId: "showEntityReference",
         entityReferenceId: annotation.id
       });

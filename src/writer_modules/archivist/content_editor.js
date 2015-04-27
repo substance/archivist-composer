@@ -12,15 +12,11 @@ var ENABLED_TOOLS = ["strong", "emphasis", "timecode", "remark", "entity_referen
 //
 // Represents a flat collection of nodes
 
-// TODO: this is not Substance.Writer but should be in Archivist
-// Plan: make this implementation an abstract mixin
-// and let the application configure a componentFactory
-// that provides a customized version.
-
 var ContentEditor = React.createClass({
   displayName: "ContentEditor",
 
   contextTypes: {
+    app: React.PropTypes.object.isRequired,
     componentFactory: React.PropTypes.object.isRequired,
     notifications: React.PropTypes.object.isRequired
   },
@@ -52,15 +48,15 @@ var ContentEditor = React.createClass({
   handleToggleSubjectReference: function(e) {
     e.preventDefault();
     var subjectReferenceId = e.currentTarget.dataset.id;
-    var writerCtrl = this.props.writerCtrl;
-    var state = writerCtrl.state;
+    var app = this.context.app;
+    var state = app.state;
 
     if (state.contextId === "editSubjectReference" && state.subjectReferenceId === subjectReferenceId) {
-      writerCtrl.replaceState({
+      app.replaceState({
         contextId: "subjects"
       });
     } else {
-      writerCtrl.replaceState({
+      app.replaceState({
         contextId: "editSubjectReference",
         subjectReferenceId: subjectReferenceId
       });
@@ -70,14 +66,14 @@ var ContentEditor = React.createClass({
   render: function() {
     var containerNode = this.props.node;
     var doc = this.props.doc;
-    var writerCtrl = this.props.writerCtrl;
+    var app = this.context.app;
 
     // Prepare subject reference components
     // ---------
 
     var subjectReferences = doc.getIndex('type').get('subject_reference');
     var subjectRefComponents = [];
-    var activeContainerAnnotations = writerCtrl.getActiveContainerAnnotations();
+    var activeContainerAnnotations = app.getActiveContainerAnnotations();
 
     _.each(subjectReferences, function(sref) {
       subjectRefComponents.push($$('a', {
@@ -102,9 +98,7 @@ var ContentEditor = React.createClass({
       return $$(ComponentClass, {
         key: node.id,
         doc: doc,
-        node: node,
-        // TODO: we should use DI instead of coupling to the writer
-        writerCtrl: writerCtrl
+        node: node
       });
     }));
 
@@ -112,7 +106,7 @@ var ContentEditor = React.createClass({
     // ---------
 
     return $$('div', {className: 'panel-content-inner'},
-      $$(TitleEditor, {writerCtrl: this.props.writerCtrl}),
+      $$(TitleEditor),
       // The full fledged interview (ContainerEditor)
       $$("div", {ref: "interviewContent", className: "interview-content", contentEditable: true, "data-id": "content"},
         $$("div", {
@@ -195,14 +189,14 @@ var ContentEditor = React.createClass({
 
   componentDidMount: function() {
     var surface = this.surface;
-
+    var app = this.context.app;
     var doc = this.props.doc;
 
     doc.connect(this, {
       'document:changed': this.onDocumentChange
     });
 
-    this.props.writerCtrl.registerSurface(surface, "content", {
+    app.registerSurface(surface, "content", {
       enabledTools: ENABLED_TOOLS
     });
     surface.attach(this.refs.interviewContent.getDOMNode());
@@ -250,16 +244,18 @@ var ContentEditor = React.createClass({
   },
 
   componentWillUnmount: function() {
+    var app = this.context.app;
     var surface = this.surface;
     var doc = this.props.doc;
     doc.disconnect(this);
 
-    this.props.writerCtrl.unregisterSurface(surface);
+    app.unregisterSurface(surface);
     surface.detach();
   },
 
   onDocumentChange: function(change) {
-    var writerCtrl = this.props.writerCtrl;
+    var app = this.context.app;
+
     // console.log('##### ContainerComponent.onDocumentChange', change);
 
     var deletedSubjectRefs = _.filter(change.deleted, function(node) {
@@ -273,8 +269,8 @@ var ContentEditor = React.createClass({
     // HACK: implicitly switch the state when a subject reference is deleted and currently open
     // This implicitly also updates the brackets accordingly
     var subjectRef = deletedSubjectRefs[0];
-    if (subjectRef && writerCtrl.state.subjectReferenceId === subjectRef.id) {
-      writerCtrl.replaceState({
+    if (subjectRef && app.state.subjectReferenceId === subjectRef.id) {
+      app.replaceState({
         contextId: 'subjects'
       });
       return;

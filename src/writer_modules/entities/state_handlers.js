@@ -11,22 +11,19 @@ var stateHandlers = {
   //
   // Returns a new panel element if a particular state is matched
 
-  handleContextPanelCreation: function(writerCtrl) {
-    var state = writerCtrl.getState();
+  handleContextPanelCreation: function(app) {
+    var state = app.state;
 
     if (state.contextId === "entities") {
       return $$(EntitiesPanel, {
-        writerCtrl: writerCtrl,
         entityId: state.entityId
       });
     } else if (state.contextId === "showEntityReference") {
       return $$(ShowEntityReferencePanel, {
-        writerCtrl: writerCtrl,
         entityReferenceId: state.entityReferenceId
       });
     } else if (state.contextId === "tagentity") {
       return $$(TagEntityPanel, {
-        writerCtrl: writerCtrl,
         path: state.path,
         startOffset: state.startOffset,
         endOffset: state.endOffset,
@@ -42,17 +39,17 @@ var stateHandlers = {
   // => modifies state
   //
   // When user navigates over a reference somewhere, the extension gets the chance to
-  // manipulate writer state (e.g. switching the contextId) so a custom panel
+  // manipulate app state (e.g. switching the contextId) so a custom panel
   // can display contextual information.
 
-  handleSelectionChange: function(writerCtrl, sel, annotations) {
+  handleSelectionChange: function(app, sel, annotations) {
     if (sel.isNull() || !sel.isPropertySelection() || !sel.isCollapsed()) return;
-    var annotations = writerCtrl.doc.annotationIndex.get(sel.getPath(), sel.getStartOffset(), sel.getEndOffset(), "entity_reference");
-    var surface = writerCtrl.getSurface();
+    var annotations = app.doc.annotationIndex.get(sel.getPath(), sel.getStartOffset(), sel.getEndOffset(), "entity_reference");
+    var surface = app.getSurface();
     if (surface.name !== "content") return false;
     if (annotations.length > 0) {
       var ref = annotations[0];
-      writerCtrl.replaceState({
+      app.replaceState({
         contextId: ShowEntityReferencePanel.contextId,
         entityReferenceId: ref.id
       });
@@ -65,12 +62,12 @@ var stateHandlers = {
   //
   // => inspects state
   //
-  // Based on writer state, determine which nodes should be highlighted in the content panel
+  // Based on app state, determine which nodes should be highlighted in the content panel
   // @returns a list of nodes to be highlighted
 
-  getHighlightedNodes: function(writerCtrl) {
-    var doc = writerCtrl.doc;
-    var state = writerCtrl.getState();
+  getHighlightedNodes: function(app) {
+    var doc = app.doc;
+    var state = app.state;
 
     // Let the extension handle which nodes should be highlighted
     if (state.contextId === "entities" && state.entityId) {

@@ -12,6 +12,7 @@ var ShowEntityReferencePanel = React.createClass({
   displayName: "Entity",
 
   contextTypes: {
+    app: React.PropTypes.object.isRequired,
     backend: React.PropTypes.object.isRequired
   },
 
@@ -20,7 +21,8 @@ var ShowEntityReferencePanel = React.createClass({
 
   loadEntity: function(props) {
     props = props || this.props;
-    var doc = props.writerCtrl.doc;
+    var app = this.context.app;
+    var doc = app.doc;
     var self = this;
     var entityRef = doc.get(props.entityReferenceId);
 
@@ -81,15 +83,17 @@ var ShowEntityReferencePanel = React.createClass({
   },
 
   handleCancel: function(e) {
+    var app = this.context.app;
     e.preventDefault();
-    this.props.writerCtrl.replaceState({
+    app.replaceState({
       contextId: "entities"
     });
   },
 
   handleEdit: function(e) {
+    var app = this.context.app;
     e.preventDefault();
-    this.props.writerCtrl.replaceState({
+    app.replaceState({
       contextId: "tagentity",
       entityReferenceId: this.props.entityReferenceId
     });
@@ -97,14 +101,14 @@ var ShowEntityReferencePanel = React.createClass({
 
   handleDeleteReference: function(e) {
     e.preventDefault();
-    var writerCtrl = this.props.writerCtrl;
-    var doc = this.props.writerCtrl.doc;
+    var app = this.context.app;
+    var doc = app.doc;
     var tx = doc.startTransaction();
 
     try {
       tx.delete(this.props.entityReferenceId);
       tx.save();
-      writerCtrl.replaceState({
+      app.replaceState({
         contextId: "entities"
       });
     } finally {

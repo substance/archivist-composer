@@ -38,17 +38,12 @@ var TextComponent = React.createClass({
     return shouldUpdate;
   },
 
-  componentDidUpdate: function() {
-    // console.log('updated', this.props.node.id);
-  },
-
   render: function() {
     return $$("div", { className: "content-node text", "data-id": this.props.node.id },
       $$(TextProperty, {
         ref: "textProp",
         doc: this.props.doc,
-        path: [ this.props.node.id, "content"],
-        writerCtrl: this.props.writerCtrl,
+        path: [ this.props.node.id, "content"]
       })
     );
   }
