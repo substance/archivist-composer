@@ -119,7 +119,7 @@ Backend.Prototype = function() {
   };
 
   this.fetchSubjects = function(cb) {
-    $.getJSON("/api/subjects", function(subjectDB) {
+    $.getJSON("/api/subjects?page=1&sort_by=position&order=asc", function(subjectDB) {
       // Store in cache
       this.cache.subjectDB = subjectDB;
       cb(null, subjectDB.subjects);
