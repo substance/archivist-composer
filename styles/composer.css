@@ -714,10 +714,14 @@ a:hover {
   border-left: 2px solid rgba(11, 157, 217, 1);
 }
 
+.entity .name {
+  margin-right: 100px;
+}
+
 .entity .type {
   position: absolute;
-  right: 15px;
-  top: 15px;
+  right: 20px;
+  top: 20px;
   color: #888;
   font-size: 12px;
 }
@@ -725,8 +729,8 @@ a:hover {
 .entity .edit {
   color: #505050;
   position: absolute;
-  bottom: 15px;
-  right: 15px;
+  bottom: 20px;
+  right: 20px;
 }
 
 .entity .description {
@@ -735,6 +739,7 @@ a:hover {
   margin-right: 30px;
 }
 
+.entity .prison-type,
 .entity .synonyms {
   font-size: 12px;
   padding-top: 10px;
@@ -745,7 +750,7 @@ a:hover {
   font-size: 12px;
   padding-top: 10px;
   position: absolute;
-  right: 15px;
+  right: 20px;
   display: block;
   top: 40px;
 }
