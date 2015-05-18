@@ -22,13 +22,17 @@ var EntityView = React.createClass({
     var className = ["entity", this.props.type];
     if (this.props.active) className.push("active");
 
+    if (this.props.type == 'prison') {
+      this.props.name = this.props.name.toLowerCase().indexOf("неизвестно") >= 0 ? this.props.nearest_locality + ' (' + this.props.prison_type.join(', ') + ')' : this.props.name;
+    }
+
     var props = [
       $$("div", {className: "type"}, TYPE_LABELS[this.props.type]),
       $$("div", {className: "name"}, this.props.name || this.props.title)
     ];
 
     if (this.props.synonyms) {
-      props.push($$("div", {className: "synonyms"}, "Also known as: "+this.props.synonyms));
+      props.push($$("div", {className: "synonyms"}, "Also known as: "+this.props.synonyms.join(', ')));
     }
 
     if (this.props.country) {
