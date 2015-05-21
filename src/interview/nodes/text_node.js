@@ -1,4 +1,5 @@
-var Document = require("substance").Document;
+var Substance = require("substance");
+var Document = Substance.Document;
 
 // Note: in archivist paragraphs are called text nodes.
 var TextNode = Document.TextNode.extend({
