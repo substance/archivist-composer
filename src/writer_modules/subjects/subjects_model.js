@@ -49,7 +49,11 @@ SubjectsModel.prototype.getAllReferencedSubjects = function() {
     Substance.each(subjectRef.target, function(subjectId) {
       var subject = this.tree.get(subjectId);
       if (!Substance.includes(subjects, subject)) {
-        subjects.push(subject);  
+        if(subject === undefined) {
+          console.log('You have outdated subjects in this interview')
+        } else {
+          subjects.push(subject);
+        }  
       }
     }, this);
   }, this);

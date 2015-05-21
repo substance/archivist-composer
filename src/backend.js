@@ -92,10 +92,14 @@ Backend.Prototype = function() {
   this.fetchEntities = function(entityIds, cb) {
     if (entityIds.length === 0) return cb(null, []);
     console.log('Fetching entities', entityIds);
+    
+    var entities = {
+      entityIds: entityIds
+    } 
 
-    $.getJSON("/api/entities?entityIds="+entityIds.join(','), function(entities) {
-      cb(null, entities.results);
-    });
+    $.post('/api/entities', entities, function(response) {
+      cb(null, response.results);
+    }, 'json');
   };
 
   // Outdated
