@@ -1,4 +1,4 @@
-window.devMode = true;
+window.devMode = false;
 
 var app = require("./src/reader_app");
 

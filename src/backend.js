@@ -8,6 +8,8 @@ var _ = require("substance/helpers");
 // ----------------
 //
 
+var serverUrl = 'http://ost.d4s.io';
+
 var Backend = function(opts) {
   this.cache = {
     "entities": {}
@@ -20,7 +22,7 @@ Backend.Prototype = function() {
   // ------------------
 
   this.getDocument = function(documentId, cb) {
-    $.getJSON("/api/documents/"+documentId, function(rawDoc) {
+    $.getJSON(serverUrl + "/api/documents/"+documentId, function(rawDoc) {
       var doc = new Interview(rawDoc);
       doc.version = rawDoc.__v;
       // For easy reference
@@ -92,10 +94,14 @@ Backend.Prototype = function() {
   this.fetchEntities = function(entityIds, cb) {
     if (entityIds.length === 0) return cb(null, []);
     console.log('Fetching entities', entityIds);
+    
+    var entities = {
+      entityIds: entityIds
+    } 
 
-    $.getJSON("/api/entities?entityIds="+entityIds.join(','), function(entities) {
-      cb(null, entities.results);
-    });
+    $.post(serverUrl + '/api/entities', entities, function(response) {
+      cb(null, response.results);
+    }, 'json');
   };
 
   // Outdated
@@ -119,7 +125,7 @@ Backend.Prototype = function() {
   };
 
   this.fetchSubjects = function(cb) {
-    $.getJSON("/api/subjects", function(subjectDB) {
+    $.getJSON(serverUrl + "/api/subjects", function(subjectDB) {
       // Store in cache
       this.cache.subjectDB = subjectDB;
       cb(null, subjectDB.subjects);

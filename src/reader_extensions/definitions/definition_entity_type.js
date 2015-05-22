@@ -17,12 +17,8 @@ var Definition = React.createClass({
     if (this.props.active) className.push("active");
 
     return $$("div", {className: className.join(" "), onClick: this.handleToggle},
-      $$("div", {className: "type"}, "Definition"),
       $$("div", {className: "title"}, this.props.title),
-      $$("div", {className: "description"}, this.props.description),
-      $$("a", {className: "edit", target: "_blank", href: './definitions/' + this.props.id, onClick: this.handleEdit},
-        $$("i", {className: "fa fa-pencil-square-o"})
-      )
+      $$("div", {className: "description"}, this.props.description)
     );
   }
 });
