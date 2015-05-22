@@ -1,10 +1,10 @@
-var EntitiesPanel = require("./entities_panel");
+var DefinitionsPanel = require("./definitions_panel");
 var stateHandlers = require("./state_handlers");
 
 module.exports = {
-  name: "entities",
+  name: "definitions",
   panels: [
-    EntitiesPanel
+    DefinitionsPanel
   ],
   stateHandlers: stateHandlers,
   tools: [

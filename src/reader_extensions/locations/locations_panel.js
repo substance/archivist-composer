@@ -1,16 +1,12 @@
 var Substance = require("substance");
 var $$ = React.createElement;
 
-// Entity types
-var Prison = require("./entity_types/prison");
-var Toponym = require("./entity_types/toponym");
-var Person = require("./entity_types/person");
-var Definition = require("./entity_types/definition");
+var Location = require("./location_entity_type");
 
 var _ = require("substance/helpers");
 
-var EntitiesPanel = React.createClass({
-  displayName: "Entities",
+var LocationsPanel = React.createClass({
+  displayName: "Locations",
 
   contextTypes: {
     app: React.PropTypes.object.isRequired,
@@ -29,13 +25,19 @@ var EntitiesPanel = React.createClass({
   // Data loading methods
   // ------------
 
-  loadEntities: function() {
+  loadEntities: function(types) {
     var self = this;
     var backend = this.context.backend;
     var entityIds = self.getReferencedEntityIds();
 
     backend.getEntities(entityIds, function(err, entities) {
-      // Finished simulated loading of entities
+      // Filter loaded entities by entity type if type provided 
+      if (types) {
+        entities = entities.filter(function(entity){
+          return types.indexOf(entity.type) > -1;
+        })
+      }
+
       self.setState({
         entities: entities
       });
@@ -56,11 +58,11 @@ var EntitiesPanel = React.createClass({
   // ------------
 
   componentDidMount: function() {
-    this.loadEntities();
+    this.loadEntities(['toponym', 'prison']);
   },
 
   componentWillReceiveProps: function() {
-    this.loadEntities();
+    this.loadEntities(['toponym', 'prison']);
   },
 
   handleToggle: function(entityId) {
@@ -68,11 +70,11 @@ var EntitiesPanel = React.createClass({
 
     if (app.state.entityId === entityId) {
       app.replaceState({
-        contextId: "entities"
+        contextId: "locations"
       });
     } else {
       app.replaceState({
-        contextId: "entities",
+        contextId: "locations",
         entityId: entityId
       });
     }
@@ -83,17 +85,7 @@ var EntitiesPanel = React.createClass({
 
   getEntityElement: function(entity) {
     entity.handleToggle = this.handleToggle;
-
-    if (entity.type === "prison") {
-      return $$(Prison, entity);
-    } else if (entity.type === "toponym") {
-      return $$(Toponym, entity);
-    } else if (entity.type === "person") {
-      return $$(Person, entity);
-    } else if (entity.type === "definition") {
-      return $$(Definition, entity);
-    }
-    throw new Error('No view component for '+ entity.type);
+    return $$(Location, entity);
   },
 
   render: function() {
@@ -118,7 +110,7 @@ var EntitiesPanel = React.createClass({
   }
 });
 
-EntitiesPanel.contextId = "entities";
-EntitiesPanel.icon = "fa-bullseye";
+LocationsPanel.contextId = "locations";
+LocationsPanel.icon = "fa-globe";
 
-module.exports = EntitiesPanel;
+module.exports = LocationsPanel;

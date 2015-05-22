@@ -1,4 +1,4 @@
-var EntitiesPanel = require("./entities_panel");
+var LocationsPanel = require("./locations_panel");
 
 var $$ = React.createElement;
 
@@ -12,8 +12,8 @@ var stateHandlers = {
   handleContextPanelCreation: function(app) {
     var state = app.state;
 
-    if (state.contextId === "entities") {
-      return $$(EntitiesPanel, {
+    if (state.contextId === "locations") {
+      return $$(LocationsPanel, {
         entityId: state.entityId
       });
     }
@@ -56,7 +56,7 @@ var stateHandlers = {
     var state = app.state;
 
     // Let the extension handle which nodes should be highlighted
-    if (state.contextId === "entities" && state.entityId) {
+    if (state.contextId === "locations" && state.entityId) {
       // Use reference handler
       var references = Object.keys(doc.entityReferencesIndex.get(state.entityId));
       return references;

@@ -1,10 +1,10 @@
-var EntitiesPanel = require("./entities_panel");
+var PersonsPanel = require("./persons_panel");
 var stateHandlers = require("./state_handlers");
 
 module.exports = {
-  name: "entities",
+  name: "persons",
   panels: [
-    EntitiesPanel
+    PersonsPanel
   ],
   stateHandlers: stateHandlers,
   tools: [
