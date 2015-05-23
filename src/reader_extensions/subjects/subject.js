@@ -16,7 +16,9 @@ var Subject = React.createClass({
     if (this.props.active) className.push("active");
 
     return $$("div", {className: className.join(" "), onClick: this.handleToggle},
-      $$('div', {className: 'full-path'}, this.props.fullPath.join(" > "))
+      // we don't need full path here now
+      //$$('div', {className: 'full-path'}, this.props.fullPath.join(" > "))
+      $$('div', {className: 'full-path'}, this.props.name)
     );
   }
 });

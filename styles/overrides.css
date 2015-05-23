@@ -1,0 +1,6 @@
+/* Reader experimental overrides */
+
+.scrollbar-component {
+	background: #FAFAFA;
+	box-shadow: inset -4px 0 4px 0 rgba(25,25,25,0.04);
+}

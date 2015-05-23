@@ -8,12 +8,12 @@ var MetadataExtension = require("./metadata");
 var TimecodesExtension = require("./timecodes");
 
 module.exports = [
-  PersonsExtension,
-  LocationsExtension,
   DefinitionsExtension,
   SubjectsExtension,
   TimecodesExtension,
   MetadataExtension,
+  LocationsExtension,
+  PersonsExtension,
   ArchivistExtension
 ];
 

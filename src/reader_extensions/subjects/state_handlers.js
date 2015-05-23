@@ -20,8 +20,12 @@ var stateHandlers = {
         subjectId: s.subjectId
       });
     } else if (s.contextId === ShowSubjectReferencePanel.contextId && s.subjectReferenceId) {
-      return $$(ShowSubjectReferencePanel, {
-        subjectReferenceId: s.subjectReferenceId
+      // currently we don't need to open subject
+      // return $$(ShowSubjectReferencePanel, {
+      //   subjectReferenceId: s.subjectReferenceId
+      // });
+      return $$(SubjectsPanel, {
+        subjectId: s.subjectReferenceId
       });
     }
   },
