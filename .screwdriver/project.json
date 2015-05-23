@@ -3,7 +3,7 @@
     {
       "repository": "https://github.com/substance/substance.git",
       "folder": "node_modules/substance",
-      "branch": "master"
+      "branch": "055e3d01178a5ae2fe776cc389ea15a1e4c9c4fe"
     },
     {
       "repository": "https://github.com/substance/cjs.git",

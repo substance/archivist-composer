@@ -5,7 +5,7 @@
     "express": "^4.11.1",
     "ejs": "*",
     "lodash": "3.3.1",
-    "substance": "substance/substance#next"
+    "substance": "substance/substance#055e3d01178a5ae2fe776cc389ea15a1e4c9c4fe"
   },
   "devDependencies": {
   },
