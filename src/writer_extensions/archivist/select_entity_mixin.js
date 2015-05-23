@@ -22,7 +22,7 @@ var EntityView = React.createClass({
     var className = ["entity", this.props.type];
     if (this.props.active) className.push("active");
 
-    if (this.props.type == 'prison') {
+    if (this.props.type == 'prison' && this.props.prison_type instanceof Array) {
       this.props.name = this.props.name.toLowerCase().indexOf("неизвестно") >= 0 ? this.props.nearest_locality + ' (' + this.props.prison_type.join(', ') + ')' : this.props.name;
     }
 
@@ -31,7 +31,7 @@ var EntityView = React.createClass({
       $$("div", {className: "name"}, this.props.name || this.props.title)
     ];
 
-    if (this.props.synonyms) {
+    if (this.props.synonyms && this.props.synonyms instanceof Array) {
       props.push($$("div", {className: "synonyms"}, "Also known as: "+this.props.synonyms.join(', ')));
     }
 

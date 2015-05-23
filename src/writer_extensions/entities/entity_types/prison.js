@@ -12,12 +12,13 @@ var Prison = React.createClass({
   },
   render: function() {
     var className = ["entity prison"];
+    var prisonType = (this.props.prison_type instanceof Array ? this.props.prison_type.join(', ') : 'unknown');
     var name = this.props.name.toLowerCase().indexOf("неизвестно") >= 0 ? this.props.nearest_locality : this.props.name;
     if (this.props.active) className.push("active");
     return $$("div", {className: className.join(" "), onClick: this.handleToggle},
       $$("div", {className: "type"}, "Prison"),
       $$("div", {className: "name"}, name),
-      $$("div", {className: "prison-type"}, "Prison type: " + this.props.prison_type.join(', ')),
+      $$("div", {className: "prison-type"}, "Prison type: " + prisonType),
       $$("div", {className: "synonyms"}, "Known as: "+ this.props.synonyms.join(', ')),
       $$("div", {className: "country"}, "Country: "+this.props.country),
       $$("div", {className: "description"}, this.props.description),
