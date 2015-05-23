@@ -46,6 +46,9 @@ var ContentEditor = React.createClass({
     };
     this.surface = new Surface(editor, options);
 
+    // Debounced version of updateBrackets
+    this.updateBracketsDebounced = _.debounce(this.updateBrackets, 600);
+
     return {};
   },
 
@@ -215,7 +218,7 @@ var ContentEditor = React.createClass({
 
     // TODO: we need a way so that the brackets get updated properly
     this.forceUpdate(function() {
-      self.updateBrackets();
+      // self.updateBrackets();
       _.delay(function() {
         self.updateBrackets();
       }, 100);
@@ -223,7 +226,7 @@ var ContentEditor = React.createClass({
       self.surface.rerenderDomSelection();
     });
 
-    $(window).resize(this.updateBrackets);
+    $(window).resize(this.updateBracketsDebounced);
   },
 
   handleContainerAnnotationUpdate: function() {
@@ -245,7 +248,6 @@ var ContentEditor = React.createClass({
         self.surface.rerenderDomSelection();
       });
     }
-
     self.updateBrackets();
   },
 
@@ -282,14 +284,14 @@ var ContentEditor = React.createClass({
 
     if (change.isAffected([this.props.node.id, 'nodes']) || createdSubjectRefs.length > 0 ) {
       var self = this;
-      // console.log('##### calling forceUpdate after document change');
+      // console.log('##### calling forceUpdate after document change, to update brackets');
       this.forceUpdate(function() {
-        self.updateBrackets();
+        self.updateBracketsDebounced();
       });
     }
     // eagerly update brackets on every change
     else {
-      this.updateBrackets();
+      this.updateBracketsDebounced();
     }
   }
 
