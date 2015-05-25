@@ -15,7 +15,7 @@ var AnnotationHandle = View.extend({
     this.$element = $element;
     this.element = $element[0];
     return this.element;
-  },
+  }
 
 });
 

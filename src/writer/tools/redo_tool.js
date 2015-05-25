@@ -7,11 +7,13 @@ var RedoTool = React.createClass({
   displayName: "SaveTool",
 
   contextTypes: {
+    app: React.PropTypes.object.isRequired,
     backend: React.PropTypes.object.isRequired
   },
 
   getDocument: function() {
-    return this.props.writerCtrl.doc;
+    var app = this.context.app;
+    return app.doc;
   },
 
   componentDidMount: function() {

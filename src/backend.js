@@ -4,9 +4,12 @@ var Substance = require("substance");
 var Interview = require('./interview');
 var _ = require("substance/helpers");
 
+
 // Archivist Backend
 // ----------------
 //
+
+var serverUrl = 'http://ost.d4s.io';
 
 var Backend = function(opts) {
   this.cache = {
@@ -20,7 +23,7 @@ Backend.Prototype = function() {
   // ------------------
 
   this.getDocument = function(documentId, cb) {
-    $.getJSON("/api/documents/"+documentId, function(rawDoc) {
+    $.getJSON(serverUrl + "/api/documents/"+documentId, function(rawDoc) {
       var doc = new Interview(rawDoc);
       doc.version = rawDoc.__v;
       // For easy reference
@@ -95,9 +98,9 @@ Backend.Prototype = function() {
     
     var entities = {
       entityIds: entityIds
-    } 
+    }
 
-    $.post('/api/entities', entities, function(response) {
+    $.post(serverUrl + '/api/entities', entities, function(response) {
       cb(null, response.results);
     }, 'json');
   };
@@ -123,7 +126,8 @@ Backend.Prototype = function() {
   };
 
   this.fetchSubjects = function(cb) {
-    $.getJSON("/api/subjects?page=1&sort_by=position&order=asc", function(subjectDB) {
+
+    $.getJSON(serverUrl + "/api/subjects", function(subjectDB) {
       // Store in cache
       this.cache.subjectDB = subjectDB;
       cb(null, subjectDB.subjects);

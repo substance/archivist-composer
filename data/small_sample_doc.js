@@ -94,6 +94,18 @@ var sampleDoc = {
       "endOffset": 47
     },
 
+    "entity_reference_2": {
+      "id": "entity_reference_2",
+      "type": "entity_reference",
+      "path": [
+        "text_1",
+        "content"
+      ],
+      "target": "54f476ba973cfcef0354adab", // this is an external object
+      "startOffset": 40,
+      "endOffset": 70
+    },
+
     "subject_reference_1": {
       "id": "subject_reference_1",
       "type": "subject_reference",

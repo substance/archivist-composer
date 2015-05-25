@@ -1,0 +1,26 @@
+/* 
+	Reader experimental overrides
+	=============================
+*/
+
+.scrollbar-component {
+	background: #FAFAFA;
+	box-shadow: inset -4px 0 4px 0 rgba(25,25,25,0.04);
+}
+
+
+/* hide timecodes */
+
+.annotation.timecode {
+	background: none;
+	color: rgb(80, 80, 80);
+}
+
+.main-container .panel-content {
+	left: 20px;
+  padding: 70px;
+  font-size: 15px;
+}
+
+.resource-container {
+}

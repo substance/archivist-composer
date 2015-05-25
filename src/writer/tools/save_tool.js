@@ -7,13 +7,14 @@ var SaveTool = React.createClass({
   displayName: "SaveTool",
 
   contextTypes: {
+    app: React.PropTypes.object.isRequired,
     backend: React.PropTypes.object.isRequired,
     notifications: React.PropTypes.object.isRequired
   },
 
   componentDidMount: function() {
-    var writerCtrl = this.props.writerCtrl;
-    var doc = writerCtrl.doc;
+    var app = this.context.app;
+    var doc = app.doc;
 
     doc.connect(this, {
       'document:changed': this.handleDocumentChange,
@@ -25,8 +26,8 @@ var SaveTool = React.createClass({
     e.preventDefault();
     var backend = this.context.backend;
     var notifications = this.context.notifications;
-    var writerCtrl = this.props.writerCtrl;
-    var doc = writerCtrl.doc;
+    var app = this.context.app;
+    var doc = app.doc;
 
     if (this.state.active && !doc.__isSaving) {
       doc.__isSaving = true;

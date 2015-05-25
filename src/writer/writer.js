@@ -2,18 +2,18 @@
 var $$ = React.createElement;
 
 var Substance = require("substance");
+var _ = require("substance/helpers");
 var ContentTools = require("./content_tools");
 var ContentPanel = require("./content_panel");
 var WriterController = require("./writer_controller");
-
 var StatusBar = require("./status_bar");
+
+console.log('WriterController.prototype', WriterController.prototype);
 
 // The Substance Writer Component
 // ----------------
 
-var Writer = React.createClass({
-  displayName: "Writer",
-
+var WriterMixin = _.extend({}, WriterController.prototype, Substance.EventEmitter.prototype, {
   contextTypes: {
     backend: React.PropTypes.object.isRequired,
     notifications: React.PropTypes.object.isRequired,
@@ -25,32 +25,41 @@ var Writer = React.createClass({
     // used by text properties to render 'active' annotations
     // For active container annotations annotation fragments are inserted
     // which can be used to highlight the associated range
+    app: React.PropTypes.object,
     getHighlightedNodes: React.PropTypes.func,
     getHighlightsForTextProperty: React.PropTypes.func
   },
 
   getChildContext: function() {
-    return {
+    var context = {
+      app: this,
       getHighlightedNodes: this.getHighlightedNodes,
       getHighlightsForTextProperty: this.getHighlightsForTextProperty,
     };
+    // console.log('context', context);
+    return context;
   },
 
   getInitialState: function() {
     return {"contextId": "metadata"};
   },
 
+  // Internal methods
+  // ----------------
+
+  getDocument: function() {
+    return this.props.doc;
+  },
+
+  getConfig: function() {
+    return this.props.config;
+  },
+
   // Events
   // ----------------
 
   componentWillMount: function() {
-    // Initialize writer controller, which will serve as a common interface
-    // for custom modules
-    this.writerCtrl = new WriterController({
-      doc: this.props.doc,
-      writerComponent: this,
-      config: this.props.config
-    });
+    this._initializeController();
   },
 
   componentWillUnmount: function() {
@@ -74,42 +83,11 @@ var Writer = React.createClass({
     }
     var rootElement = this.getDOMNode();
     var $clipboard = $(rootElement).find('.clipboard');
-    this.clipboard = new Substance.Surface.Clipboard(this.writerCtrl, $clipboard[0],
+    this.clipboard = new Substance.Surface.Clipboard(this, $clipboard[0],
       this.context.htmlImporter, this.context.htmlExporter);
     this.clipboard.attach(rootElement);
   },
 
-  requestAutoSave: function() {
-    var doc = this.props.doc;
-    var backend = this.context.backend;
-    var notifications = this.context.notifications;
-
-    if (doc.__dirty && !doc.__isSaving) {
-      notifications.addMessage({
-        type: "info",
-        message: "Autosaving ..."
-      });
-
-      doc.__isSaving = true;
-      backend.saveDocument(doc, function(err) {
-        doc.__isSaving = false;
-        if (err) {
-          notifications.addMessage({
-            type: "error",
-            message: err.message || err.toString()
-          });
-          console.error('saving of document failed');
-        } else {
-          doc.emit('document:saved');
-          notifications.addMessage({
-            type: "info",
-            message: "No changes"
-          });
-          doc.__dirty = false;
-        }
-      });
-    }
-  },
 
   // E.g. when a tool requests a context switch
   handleContextSwitch: function(contextId) {
@@ -136,7 +114,8 @@ var Writer = React.createClass({
 
   // Toggles for explicitly switching between context panels
   createContextToggles: function() {
-    var panels = this.writerCtrl.getPanels();
+    var panels = this.getPanels();
+
     var contextId = this.state.contextId;
     var self = this;
 
@@ -150,20 +129,6 @@ var Writer = React.createClass({
       }
 
       if (panelClass.isDialog) {
-        // return $$('div', {
-        //   className: 'dialog '+ contextId,
-        //   href: "#",
-        //   key: panelClass.contextId,
-        //   "data-id": panelClass.contextId
-        // },
-        //   panelClass.displayName,
-        //   $$('a', {
-        //     href: "#",
-        //     onClick: this.handleCloseDialog,
-        //     className: "close-dialog",
-        //     dangerouslySetInnerHTML: {__html: '<i class="fa fa-close"></i> '}
-        //   })
-        // );
         return $$('div');
       } else {
         return $$('a', {
@@ -184,16 +149,7 @@ var Writer = React.createClass({
 
   // Create a new panel based on current writer state (contextId)
   createContextPanel: function() {
-    var panelElement = null;
-    var modules = this.writerCtrl.getModules();
-
-    for (var i = 0; i < modules.length && !panelElement; i++) {
-      var stateHandlers = modules[i].stateHandlers;
-      if (stateHandlers && stateHandlers.handleContextPanelCreation) {
-        panelElement = stateHandlers.handleContextPanelCreation(this.writerCtrl);
-      }
-    }
-
+    var panelElement = this.getActivePanelElement();
     if (!panelElement) {
       return $$('div', null, "No panels are registered");
     }
@@ -203,12 +159,8 @@ var Writer = React.createClass({
   render: function() {
     return $$('div', { className: 'writer-component', onKeyDown: this.handleApplicationKeyCombos},
       $$('div', {className: "main-container"},
-        $$(ContentTools, {
-          writerCtrl: this.writerCtrl
-        }),
-        $$(ContentPanel, {
-          writerCtrl: this.writerCtrl,
-        })
+        $$(ContentTools),
+        $$(ContentPanel)
       ),
       $$('div', {className: "resource-container"},
         this.createContextToggles(),
@@ -221,14 +173,6 @@ var Writer = React.createClass({
     );
   },
 
-  getHighlightedNodes: function() {
-    return this.writerCtrl.getHighlightedNodes();
-  },
-
-  getHighlightsForTextProperty: function() {
-    return this.writerCtrl.getHighlightsForTextProperty.apply(this.writerCtrl, arguments);
-  },
-
   // return true when you handled a key combo
   handleApplicationKeyCombos: function(e) {
     // console.log('####', e.keyCode, e.metaKey, e.ctrlKey, e.shiftKey);
@@ -237,9 +181,9 @@ var Writer = React.createClass({
     // Undo/Redo: cmd+z, cmd+shift+z
     if (e.keyCode === 90 && (e.metaKey||e.ctrlKey)) {
       if (e.shiftKey) {
-        this.writerCtrl.redo();
+        this.redo();
       } else {
-        this.writerCtrl.undo();
+        this.undo();
       }
       handled = true;
     }
@@ -257,8 +201,14 @@ var Writer = React.createClass({
       e.preventDefault();
       e.stopPropagation();
     }
-  },
+  }
+});
 
+// Create React class
+
+var Writer = React.createClass({
+  mixins: [WriterMixin],
+  displayName: "Writer",
 });
 
 module.exports = Writer;

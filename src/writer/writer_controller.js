@@ -1,98 +1,72 @@
-"use strict";
-
-var Substance = require('substance');
+var Substance = require("substance");
 var Document = Substance.Document;
-var Selection = Document.Selection;
 var _ = require("substance/helpers");
+
 var ToolManager = require("substance").Surface.ToolManager;
-
 var Highlight = require("./components/text_property").Highlight;
+var ExtensionManager = require("./extension_manager");
 
-// Writer Controller
+var coreTools = require("./tools");
+var coreComponents = require("./components");
+
+// Mixin with helpers to implement a WriterController
 // ----------------
-//
-// An common interface for all writer modules
 
-var WriterController = function(opts) {
-  Substance.EventEmitter.call(this);
-
-  this.config = opts.config;
-  this.doc = opts.doc;
-  this.writerComponent = opts.writerComponent;
-  this.surfaces = {};
-
-  this.doc.connect(this, {
-    'transaction:started': this.transactionStarted,
-    'document:changed': this.onDocumentChanged
-  });
-
-  this.toolManager = new ToolManager(this.doc, {
-    isToolEnabled: this.isToolEnabled.bind(this)
-  });
-};
+function WriterController() {}
 
 WriterController.Prototype = function() {
 
-  // API method used by writer modules to modify the writer state
-  this.replaceState = function(newState, cb) {
-    this.writerComponent.replaceState(newState, cb);
+  this.getDocument = function() {
+    throw new Error('Contract: A Writer must implement getDocument()');
   };
 
-  this.transactionStarted = function(tx) {
+  this.getWriterState = function() {
+    throw new Error('Contract: A Writer must implement getWriterState()');
+  };
+
+  // Internal Methods
+  // ----------------------
+
+  this._initializeController = function(doc, config) {
+    
+    // We need to do this manually since we can't call the EventEmitter constructor function
+    this.__events__ = {};
+
+    // Initialize doc
+    var doc = this.getDocument();
+
+    // For compatibility with extensions which rely on the app.doc instance
+    this.doc = doc;
+
+    var config = this.getConfig();
+
+    // Initialize surface registry
+    this.surfaces = {};
+
+    doc.connect(this, {
+      'transaction:started': this._transactionStarted,
+      'document:changed': this._onDocumentChanged
+    });
+
+    this.toolManager = new ToolManager(this.doc, {
+      isToolEnabled: this.isToolEnabled
+    });
+
+    this.extensionManager = new ExtensionManager(config.extensions, this);
+  };
+
+  this._transactionStarted = function(tx) {
     // store the state so that it can be recovered when undo/redo
-    tx.before.state = this.writerComponent.state;
+    tx.before.state = this.state;
     tx.before.selection = this.getSelection();
     if (this.activeSurface) {
       tx.before.surfaceName = this.activeSurface.name;
     }
   };
 
-  // Checks based on the surface registry if a certain tool is enabled
-  this.isToolEnabled = function(toolName) {
-    var activeSurface = this.getSurface();
-    var enabledTools = activeSurface.enabledTools;
-    return _.includes(enabledTools, toolName);
-  };
-
-  this.registerSurface = function(surface, name, options) {
-    name = name || Substance.uuid();
-    options = options || {};
-    this.surfaces[name] = surface;
-    if (surface.name) {
-      throw new Error("Surface has already been attached");
-    }
-    // HACK: we store a name on the surface for later decision making
-    surface.name = name;
-
-    // HACK: we store enabled tools on the surface instance for later lookup
-    surface.enabledTools = options.enabledTools || [];
-
-    surface.connect(this, {
-      'selection:changed': function(sel) {
-        this.updateSurface(surface);
-        this.onSelectionChanged(sel);
-        this.emit('selection:changed', sel);
-      }
-    });
-  };
-
-  this.onSelectionChanged = function(sel) {
-    var modules = this.getModules();
-    var handled = false;
-    for (var i = 0; i < modules.length && !handled; i++) {
-      var stateHandlers = modules[i].stateHandlers;
-      if (stateHandlers && stateHandlers.handleSelectionChange) {
-        handled = stateHandlers.handleSelectionChange(this, sel);
-      }
-    }
-
-    // Notify all registered tools about the selection change (if enabled)
-    this.toolManager.updateTools(sel);
-  };
-
-  this.onDocumentChanged = function(change, info) {
+  this._onDocumentChanged = function(change, info) {
     this.doc.__dirty = true;
-    var notifications = this.writerComponent.context.notifications;
+    var notifications = this.context.notifications;
 
     notifications.addMessage({
       type: "info",
@@ -112,6 +86,79 @@ WriterController.Prototype = function() {
     }
   };
 
+  this._onSelectionChanged = function(sel) {
+    this.extensionManager.handleSelectionChange(sel);
+
+    // Notify all registered tools about the selection change (if enabled)
+    this.toolManager.updateTools(sel);
+  };
+
+  this.requestAutoSave = function() {
+    var doc = this.props.doc;
+    var backend = this.context.backend;
+    var notifications = this.context.notifications;
+
+    if (doc.__dirty && !doc.__isSaving) {
+      notifications.addMessage({
+        type: "info",
+        message: "Autosaving ..."
+      });
+
+      doc.__isSaving = true;
+      backend.saveDocument(doc, function(err) {
+        doc.__isSaving = false;
+        if (err) {
+          notifications.addMessage({
+            type: "error",
+            message: err.message || err.toString()
+          });
+          console.error('saving of document failed');
+        } else {
+          doc.emit('document:saved');
+          notifications.addMessage({
+            type: "info",
+            message: "No changes"
+          });
+          doc.__dirty = false;
+        }
+      });
+    }
+  };
+
+  // Surface related
+  // ----------------------
+
+  this.registerSurface = function(surface, name, options) {
+    name = name || Substance.uuid();
+    options = options || {};
+    this.surfaces[name] = surface;
+    if (surface.name) {
+      throw new Error("Surface has already been attached");
+    }
+    // HACK: we store a name on the surface for later decision making
+    surface.name = name;
+
+    // HACK: we store enabled tools on the surface instance for later lookup
+    surface.enabledTools = options.enabledTools || [];
+
+    surface.connect(this, {
+      'selection:changed': function(sel) {
+        this.updateSurface(surface);
+        this._onSelectionChanged(sel);
+        this.emit('selection:changed', sel);
+      }
+    });
+  };
+
+  this.unregisterSurface = function(surface) {
+    Substance.each(this.surfaces, function(s, name) {
+      if (surface === s) {
+        delete this.surfaces[name];
+      }
+    }, this);
+    surface.disconnect(this);
+  };
+
   this.updateSurface = function(surface) {
     this.activeSurface = surface;
   };
@@ -125,81 +172,62 @@ WriterController.Prototype = function() {
     return this.activeSurface.getSelection();
   };
 
-  this.unregisterSurface = function(surface) {
-    Substance.each(this.surfaces, function(s, name) {
-      if (surface === s) {
-        delete this.surfaces[name];
-      }
-    }, this);
-
-    surface.disconnect(this);
+  // Checks based on the surface registry if a certain tool is enabled
+  this.isToolEnabled = function(toolName) {
+    var activeSurface = this.getSurface();
+    var enabledTools = activeSurface.enabledTools;
+    return _.includes(enabledTools, toolName);
   };
 
-  // Remove since we have a property getter already?
-  this.getState = function() {
-    return this.writerComponent.state;
-  };
+  // Extensions Related
+  // ----------------------
+  // 
+  // Should delegate most work to ExtensionManager
+  // Dead code!!
+  // 
+  // this.getNodeComponentClass = function(nodeType) {
+  //   console.log('get node component class', nodeType);
+  //   var extensions = this.getConfig().extensions;
+  //   var NodeClass;
 
-  this.getModules = function() {
-    return this.config.modules;
-  };
+  //   var components = _.extend({}, coreComponents);
 
-  this.getNodeComponentClass = function(nodeType) {
-    var modules = this.config.modules;
-    var NodeClass;
+  //   for (var i = 0; i < extensions.length; i++) {
+  //     var ext = extensions[i];
+  //     if (ext.components && ext.components[nodeType]) {
+  //       components[nodeType] = ext.components[nodeType];
+  //     }
+  //   }
 
-    for (var i = 0; i < modules.length; i++) {
-      var ext = modules[i];
-      if (ext.components && ext.components[nodeType]) {
-        NodeClass = ext.components[nodeType];
-      }
-    }
+  //   NodeClass = components[nodeType];
 
-    if (!NodeClass) throw new Error("No component found for "+nodeType);
-    return NodeClass;
-  };
+  //   if (!NodeClass) throw new Error("No component found for "+nodeType);
+  //   return NodeClass;
+  // };
 
   this.getPanels = function() {
-    var modules = this.config.modules;
-    var panels = [];
+    return this.extensionManager.getPanels();
+  };
 
-    for (var i = 0; i < modules.length; i++) {
-      var ext = modules[i];
-      panels = panels.concat(ext.panels);
-    }
-    return panels;
+  this.getActivePanelElement = function() {
+    return this.extensionManager.getActivePanelElement();
   };
 
   // Get all available tools from core and extensions
   this.getTools = function() {
-    var modules = this.config.modules;
-    var tools = [];
-
-    for (var i = 0; i < modules.length; i++) {
-      var ext = modules[i];
-      if (ext.tools) {
-        tools = tools.concat(ext.tools);
-      }
-    }
-    return tools;
+    return coreTools.concat(this.extensionManager.getTools());
   };
 
-  // Based on a certain writer state, determine what should be
-  // highlighted in the scrollbar.
+  this.getActiveContainerAnnotations = function() {
+    return this.extensionManager.getActiveContainerAnnotations();
+  };
 
   this.getHighlightedNodes = function() {
-    var modules = this.getModules();
-    var highlightedNodes = null;
-    for (var i = 0; i < modules.length && !highlightedNodes; i++) {
-      var stateHandlers = modules[i].stateHandlers;
-      if (stateHandlers && stateHandlers.getHighlightedNodes) {
-        highlightedNodes = stateHandlers.getHighlightedNodes(this);
-      }
-    }
-    return highlightedNodes || [];
+    return this.extensionManager.getHighlightedNodes();
   };
 
   // This belongs to container annotations
+  // A higlight is a container annotations fragment
   this.getHighlightsForTextProperty = function(textProperty) {
     var doc = this.doc;
     var container = textProperty.getContainer();
@@ -225,17 +253,8 @@ WriterController.Prototype = function() {
     }
   };
 
-  this.getActiveContainerAnnotations = function() {
-    var modules = this.getModules();
-    var activeContainerAnnotations = null;
-    for (var i = 0; i < modules.length && !activeContainerAnnotations; i++) {
-      var stateHandlers = modules[i].stateHandlers;
-      if (stateHandlers && stateHandlers.getActiveContainerAnnotations) {
-        activeContainerAnnotations = stateHandlers.getActiveContainerAnnotations(this);
-      }
-    }
-    return activeContainerAnnotations || [];
-  };
+  // Document Specific stuff
+  // TODO: Move to DocumentController class
 
   this.deleteAnnotation = function(annotationId) {
     var anno = this.doc.get(annotationId);
@@ -287,16 +306,6 @@ WriterController.Prototype = function() {
   };
 };
 
-Substance.inherit(WriterController, Substance.EventEmitter);
 
-Object.defineProperty(WriterController.prototype, 'state', {
-  get: function() {
-    return this.writerComponent.state;
-  },
-  set: function() {
-    throw new Error("Immutable property. Use replaceState");
-  }
-});
-
-
+Substance.initClass(WriterController);
 module.exports = WriterController;
