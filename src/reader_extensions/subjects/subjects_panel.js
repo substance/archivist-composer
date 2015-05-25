@@ -77,11 +77,13 @@ var SubjectsPanelMixin = _.extend({}, PanelMixin, {
     if (!state.subjects) {
       return $$("div", null, "Loading subjects ...");
     }
-    //debugger
+
     if (state.subjects) {
       treeEl = $$(Tree, {
         ref: "treeWidget",
-        tree: this.state.subjects.tree
+        tree: this.state.subjects.tree,
+        selectedNodes: [],
+        onSelectionChanged: function() {}
       });
     }
 

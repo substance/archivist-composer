@@ -48,13 +48,6 @@ var TreeNode = React.createClass({
       }),
       $$('a', {
         href: "#",
-        "data-id": node.id,
-        className: 'select-toggle',
-        onClick: this.props.handleSelection,
-        dangerouslySetInnerHTML: {__html: '<i class="fa '+selectedIcon+'"></i>'}
-      }),
-      $$('a', {
-        href: "#",
         className: 'name',
         "data-id": node.id,
         onClick: this.props.handleSelection,
@@ -71,11 +64,11 @@ var Tree = React.createClass({
   displayName: "Tree",
 
   componentWillMount: function() {
-    //this._prepare(this.props.selectedNodes);
+    this._prepare(this.props.selectedNodes);
   },
 
   componentWillReceiveProps: function(nextProps) {
-    //this._prepare(nextProps.selectedNodes);
+    this._prepare(nextProps.selectedNodes);
   },
 
   // Preprocess tree to flag nodes accordingly

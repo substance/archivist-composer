@@ -65,6 +65,10 @@ Backend.Prototype = function() {
     });
   };
 
+  this.getEntity = function(entityId) {
+    return this.cache.entities[entityId];
+  };
+
   // Entities
   // ------------------
 
