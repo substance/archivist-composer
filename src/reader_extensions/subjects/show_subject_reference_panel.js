@@ -112,7 +112,6 @@ var ShowSubjectReferencePanel = React.createClass({
     var app = this.context.app;
     var doc = app.doc;
 
-
     return $$("div", {className: "panel dialog show-subject-reference-panel-component"},
       $$('div', {className: "dialog-header"},
         $$('a', {

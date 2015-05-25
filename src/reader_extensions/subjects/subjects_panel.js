@@ -3,6 +3,7 @@ var Substance = require("substance");
 var SubjectsModel = require("./subjects_model");
 var PanelMixin = require("../../writer").PanelMixin;
 var _ = require("substance/helpers");
+var Tree = require("./tree_component");
 
 // Sub component
 var Subject = require("./subject");
@@ -76,6 +77,13 @@ var SubjectsPanelMixin = _.extend({}, PanelMixin, {
     if (!state.subjects) {
       return $$("div", null, "Loading subjects ...");
     }
+    //debugger
+    if (state.subjects) {
+      treeEl = $$(Tree, {
+        ref: "treeWidget",
+        tree: this.state.subjects.tree
+      });
+    }
 
     // Only get referenced subjects
     var referencedSubjects = state.subjects.getAllReferencedSubjects();
@@ -91,7 +99,7 @@ var SubjectsPanelMixin = _.extend({}, PanelMixin, {
     return $$("div", {className: "panel subjects-panel-component"},
       $$('div', {className: 'panel-content'},
         $$('div', {className: 'subjects'},
-          subjectNodes
+          treeEl
         )
       )
     );
