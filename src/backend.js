@@ -9,8 +9,6 @@ var _ = require("substance/helpers");
 // ----------------
 //
 
-var serverUrl = 'http://ost.d4s.io';
-
 var Backend = function(opts) {
   this.cache = {
     "entities": {}
@@ -23,7 +21,7 @@ Backend.Prototype = function() {
   // ------------------
 
   this.getDocument = function(documentId, cb) {
-    $.getJSON(serverUrl + "/api/documents/"+documentId, function(rawDoc) {
+    $.getJSON("/api/documents/"+documentId, function(rawDoc) {
       var doc = new Interview(rawDoc);
       doc.version = rawDoc.__v;
       // For easy reference
@@ -104,7 +102,7 @@ Backend.Prototype = function() {
       entityIds: entityIds
     }
 
-    $.post(serverUrl + '/api/entities', entities, function(response) {
+    $.post('/api/entities', entities, function(response) {
       cb(null, response.results);
     }, 'json');
   };
@@ -131,7 +129,7 @@ Backend.Prototype = function() {
 
   this.fetchSubjects = function(cb) {
 
-    $.getJSON(serverUrl + "/api/subjects", function(subjectDB) {
+    $.getJSON("/api/subjects", function(subjectDB) {
       // Store in cache
       this.cache.subjectDB = subjectDB;
       cb(null, subjectDB.subjects);
