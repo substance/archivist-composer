@@ -218,8 +218,6 @@ var ContentEditor = React.createClass({
 
     _.each(brackets, function(bracket, bracketId) {
       var subjectRefEl = $(this.getDOMNode()).find('.subject-references .subject-reference[data-id='+bracketId+']');
-
-      console.log('subjectRefEl', subjectRefEl);
       subjectRefEl.css({
         top: bracket.top,
         height: bracket.height
