@@ -128,7 +128,13 @@ var ContentEditor = React.createClass({
     var doc = this.props.doc;
     var subjectReferences = doc.getIndex('type').get('subject_reference');
 
-    var brackets = [];
+    var brackets = {};
+
+    // 3 available slots (0 means not used)
+    var bracketSlots = [0,0,0];
+
+    // Collects all events for the sweep algorithm
+    var events = [];
 
     _.each(subjectReferences, function(subjRef) {
       var anchors = $(this.getDOMNode()).find('.nodes .anchor[data-id='+subjRef.id+']');
@@ -151,42 +157,76 @@ var ContentEditor = React.createClass({
       var endTop = $(endAnchorEl).position().top + $(endAnchorEl).height();
       var height = endTop - startTop;
 
-      brackets.push({
-        id: subjRef.id,
+      // Add start and end events
+      events.push({
+        subjRefId: subjRef.id,
+        pos: startTop,
+        type: "start"
+      });
+
+      events.push({
+        subjRefId: subjRef.id,
+        pos: endTop,
+        type: "end"
+      });
+
+      brackets[subjRef.id] = {
         top: startTop,
         height: height,
-      });
+        slot: null        
+      };
     }, this);
 
 
-    brackets = _.sortBy(brackets, 'top');
-    var prevBracket = null;
-    var level = 0;
-    for (var i = 0; i < brackets.length; i++) {
-      var bracket = brackets[i];
+    function bookSlot(subjRefId) {
+      // debugger;
+      // Use slot 0 by default
+      var minVal = Math.min.apply(this, bracketSlots);
+      var slot;
 
-      if (prevBracket) {
-        var prevBottom = prevBracket.top + prevBracket.height;
-        // When there is an overlap, increase the bracket level
-        if (bracket.top < prevBottom) {
-          level = (level + 1) % 3;
-        } else {
-          // No overlap go back to level 0
-          level = 0;
+      for (var i = 0; i < bracketSlots.length && slot === undefined; i++) {
+        var slotVal = bracketSlots[i];
+        // Found first suitable slot
+        if (slotVal === minVal) {
+          slot = i;
+          bracketSlots[i] = slotVal+1;
         }
       }
+      // Assign slot to associated bracket
+      brackets[subjRefId].slot = slot;
+    }
 
-      var subjectRefEl = $(this.getDOMNode()).find('.subject-references .subject-reference[data-id='+bracket.id+']');
+    function releaseSlot(subjRefId) {
+      var bracket = brackets[subjRefId];
+      bracketSlots[bracket.slot] = bracketSlots[bracket.slot] - 1;
+    }
+    
+    // Sort brackets and events
+    events = _.sortBy(events, 'pos');
 
+    // Start the sweep (go through all events)
+    _.each(events, function(evt) {
+      if (evt.type === "start") {
+        bookSlot(evt.subjRefId);
+      } else {
+        releaseSlot(evt.subjRefId);
+      }
+    });
+
+    // Render brackets
+    // --------------
+
+    _.each(brackets, function(bracket, bracketId) {
+      var subjectRefEl = $(this.getDOMNode()).find('.subject-references .subject-reference[data-id='+bracketId+']');
       subjectRefEl.css({
         top: bracket.top,
         height: bracket.height
       });
 
       subjectRefEl.removeClass('level-0 level-1 level-2');
-      subjectRefEl.addClass('level-'+level);
+      subjectRefEl.addClass('level-'+bracket.slot);
       prevBracket = bracket;
-    };
+    }, this);
   },
 
 
