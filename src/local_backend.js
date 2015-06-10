@@ -1,6 +1,6 @@
 var Substance = require("substance");
 var Interview = require('./interview');
-var EXAMPLE_DOC = require("../data/problematic_doc");
+var EXAMPLE_DOC = require("../data/problematic_doc_isolated");
 var _ = require("substance/helpers");
 
 var ENTITIES = [
