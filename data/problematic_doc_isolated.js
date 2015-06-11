@@ -59,17 +59,18 @@ var sampleDoc = {
       target: "554a831226ee98fc05606b2a",
       type: "entity_reference"
     },
-    // entity_reference_1f274a52cefc5d64024f6eb926569638: {
-    //   id: "entity_reference_1f274a52cefc5d64024f6eb926569638",
-    //   startOffset: 59,
-    //   endOffset: 44,
-    //   path: [
-    //     "textff1951ba68a8ecce8a9eb55c60951743",
-    //     "content"
-    //   ],
-    //   target: "554a831226ee98fc05606b2a",
-    //   type: "entity_reference"
-    // },
+    // PROBLEMATIC ANNOTATION
+    entity_reference_1f274a52cefc5d64024f6eb926569638: {
+      id: "entity_reference_1f274a52cefc5d64024f6eb926569638",
+      startOffset: 59,
+      endOffset: 44,
+      path: [
+        "textff1951ba68a8ecce8a9eb55c60951743",
+        "content"
+      ],
+      target: "554a831226ee98fc05606b2a",
+      type: "entity_reference"
+    },
     entity_reference_f8f3f3d557b4ce2140552412cece5106: {
       id: "entity_reference_f8f3f3d557b4ce2140552412cece5106",
       endOffset: 101,
