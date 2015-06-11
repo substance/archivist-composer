@@ -59,17 +59,17 @@ var sampleDoc = {
       target: "554a831226ee98fc05606b2a",
       type: "entity_reference"
     },
-    entity_reference_1f274a52cefc5d64024f6eb926569638: {
-      id: "entity_reference_1f274a52cefc5d64024f6eb926569638",
-      endOffset: 44,
-      startOffset: 59,
-      path: [
-        "textff1951ba68a8ecce8a9eb55c60951743",
-        "content"
-      ],
-      target: "554a831226ee98fc05606b2a",
-      type: "entity_reference"
-    },
+    // entity_reference_1f274a52cefc5d64024f6eb926569638: {
+    //   id: "entity_reference_1f274a52cefc5d64024f6eb926569638",
+    //   startOffset: 59,
+    //   endOffset: 44,
+    //   path: [
+    //     "textff1951ba68a8ecce8a9eb55c60951743",
+    //     "content"
+    //   ],
+    //   target: "554a831226ee98fc05606b2a",
+    //   type: "entity_reference"
+    // },
     entity_reference_f8f3f3d557b4ce2140552412cece5106: {
       id: "entity_reference_f8f3f3d557b4ce2140552412cece5106",
       endOffset: 101,
@@ -166,16 +166,18 @@ var sampleDoc = {
       type: "subject_reference",
       id: "subject_reference551f0af404dff6beaddb85065ae87bc5"
     },
-    strongdf5ae21e96c93ef3bae38a6cca9ea7fb: {
-      path: [
-        "text8b1085a7281da527a77f87301090c62f",
-        "content"
-      ],
-      endOffset: 503,
-      startOffset: 504,
-      id: "strongdf5ae21e96c93ef3bae38a6cca9ea7fb",
-      type: "strong"
-    },
+    // startOffset > endOffset (breaks the doc!)
+    // strongdf5ae21e96c93ef3bae38a6cca9ea7fb: {
+    //   path: [
+    //     "text8b1085a7281da527a77f87301090c62f",
+    //     "content"
+    //   ],
+    //   endOffset: 503,
+    //   startOffset: 504,
+    //   id: "strongdf5ae21e96c93ef3bae38a6cca9ea7fb",
+    //   type: "strong"
+    // },
+
     entity_reference_4f45f25a2d9ab13fdb8dcbe3bd539724: {
       id: "entity_reference_4f45f25a2d9ab13fdb8dcbe3bd539724",
       endOffset: 504,
