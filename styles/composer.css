@@ -448,7 +448,7 @@ a:hover {
 
 .content-panel-component .container-node.content .nodes {
   padding: 40px;
-
+  color: #000;
   padding-right: 60px;
   /*position: relative;*/
 }
@@ -691,6 +691,7 @@ a:hover {
   border-bottom: 1px solid #ddd;
   border-left: 2px solid transparent;
   cursor: pointer;
+  color: #000;
 }
 
 .show-entity-reference-panel-component .entity {
