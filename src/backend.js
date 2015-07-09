@@ -74,6 +74,8 @@ Backend.Prototype = function() {
     var entitiesToFetch = [];
     var entities = [];
 
+    entityIds = _.uniq(entityIds);
+
     // Try to use cached items
     _.each(entityIds, function(entityId) {
       var entity = this.cache.entities[entityId];
